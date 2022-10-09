@@ -1,7 +1,10 @@
 ## Get Started
 After cloning the project, create a `.env` file in the root directory.
+
 Place the following in the file:
+
 `PORT=8000`
+
 The React app will run on Port 8000 and proxy to localhost:3000 where the Express app should be running on.
 
 ## Available Scripts
