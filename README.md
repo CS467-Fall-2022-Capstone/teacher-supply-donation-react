@@ -13,9 +13,14 @@ After cloning the project, create a `.env` file in the root directory.
 
 Place the following in the file:
 
-`PORT=8000`
+```
+PORT=8000
+REACT_APP_API=http://localhost:3000
+```
 
 The React app will run on Port 8000 and proxy to localhost:3000 where the Express app should be running on.
+
+When developing locally, REACT_APP_API will point to the local express server.  For deployment, REACT_APP_API is set to the Donation Web API's URL.
 
 ## Available Scripts
 
