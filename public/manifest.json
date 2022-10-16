@@ -1,0 +1,8 @@
+{
+  "short_name": "Teacher Supply Donation",
+  "name": "Teacher Supply Donation",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

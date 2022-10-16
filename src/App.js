@@ -13,8 +13,8 @@ function App() {
   return (
     <div className="App" style={{ justifyContent: "space-between" }}>
         <Banner />
-        <ImageTitle img={aboutUs} /> 
-        <Message msg='about'/>
+        <ImageTitle img={keepItSimple} /> 
+        <Message msg='mission'/>
     </div>
   );
 }
