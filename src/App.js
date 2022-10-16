@@ -1,23 +1,17 @@
-import logo from './logo.svg';
+import React from 'react';
+import keepItSimple from './media/keepItSimple.png';
+import aboutUs from './media/aboutUs.png';
+import howItWorks from './media/howItWorks.png';
 import './App.css';
-
+import Banner from './Banner';
+import ImageTitle from './ImageTitle';
+import Message from './Message';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Teacher Supply Donation (Dev Build)
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ justifyContent: "space-between" }}>
+        <Banner />
+        <ImageTitle img={keepItSimple} />
+        <Message msg='mission'/>
     </div>
   );
 }
