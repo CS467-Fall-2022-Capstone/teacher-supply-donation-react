@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Banner from './Banner';
 import ImageTitle from './ImageTitle';
-import Message from './Message';
+import DisplayText from './DisplayText';
 import {viewConfig} from './constants';
 
 class App extends React.Component {
@@ -22,7 +22,7 @@ class App extends React.Component {
       <div className="App" style={{ justifyContent: "space-between" }}>
           <Banner onClick={this.onButtonClick} />
           <ImageTitle img={this.state.imageDisplay} /> 
-          <Message msg={this.state.textDisplay} onClick={this.onButtonClick}/>
+          <DisplayText msg={this.state.textDisplay} onClick={this.onButtonClick}/>
       </div>
     );    
   }
