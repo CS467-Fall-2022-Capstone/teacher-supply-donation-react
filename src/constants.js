@@ -12,6 +12,10 @@ export const viewConfig = {
       textDisplay: 'aboutUs',
       imageDisplay: aboutUs
     },
+    howItWorks: {
+      textDisplay: 'howItWorks',
+      imageDisplay: howItWorks
+    },
     login: {
       textDisplay: 'login',
       imageDisplay: logo
@@ -19,9 +23,5 @@ export const viewConfig = {
     signup: {
       textDisplay: 'signup',
       imageDisplay: logo
-    },
-    howItWorks: {
-      textDisplay: 'howItWorks',
-      imageDisplay: howItWorks
     }
   }

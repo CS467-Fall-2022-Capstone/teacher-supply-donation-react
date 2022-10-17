@@ -6,7 +6,6 @@ import Layout from "./Layout";
 class Login extends Component {
 
   onSignupBtnClick = () => {
-    console.log('inside onSignupBtnClick');
      this.props.onClick('signup');
   }
 

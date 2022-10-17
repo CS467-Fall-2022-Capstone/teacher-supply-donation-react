@@ -22,8 +22,8 @@ class App extends React.Component {
     if (textDisplay === 'login')
     {
       return <Login onClick={this.onButtonClick} />
-    } else if (textDisplay == 'signup') {
-      return <Signup />
+    } else if (textDisplay === 'signup') {
+      return <Signup onClick={this.onButtonClick} />
     }
     else {
       return <DisplayText msg={this.state.textDisplay} onClick={this.onButtonClick}/>;
