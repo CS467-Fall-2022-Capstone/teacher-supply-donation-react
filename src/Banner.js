@@ -1,20 +1,39 @@
 import React from 'react'
 import './App.css'
-function Banner() {
+import {viewConfig} from './constants';
 
-  return (
-    <div className="Banner">
+
+class Banner extends React.Component {
+
+  state = { currentView: viewConfig.mission };
+
+  onAboutBtnClick = () => {
+    this.props.onClick('aboutUs');
+  }
+  
+  onLoginBtnClick = () => {
+    this.props.onClick('login');
+  }
+
+  onTitleClick = () => {
+    this.props.onClick('mission');
+  }
+
+  render() {
+    return (
+    <div className="Banner" >
       <span className="ui container">
-        <button class="ui inverted basic button">About Us</button>
+        <button id="aboutBtn" className="ui inverted basic button" onClick={this.onAboutBtnClick}>About Us</button>
       </span>
-      <span className="ui container">
+      <span className="ui container" onClick={this.onTitleClick}>
         <h1>Teacher Supply Donation</h1>
       </span>
       <span className="ui container">
-        <button class="ui button">Sign up / Login</button>
+        <button id="loginBtn" className="ui button" onClick={this.onLoginBtnClick}>Sign up / Login</button>
       </span>
     </div>
-  );
+  );  
+  }
 }
 
 export default Banner
