@@ -1,7 +1,7 @@
 import React from 'react'
-import './App.css'
-import {viewConfig} from './constants';
-
+import './Banner.css'
+import {viewConfig} from '../constants';
+import { Button } from "semantic-ui-react";
 
 class Banner extends React.Component {
 
@@ -23,13 +23,13 @@ class Banner extends React.Component {
     return (
     <div className="Banner">
       <span class="ui container">
-        <button id="aboutBtn" class="ui inverted basic button" onClick={this.onAboutBtnClick}>About Us</button>
+        <Button id="aboutBtn" className="ui inverted basic button" onClick={this.onAboutBtnClick}>About Us</Button>
       </span>
       <span class="ui container" onClick={this.onTitleClick}>
         <h1>Teacher Supply Donation</h1>
       </span>
       <span class="ui container">
-        <button id="loginBtn" className="ui button" onClick={this.onLoginBtnClick}>Sign up / Login</button>
+        <Button id="loginBtn" className="ui button" onClick={this.onLoginBtnClick}>Sign up / Login</Button>
       </span>
     </div>
   );  

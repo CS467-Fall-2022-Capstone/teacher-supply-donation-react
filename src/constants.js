@@ -1,6 +1,7 @@
 import keepItSimple from './media/keepItSimple.png';
 import aboutUs from './media/aboutUs.png';
 import howItWorks from './media/howItWorks.png';
+import logo from './media/logo.png';
 
 export const viewConfig = {
     mission: {
@@ -14,5 +15,13 @@ export const viewConfig = {
     howItWorks: {
       textDisplay: 'howItWorks',
       imageDisplay: howItWorks
+    },
+    login: {
+      textDisplay: 'login',
+      imageDisplay: logo
+    },
+    signup: {
+      textDisplay: 'signup',
+      imageDisplay: logo
     }
   }
