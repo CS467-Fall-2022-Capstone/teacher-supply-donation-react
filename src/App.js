@@ -1,45 +1,36 @@
 import React from 'react';
 import './App.css';
-import Banner from './components/Banner';
-import DisplayText from './components/DisplayText';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import {viewConfig} from './constants';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import AboutPage from './pages/AboutUsPage';
+import HowItWorksPage from './pages/HowItWorks';
+import SignupPage from './pages/SignupPage';
+import TeacherDashboardPage from './pages/TeacherDashboardPage';
 
-class App extends React.Component {
-
-  state = {
-    textDisplay: viewConfig.mission.textDisplay,
-    imageDisplay: viewConfig.mission.imageDisplay
-  };
-
-  onButtonClick = (currentView) => {
-    this.setState({ textDisplay: viewConfig[currentView].textDisplay, imageDisplay: viewConfig[currentView].imageDisplay});
-  }
-
-  renderContent = () => {
-    let textDisplay = this.state.textDisplay;
-    if (textDisplay === 'login')
-    {
-      return <Login onClick={this.onButtonClick} />
-    } else if (textDisplay === 'signup') {
-      return <Signup onClick={this.onButtonClick} />
-    }
-    else {
-      return <DisplayText msg={this.state.textDisplay} onClick={this.onButtonClick}/>;
-    }
-  }
-
-  render() {
-    return (
-      <div className="App" style={{ justifyContent: "space-between" }}>
-          <Banner onClick={this.onButtonClick} />
-          < img src={this.state.imageDisplay} alt='img-title' className="photo"/>
-          {this.renderContent()}
-          
-      </div>
-    );    
-  }
-}
+function App() {
+  return (
+    <div className="App">
+        <Router>
+            <Routes>
+              <Route path="/" exact element={<HomePage />}>
+              </Route>
+              <Route path="/home" exact element={<HomePage />}>
+              </Route>
+              <Route path="/login" exact element={<LoginPage />}>
+              </Route>
+              <Route path="/aboutus" exact element={<AboutPage />}>
+              </Route>
+              <Route path="/signup" exact element={<SignupPage />}>
+              </Route>              
+              <Route path="/howitworks" exact element={<HowItWorksPage />}>
+              </Route>
+              <Route path="/teacherdashboard" exact element={<TeacherDashboardPage />}>
+              </Route>
+            </Routes>
+        </Router>
+    </div>
+  );
+}; 
 
 export default App;

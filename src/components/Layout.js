@@ -8,7 +8,7 @@ class Layout extends Component {
           <div className="auth-main">
             <div class="auth-content">
               <div className="auth-card">
-                <Header as="h2" color="black" textAlign="center">
+                <Header as="h2" style={{color: '#6d6d6d'}} textAlign="center">
                   {this.props.header}
                 </Header>
                 <Form.Group size="large" className="auth-form" autoComplete="off">

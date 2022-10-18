@@ -1,17 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+import { Button } from "semantic-ui-react";
 
 class DisplayText extends React.Component {
 
     mission = "Teacher Supply Donation’s mission is to help teachers collect classroom supplies in an efficient, simple way from their local community.";
 
-    onHowBtnClick = () => {
-        this.props.onClick('howItWorks');
-    }
-
-    onMissionBtnClick = () => {
-        this.props.onClick('mission');
-    }
-  
     colorText(color, text) {
         return <span style={{ color }}>{text}</span>;
     }
@@ -28,7 +22,11 @@ class DisplayText extends React.Component {
                         {this.mission}
                     </p>
                     <p>
-                        <button id="howItWorksBtn" className='ui primary button'  onClick={this.onHowBtnClick} >{this.colorText('white', 'Read how it works.')}</button>
+                        <Link style={{color: 'white'}} to='/howitworks'>
+                            <button id="howItWorksBtn" className='ui primary button' >
+                                {this.colorText('white', 'Read how it works.')}
+                            </button>
+                        </Link>
                     </p>
                 </h2>
                 </div>
@@ -52,14 +50,22 @@ class DisplayText extends React.Component {
                         </h3>
                                     
                     </div>
-                    <button class="ui basic button" onClick={this.onMissionBtnClick} style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>Back to our mission</button>
+                    <Link to='/home' style={{color: '#3d3d3d'}}>
+                        <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>               
+                            Back to home
+                        </Button>
+                    </Link>
                 </div>
             );
         } else if (whichMsg === 'aboutUs') {
             return (
                 <div>
                     {this.aboutTeam()}
-                    <button class="ui basic button" onClick={this.onMissionBtnClick} style={{marginTop: '3em', marginBottom: '3em'}}>Back to our mission</button>
+                    <Link to='/home' style={{color: '#3d3d3d'}}>
+                        <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>               
+                            Back to home
+                        </Button>
+                    </Link>
                 </div>
             );
         }
