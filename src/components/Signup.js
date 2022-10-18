@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Button, Form} from "semantic-ui-react";
 import Layout from "./Layout";
+import { Link } from 'react-router-dom';
 
 class Signup extends Component {
-
-    onLoginBtnClick = () => {
-         this.props.onClick('login');
-    }
 
     render() {
         return (
@@ -40,7 +37,9 @@ class Signup extends Component {
                 Sign up
               </Button>
               <Button color="red" fluid size="huge" onClick={this.onLoginBtnClick}>
-                Already have account? Log in
+                <Link style={{color: 'white'}} to='/login'>
+                  Already have account? Log in
+                </Link>
               </Button>
           </Layout>
         );

@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import { Button, Form} from "semantic-ui-react";
 import './Login.css';
 import Layout from "./Layout";
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
-
-  onSignupBtnClick = () => {
-     this.props.onClick('signup');
-  }
 
   render() {
     return (
@@ -35,8 +32,10 @@ class Login extends Component {
           <Button color="green" fluid size="huge" style={{marginBottom: '1em'}}>
             Login with Google
           </Button>
-          <Button color="red" fluid size="huge" onClick={this.onSignupBtnClick}>
-          Sign up for an account
+          <Button color="red" fluid size="huge" >
+            <Link style={{color: 'white'}} to='/signup'>
+              Sign up for an account
+            </Link>
           </Button>
 
       </Layout>
