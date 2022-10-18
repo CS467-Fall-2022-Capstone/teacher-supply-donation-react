@@ -36,11 +36,11 @@ class Signup extends Component {
               <Button color="blue" fluid size="huge" style={{marginBottom: '1em'}}>
                 Sign up
               </Button>
-              <Button color="red" fluid size="huge" onClick={this.onLoginBtnClick}>
-                <Link style={{color: 'white'}} to='/login'>
+              <Link style={{color: 'white'}} to='/login'>
+                <Button color="red" fluid size="huge" onClick={this.onLoginBtnClick}>
                   Already have account? Log in
-                </Link>
-              </Button>
+                </Button>
+              </Link>
           </Layout>
         );
       }

@@ -22,11 +22,11 @@ class DisplayText extends React.Component {
                         {this.mission}
                     </p>
                     <p>
-                        <button id="howItWorksBtn" className='ui primary button' >
-                            <Link style={{color: 'white'}} to='/howitworks'>
+                        <Link style={{color: 'white'}} to='/howitworks'>
+                            <button id="howItWorksBtn" className='ui primary button' >
                                 {this.colorText('white', 'Read how it works.')}
-                            </Link>
-                        </button>
+                            </button>
+                        </Link>
                     </p>
                 </h2>
                 </div>
@@ -50,22 +50,22 @@ class DisplayText extends React.Component {
                         </h3>
                                     
                     </div>
-                    <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>
-                        <Link to='/home' style={{color: '#3d3d3d'}}>
+                    <Link to='/home' style={{color: '#3d3d3d'}}>
+                        <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>               
                             Back to home
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </div>
             );
         } else if (whichMsg === 'aboutUs') {
             return (
                 <div>
                     {this.aboutTeam()}
-                    <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>
-                        <Link to='/home' style={{color: '#3d3d3d'}}>
+                    <Link to='/home' style={{color: '#3d3d3d'}}>
+                        <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>               
                             Back to home
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </div>
             );
         }

@@ -32,11 +32,11 @@ class Login extends Component {
           <Button color="green" fluid size="huge" style={{marginBottom: '1em'}}>
             Login with Google
           </Button>
-          <Button color="red" fluid size="huge" >
-            <Link style={{color: 'white'}} to='/signup'>
+          <Link style={{color: 'white'}} to='/signup'>
+            <Button color="red" fluid size="huge" >
               Sign up for an account
-            </Link>
-          </Button>
+            </Button>
+          </Link>
 
       </Layout>
     );
