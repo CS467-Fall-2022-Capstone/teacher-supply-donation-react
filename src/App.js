@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import AboutPage from './pages/AboutUsPage';
 import HowItWorksPage from './pages/HowItWorks';
 import SignupPage from './pages/SignupPage';
+import TeacherDashboardPage from './pages/TeacherDashboardPage';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
               <Route path="/signup" exact element={<SignupPage />}>
               </Route>              
               <Route path="/howitworks" exact element={<HowItWorksPage />}>
+              </Route>
+              <Route path="/teacherdashboard" exact element={<TeacherDashboardPage />}>
               </Route>
             </Routes>
         </Router>
