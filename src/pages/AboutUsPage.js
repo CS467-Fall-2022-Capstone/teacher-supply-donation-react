@@ -23,10 +23,10 @@ class AboutUsPage extends React.Component {
 
     render() {
         return (
-            <div className="HomePage" style={{ justifyContent: "space-between" }}>
+            <div className="AboutUsPage" data-testid="aboutUsPage" style={{ justifyContent: "space-between" }}>
                 <Banner onClick={this.onButtonClick} />
                 <img src={this.state.imageDisplay} alt='img-title' className="photo"/>
-                <DisplayText msg={this.state.textDisplay} onClick={this.onButtonClick} />
+                <DisplayText data-testid="ourTeam" msg={this.state.textDisplay} onClick={this.onButtonClick} />
             </div>
         );
     }
