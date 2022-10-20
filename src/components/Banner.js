@@ -12,7 +12,7 @@ class Banner extends React.Component {
     return (
       <div className="Banner">
         <span className="ui container">
-          <Link data-testid="aboutBtn" style={{ color: 'white' }} to='/aboutus'>
+          <Link style={{ color: 'white' }} to='/aboutus'>
             <Button id="aboutBtn" className="ui inverted basic button" >
               About Us
             </Button>

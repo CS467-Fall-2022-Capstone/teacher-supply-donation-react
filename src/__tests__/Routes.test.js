@@ -2,39 +2,57 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-//import '@testing-library/jest-dom/extend-expect';
-//import App from '../App';
 import HomePage from '../pages/HomePage';
 import AboutUsPage from '../pages/AboutUsPage';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HowItWorksPage from '../pages/HowItWorks';
+import LoginPage from '../pages/LoginPage';
+import SignupPage from '../pages/SignupPage';
 
-//afterEach(cleanup);
+import { BrowserRouter } from 'react-router-dom';
 
-test('Home Page rendering/navigating', async () => {
+
+afterEach(cleanup);
+
+test('Home Page rendering', async () => {
     render(<HomePage />, { wrapper: BrowserRouter })
 
-    const user = userEvent.setup();
+    //expect(screen.getByText(/read how it works./i)).toBeInTheDocument();
+    expect(screen.getByTestId('howItWorksBtn')).toBeInTheDocument();
 
-    expect(screen.getByText(/proposals to write/i)).toBeInTheDocument();
-
-    //this is supposed to direct to the but doesn't work -- based on testing library docs
+    //NOT WORKING - Attempt to click button and navigate to another page
     /*
-    const button = screen.getByTestId('aboutBtn');
-    user.click(button);
-    */
-    /*
-    await user.click(screen.getByTestId('aboutBtn'));
-    
-    await expect(screen.getByText(/our team/i)).toBeInTheDocument();
-    */
+    userEvent.click(screen.getByTestId('howItWorksBtn'));
 
+    expect(screen.getByText(/teachers can view/i)).toBeInTheDocument();
+    */
 });
 
-test('About Page rendering/navigating', async () => {
+test('AboutUsPage rendering', async () => {
 
     render(<AboutUsPage />, { wrapper: BrowserRouter })
 
     await expect(screen.getByText(/our team/i)).toBeInTheDocument();
 
+});
+
+test('HowItWorks rendering', async () => {
+
+    render(<HowItWorksPage />, { wrapper: BrowserRouter })
+
+    await expect(screen.getByText(/teachers can view the list of donors/i)).toBeInTheDocument();
+});
+
+test('LoginPage rendering', async () => {
+
+    render(<LoginPage />, { wrapper: BrowserRouter })
+
+    await expect(screen.getByText(/login with Google/i)).toBeInTheDocument();
+});
+
+test('SignupPage rendering', async () => {
+
+    render(<SignupPage />, { wrapper: BrowserRouter })
+
+    await expect(screen.getByText(/sign up to get started/i)).toBeInTheDocument();
 });
 

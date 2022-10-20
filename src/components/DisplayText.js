@@ -13,29 +13,29 @@ class DisplayText extends React.Component {
     displayMsg(whichMsg) {
         if (whichMsg === 'mission') {
             return (
-                <div style={{textAlign: 'center', marginLeft: '4em', marginRight: '4em'}}>
-                <h2>
-                    <p>
-                        {this.colorText('red', 'No')} proposals to write. {this.colorText('red', 'No')} budgets to create and manage. {this.colorText('red', 'No')} fuss.
-                    </p>
-                    <p>
-                        {this.mission}
-                    </p>
-                    <p>
-                        <Link style={{color: 'white'}} to='/howitworks'>
-                            <button id="howItWorksBtn" className='ui primary button' >
-                                {this.colorText('white', 'Read how it works.')}
-                            </button>
-                        </Link>
-                    </p>
-                </h2>
+                <div style={{ textAlign: 'center', marginLeft: '4em', marginRight: '4em' }}>
+                    <h2>
+                        <p>
+                            {this.colorText('red', 'No')} proposals to write. {this.colorText('red', 'No')} budgets to create and manage. {this.colorText('red', 'No')} fuss.
+                        </p>
+                        <p>
+                            {this.mission}
+                        </p>
+                        <p>
+                            <Link style={{ color: 'white' }} to='/howitworks'>
+                                <button id="howItWorksBtn" data-testid="howItWorksBtn" className='ui primary button' >
+                                    {this.colorText('white', 'Read how it works.')}
+                                </button>
+                            </Link>
+                        </p>
+                    </h2>
                 </div>
             );
-        
+
         } else if (whichMsg === 'howItWorks') {
-            return(
+            return (
                 <div>
-                    <div style={{textAlign: 'left', marginLeft: '4em', marginRight: '4em'}}>
+                    <div style={{ textAlign: 'left', marginLeft: '4em', marginRight: '4em' }}>
                         <h3>
                             {this.colorText('red', '1.')} Teachers, sign up for a free account then create a list of classroom supplies including the number of each item needed.
                         </h3>
@@ -48,10 +48,10 @@ class DisplayText extends React.Component {
                         <h3>
                             {this.colorText('red', '4.')} Teachers can view the list of donors and committed supplies, sort the list, and download the list as a .csv file.
                         </h3>
-                                    
+
                     </div>
-                    <Link to='/home' style={{color: '#3d3d3d'}}>
-                        <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>               
+                    <Link to='/home' style={{ color: '#3d3d3d' }}>
+                        <Button className="ui  button" style={{ marginTop: '3em', marginBottom: '3em', align: 'center' }}>
                             Back to home
                         </Button>
                     </Link>
@@ -61,8 +61,8 @@ class DisplayText extends React.Component {
             return (
                 <div>
                     {this.aboutTeam()}
-                    <Link to='/home' style={{color: '#3d3d3d'}}>
-                        <Button className="ui  button" style={{marginTop: '3em', marginBottom: '3em', align: 'center'}}>               
+                    <Link to='/home' style={{ color: '#3d3d3d' }}>
+                        <Button className="ui  button" style={{ marginTop: '3em', marginBottom: '3em', align: 'center' }}>
                             Back to home
                         </Button>
                     </Link>
@@ -73,8 +73,8 @@ class DisplayText extends React.Component {
 
     aboutTeam() {
         return (
-            <div className="ui segment" style={{marginLeft: '15rem', marginRight:'15rem'}}>
-                <p style={{textAlign: 'left'}}>Our team...</p>
+            <div className="ui segment" style={{ marginLeft: '15rem', marginRight: '15rem' }}>
+                <p style={{ textAlign: 'left' }}>Our team...</p>
             </div>
         );
     }
@@ -87,6 +87,6 @@ class DisplayText extends React.Component {
     };
 
 }
-    
+
 
 export default DisplayText;
