@@ -3,6 +3,7 @@ import { Button, Form} from "semantic-ui-react";
 import './Login.css';
 import Layout from "./Layout";
 import { Link } from 'react-router-dom';
+import { GoogleLoginButton } from 'react-social-login-buttons'
 
 class Login extends Component {
 
@@ -29,9 +30,7 @@ class Login extends Component {
           <Button color="blue" fluid size="huge" style={{marginBottom: '1em'}}>
             Login
           </Button>
-          <Button color="green" fluid size="huge" style={{marginBottom: '1em'}}>
-            Login with Google
-          </Button>
+          <GoogleLoginButton fluid iconSize="45px" align="center" style={{marginLeft: 0, marginBottom: '1em', width: '100%'}}/>
           <Link style={{color: 'white'}} to='/signup'>
             <Button color="red" fluid size="huge" >
               Sign up for an account
