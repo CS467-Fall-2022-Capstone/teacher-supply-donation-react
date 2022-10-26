@@ -19,7 +19,7 @@ class Banner extends React.Component {
           </Link>
         </span>
         <span className="ui container" >
-          <Link to='/home' style={{ color: '#cccccc' }}>
+          <Link to='/' style={{ color: '#cccccc' }}>
             <h1>Teacher Supply Donation</h1>
           </Link>
         </span>
