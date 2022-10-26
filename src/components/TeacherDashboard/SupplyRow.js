@@ -6,7 +6,7 @@ function SupplyRow({ supply }) {
         if (supply.totalQtyNeeded === supply.qtyDonated) {
             return false;
         }
-        return false;
+        return true;
     };
 
     return (
