@@ -50,7 +50,7 @@ class DisplayText extends React.Component {
                         </h3>
 
                     </div>
-                    <Link to='/home' style={{ color: '#3d3d3d' }}>
+                    <Link to='/' style={{ color: '#3d3d3d' }}>
                         <Button className="ui  button" style={{ marginTop: '3em', marginBottom: '3em', align: 'center' }}>
                             Back to home
                         </Button>
@@ -61,7 +61,7 @@ class DisplayText extends React.Component {
             return (
                 <div>
                     {this.aboutTeam()}
-                    <Link to='/home' style={{ color: '#3d3d3d' }}>
+                    <Link to='/' style={{ color: '#3d3d3d' }}>
                         <Button className="ui  button" style={{ marginTop: '3em', marginBottom: '3em', align: 'center' }}>
                             Back to home
                         </Button>

@@ -27,7 +27,7 @@ class Login extends Component {
         />
 
 
-          <Button color="blue" fluid size="huge" style={{marginBottom: '1em'}}>
+          <Button as={Link} to='/dashboard' color="blue" fluid size="huge" style={{marginBottom: '1em'}}>
             Login
           </Button>
           <GoogleLoginButton fluid iconSize="45px" align="center" style={{marginLeft: 0, marginBottom: '1em', width: '100%'}}/>
