@@ -12,7 +12,6 @@ function SupplyTable({ supplies }) {
                     <Table.HeaderCell>Quantity Donated</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
-
             <Table.Body>
                 {supplies.map((supply, i) => (
                     <SupplyRow supply={supply} key={i} />

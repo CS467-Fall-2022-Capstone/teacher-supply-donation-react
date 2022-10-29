@@ -1,8 +1,6 @@
 import React from 'react';
-import { Grid, Header } from 'semantic-ui-react';
-import SideBar from '../components/TeacherDashboard/SideBar.js';
-import SupplyTable from '../components/TeacherDashboard/SupplyTable.js';
-
+// import Sidebar from '../../components/TeacherDashboard/DashboardLayout.js';
+import SupplyTable from '../../components/TeacherDashboard/SupplyTable.js';
 
 function TeacherDashboardPage() {
     const testData = [
@@ -27,17 +25,10 @@ function TeacherDashboardPage() {
     ];
 
     return (
-        <Grid columns={2}>
-            <Grid.Column>
-                <SideBar />
-            </Grid.Column>
-            <Grid.Column width={8} >
-                <Header size='huge'>
-                    Dashboard
-                </Header>
-                <SupplyTable supplies={testData} />
-            </Grid.Column>
-        </Grid>
+        <>
+            <h1>Welcome</h1>
+            <SupplyTable supplies={testData} />
+        </>
     );
 }
 
