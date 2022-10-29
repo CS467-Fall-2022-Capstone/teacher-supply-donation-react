@@ -11,7 +11,7 @@ function SupplyRow({ supply }) {
 
     return (
         <>
-            {isNeeded ? (
+            {!isNeeded ? (
                 <Table.Row disabled>
                     <Table.Cell>{supply.item}</Table.Cell>
                     <Table.Cell>{supply.totalQtyNeeded}</Table.Cell>
