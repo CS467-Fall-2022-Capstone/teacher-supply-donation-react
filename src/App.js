@@ -17,6 +17,7 @@ function App() {
         <div className='App'>
             <Router>
                 <Routes>
+                    {/* Landing Page */}
                     <Route path='/' exact>
                         <Route index element={<HomePage />} />
                         <Route path='login' element={<LoginPage />} />
@@ -28,10 +29,18 @@ function App() {
                             element={<HowItWorksPage />}
                         />
                     </Route>
-                    <Route path='/teacher' exact element={<DashboardLayout />}>
+                    {/* Teacher Protected Dashboard */}
+                    <Route path='/teachers' exact element={<DashboardLayout />}>
                         <Route index element={<TeacherDashboardPage />} />
+                        {/* <Route path='/:teacherId/supplies' element={SuppliesList} /> */}
+                        {/* <Route path='/:teacherId/donors' element={DonorsList} */}
                         <Route path='settings' element={<Settings />} />
                     </Route>
+                    {/* Public Donation */}
+                    {/* <Route path='/donation exect element={}>
+                        {/* <Route path='/teacher/:teacherId' element={} /> */}
+                    {/* /donation/teacher/:teacherId/ */}
+                    {/* </Route> */}
                 </Routes>
             </Router>
         </div>
