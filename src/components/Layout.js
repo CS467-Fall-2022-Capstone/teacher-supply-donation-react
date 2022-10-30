@@ -11,9 +11,11 @@ class Layout extends Component {
             <Header as="h2" style={{ color: '#6d6d6d' }} textAlign="center">
               {this.props.header}
             </Header>
+
             <Form.Group size="large" className="auth-form" autoComplete="off">
               {this.props.children}
             </Form.Group>
+
           </div>
         </div>
       </div>
