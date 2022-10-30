@@ -1,4 +1,31 @@
+/* Dashboard General */
+.dashboardHeader {
+    margin-bottom: 50px;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    position: sticky;
+    height: 100vh;
+    display: flex;
+    flex: 1;
+}
+
+.dashboard {
+    flex: 4;
+    margin: 50px;
+}
+
+/* Dashboard - Main Page */
+.metrics {
+    margin: 50px auto;
+}
+
+/*  */
 .photo {
-  height: 14rem;
-  margin-bottom: 3rem;
+    height: 14rem;
+    margin-bottom: 3rem;
 }
