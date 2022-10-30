@@ -1,9 +1,8 @@
 import React from 'react';
-import { Image, Menu } from 'semantic-ui-react';
+import { Image, Menu, Icon } from 'semantic-ui-react';
 import { Navigate, Link, Outlet } from 'react-router-dom';
 
 function DashboardLayout() {
-    
     const logOut = () => {
         // TODO: implement sign out process
         // fetch to backend authenticate
@@ -15,7 +14,7 @@ function DashboardLayout() {
     return (
         <div className='container'>
             <div className='sidebar'>
-                <Menu borderless inverted vertical fluid>
+                <Menu icon='labeled' fluid borderless inverted vertical>
                     <Menu.Item>
                         <Image
                             centered
@@ -50,6 +49,7 @@ function DashboardLayout() {
                             to='/teacher/settings'
                             name='settings'
                         >
+                            <Icon name='setting' />
                             Settings
                         </Menu.Item>
                         <Menu.Item
@@ -58,6 +58,7 @@ function DashboardLayout() {
                             name='logOut'
                             onClick={logOut}
                         >
+                            <Icon name='log out' />
                             Log Out
                         </Menu.Item>
                     </Menu.Menu>
