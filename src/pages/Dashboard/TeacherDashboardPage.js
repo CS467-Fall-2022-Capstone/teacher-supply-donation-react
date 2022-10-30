@@ -73,6 +73,27 @@ function TeacherDashboardPage() {
         updateSupply(id, update);
     };
 
+    const onAdd = () => {
+        setInAddMode(true);
+    };
+
+    const onSubmit = (itemName, qtyNeeded) => {
+        // TODO: POST request to create Supply
+        // use teacherId as param to create new Supply and push
+        // the new supply to Teacher.supplies array
+
+        // Test Data
+        const id = supplies.length;
+        const newSupply = {
+            _id: id,
+            item: itemName,
+            totalQtyNeeded: qtyNeeded,
+            qtyDonated: 0,
+        };
+        onCancel(); // reset add mode
+        setSupplies([...supplies, newSupply]);
+    };
+
     const onCancel = () => {
         setInEditMode({
             status: false,
@@ -88,7 +109,7 @@ function TeacherDashboardPage() {
     return (
         <>
             <div className='dashboardHeader'>
-                <Header size='huge'>
+                <Header size='huge' textAlign='center'>
                     <Header.Content>
                         Welcome {teacherName}
                         <Header.Subheader>{schoolName}</Header.Subheader>
@@ -105,6 +126,8 @@ function TeacherDashboardPage() {
                 inAddMode={inAddMode}
                 onDelete={onDelete}
                 onEdit={onEdit}
+                onAdd={onAdd}
+                onSubmit={onSubmit}
                 onSave={onSave}
                 onCancel={onCancel}
             />
