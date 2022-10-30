@@ -26,7 +26,7 @@ class Login extends Component {
                 />
                 <Button
                     as={Link}
-                    to='/teacher'
+                    to='/teachers'
                     color='blue'
                     fluid
                     size='huge'
