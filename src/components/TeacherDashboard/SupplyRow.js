@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import { Table, Input, Button } from 'semantic-ui-react';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
+import DeleteModal from './DeleteModal';
 
-function SupplyRow({
-    supply,
-    inEditMode,
-    onDelete,
-    onEdit,
-    onSave,
-    onCancel
-}) {
+function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
     const [supplyName, setSupplyName] = useState(supply.item);
     const [qtyNeeded, setQtyNeeded] = useState(supply.totalQtyNeeded);
     return (
@@ -18,6 +12,7 @@ function SupplyRow({
                 <Table.Row>
                     <Table.Cell>
                         <Input
+                            size='small'
                             value={supplyName}
                             type='text'
                             onChange={(event) =>
@@ -27,8 +22,10 @@ function SupplyRow({
                     </Table.Cell>
                     <Table.Cell>
                         <Input
+                            size='small'
                             value={qtyNeeded}
                             type='number'
+                            min='0'
                             onChange={(event) =>
                                 setQtyNeeded(event.target.value)
                             }
@@ -39,7 +36,9 @@ function SupplyRow({
                         <Button
                             content='Save'
                             primary
-                            onClick={() => onSave(supply._id, supplyName, qtyNeeded)}
+                            onClick={() =>
+                                onSave(supply._id, supplyName, qtyNeeded)
+                            }
                         />
                     </Table.Cell>
                     <Table.Cell textAlign='center'>
@@ -55,11 +54,7 @@ function SupplyRow({
                         <FaEdit as='button' onClick={() => onEdit(supply)} />
                     </Table.Cell>
                     <Table.Cell textAlign='center'>
-                        <FaTrashAlt
-                            as='button'
-                            color='red'
-                            onClick={() => onDelete(supply._id)}
-                        />
+                        <DeleteModal onDelete={onDelete} supply={supply} />
                     </Table.Cell>
                 </Table.Row>
             )}
