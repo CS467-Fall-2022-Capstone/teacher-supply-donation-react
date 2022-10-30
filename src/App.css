@@ -17,6 +17,7 @@
 .dashboard {
     flex: 4;
     margin: 50px;
+    text-align: left;
 }
 
 /* Dashboard - Main Page */

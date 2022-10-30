@@ -109,7 +109,7 @@ function TeacherDashboardPage() {
     return (
         <>
             <div className='dashboardHeader'>
-                <Header size='huge'>
+                <Header size='huge' textAlign='center'>
                     <Header.Content>
                         Welcome {teacherName}
                         <Header.Subheader>{schoolName}</Header.Subheader>

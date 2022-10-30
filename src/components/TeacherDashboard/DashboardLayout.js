@@ -23,13 +23,13 @@ function DashboardLayout() {
                             size='small'
                         />
                     </Menu.Item>
-                    <Menu.Item link as={Link} to='/teacher' name='main'>
+                    <Menu.Item link as={Link} to='/teachers' name='main'>
                         Main Dashboard
                     </Menu.Item>
                     <Menu.Item
                         link
                         as={Link}
-                        to='/teacher/createList'
+                        to='/teachers/createList'
                         name='createList'
                     >
                         Create Supplies List
@@ -37,7 +37,7 @@ function DashboardLayout() {
                     <Menu.Item
                         link
                         as={Link}
-                        to='/teacher/donorList'
+                        to='/teachers/donorList'
                         name='donorList'
                     >
                         Donor List
@@ -46,7 +46,7 @@ function DashboardLayout() {
                         <Menu.Item
                             link
                             as={Link}
-                            to='/teacher/settings'
+                            to='/teachers/settings'
                             name='settings'
                         >
                             <Icon name='setting' />
