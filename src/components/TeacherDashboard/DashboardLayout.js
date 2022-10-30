@@ -3,10 +3,13 @@ import { Image, Menu } from 'semantic-ui-react';
 import { Navigate, Link, Outlet } from 'react-router-dom';
 
 function DashboardLayout() {
+    
     const logOut = () => {
         // TODO: implement sign out process
+        // fetch to backend authenticate
+        // if authenticated
         console.log('Sign Out');
-        Navigate('/');
+        Navigate('/teachers');
     };
 
     return (

@@ -1,3 +1,8 @@
+/* Dashboard General */
+.dashboardHeader {
+    margin-bottom: 50px;
+}
+
 .container {
     display: flex;
 }
@@ -14,6 +19,12 @@
     margin: 50px;
 }
 
+/* Dashboard - Main Page */
+.metrics {
+    margin: 50px auto;
+}
+
+/*  */
 .photo {
     height: 14rem;
     margin-bottom: 3rem;
