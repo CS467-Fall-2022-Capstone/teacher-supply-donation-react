@@ -3,11 +3,13 @@ import { Image, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 function SideBar() {
+    
     const [activeItem, setActiveItem] = useState('main');
 
     const handleClick = (e) => {
         e.preventDefault();
         setActiveItem(e.target.name);
+        console.log(`${e.target.text} was clicked`);
     };
 
     const logOut = () => {
