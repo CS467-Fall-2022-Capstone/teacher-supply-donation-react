@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Table, Button, Icon, Input } from 'semantic-ui-react';
 import SupplyRow from './SupplyRow';
 
 function SupplyTable({
@@ -10,7 +10,18 @@ function SupplyTable({
     onEdit,
     onSave,
     onCancel,
+    onAdd,
+    onSubmit,
 }) {
+    const [itemName, setItemName] = useState('');
+    const [totalNeeded, setTotalNeeded] = useState(0);
+
+    const handleSubmit = (item, qty) => {
+        onSubmit(item, qty);
+        setItemName('');
+        setTotalNeeded(0);
+    };
+
     return (
         <Table inverted celled selectable>
             <Table.Header>
@@ -37,6 +48,84 @@ function SupplyTable({
                     />
                 ))}
             </Table.Body>
+            <Table.Footer fullWidth>
+                {inAddMode ? (
+                    <Table.Row>
+                        <Table.Cell>
+                            <Input
+                                placeholder='Enter Supply Item Name'
+                                size='small'
+                                value={itemName}
+                                type='text'
+                                onChange={(event) =>
+                                    setItemName(event.target.value)
+                                }
+                            />
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Input
+                                size='small'
+                                value={totalNeeded}
+                                type='number'
+                                min='0'
+                                onChange={(event) =>
+                                    setTotalNeeded(event.target.value)
+                                }
+                            />
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Input
+                                transparent
+                                disabled
+                                size='small'
+                                placeholder='Default to 0'
+                                type='number'
+                            />
+                        </Table.Cell>
+                        <Table.Cell textAlign='center'>
+                            <Button
+                                disabled={itemName.length === 0}
+                                icon='check circle'
+                                labelPosition='left'
+                                size='small'
+                                content='Add New Item'
+                                primary
+                                onClick={() =>
+                                    handleSubmit(itemName, totalNeeded)
+                                }
+                            />
+                        </Table.Cell>
+                        <Table.Cell textAlign='center'>
+                            <Button
+                                secondary
+                                size='small'
+                                icon='cancel'
+                                labelPosition='left'
+                                content='Cancel'
+                                onClick={() => onCancel()}
+                            />
+                        </Table.Cell>
+                    </Table.Row>
+                ) : (
+                    <Table.Row>
+                        <Table.HeaderCell />
+                        <Table.HeaderCell />
+                        <Table.HeaderCell />
+                        <Table.HeaderCell textAlign='center' colSpan='2'>
+                            <Button
+                                icon
+                                labelPosition='left'
+                                primary
+                                size='small'
+                                onClick={onAdd}
+                            >
+                                <Icon name='add' />
+                                Add Item
+                            </Button>
+                        </Table.HeaderCell>
+                    </Table.Row>
+                )}
+            </Table.Footer>
         </Table>
     );
 }
