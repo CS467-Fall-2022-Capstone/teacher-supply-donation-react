@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 import AuthService from './auth.service';
-const API_URL = process.env.REACT_APP_URL;
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 /**
  * Functions for accessing sending requests to the backend
