@@ -1,12 +1,14 @@
 import React from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
 import { Navigate, Link, Outlet } from 'react-router-dom';
+import AuthService from '../../services/auth.service';
 
 function DashboardLayout() {
     const logOut = () => {
         // TODO: implement sign out process
         // fetch to backend authenticate
         // if authenticated
+        AuthService.logout();
         console.log('Sign Out');
         Navigate('/teachers');
     };

@@ -10,16 +10,27 @@ class AuthService {
      */
     async login(email, password) {
         try {
+            //clear any prior user data in local storage
+            localStorage.removeItem("user");
+
+            //For testing
+            //console.log(`AuthService data sending: Email: ${email}, Pass: ${password}`);
+
             let response = await axios
-                .post(API_URL + "/auth/signin", {
+                .post(`${API_URL}/auth/login`, {
                     email,
                     password
                 })
             if (response.data.token) {
                 localStorage.setItem("user", JSON.stringify(response.data));
+                console.log("User logged in: Data set in local storage");
+            } else {
+                //clear any prior user data from local storage
+                localStorage.removeItem("user");
             }
-            return response.data;
+            return response;
         } catch (err) {
+            localStorage.removeItem("user");
             throw err;
         }
     }
@@ -30,6 +41,7 @@ class AuthService {
      */
     logout() {
         localStorage.removeItem("user");
+        console.log("Local storage cleared. User logged out");
     }
 
     /**
@@ -40,6 +52,7 @@ class AuthService {
 
     async signup(name, email, password) {
         try {
+
             const response = await axios.post(`${API_URL}/auth/signup`, {
                 name,
                 email,
@@ -48,11 +61,16 @@ class AuthService {
 
             if (response.data.token) {
                 localStorage.setItem("user", JSON.stringify(response.data));
-                console.log("Data set in local storage")
+                console.log("User signed up and logged in: Data set in local storage");
+            } else {
+                //clear any prior user data from local storage
+                localStorage.removeItem("user");
             }
-            console.log(response);
-            return response.data;
+            console.log(response.data);
+            return response;
         } catch (err) {
+            //if local storage had a user at this point, clear it
+            localStorage.removeItem("user");
             throw err;
         }
     }
@@ -65,23 +83,16 @@ class AuthService {
         return JSON.parse(localStorage.getItem('user'));
     }
 
-    /*
-    //EARLIER chained version of login - refactored to async
-    login(email, password) {
-        return axios
-            .post(API_URL+"/auth/signin", {
-                email,
-                password
-            })
-            .then(response => {
-                if (response.data.token) {
-                    localStorage.setItem("user", JSON.stringify(response.data));
-                }
-
-                return response.data;
-            });
+    /**
+     * 
+     * Check if current user is authenticated
+     */
+    checkAuthenticated() {
+        const user = localStorage.getItem('user');
+        const authenticated = user ? true : false;
+        console.log("Authentication status is:" + authenticated);
+        return authenticated;
     }
-    */
 }
 
 export default new AuthService();

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Form } from "semantic-ui-react";
 import Layout from "./Layout";
-import { Link } from 'react-router-dom';
-import AuthService from '../services/auth.service';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthService from './../services/auth.service';
 
 
 function Signup() {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -30,23 +32,28 @@ function Signup() {
       return nextFormData;
     })
   }
- 
+
   async function handleSignup(event) {
 
     try {
       event.preventDefault();
       setSuccessfulReq({ message: "", successful: false })
 
-      let response = await AuthService.signup(
+      const response = await AuthService.signup(
         formData.name,
         formData.email,
         formData.password
       )
-      if (response) {
+      if (response.status === 201) {
+        const authenticated = AuthService.checkAuthenticated()
+        console.log("New user is authenticated:" + authenticated);
         setSuccessfulReq(
           { message: "Request succeeded", successful: true }
         )
+        //redirect to individual dashboard (currently just general teacher dash endpoint)
+        if (authenticated) { navigate("/teachers") }
       }
+
     } catch (error) {
       const resMessage =
         (error.response &&
@@ -59,9 +66,7 @@ function Signup() {
       console.log(error);
       console.log("Error calling API: " + resMessage);
       console.log(error.code, error.message);
-
     }
-
   }
 
   return (
@@ -119,7 +124,8 @@ function Signup() {
         </Button>
       </Link>
       <div>
-        <h1>{successfulReq.message}</h1>
+        <h1>{
+          successfulReq.message}</h1>
       </div>
     </Layout>
   )
