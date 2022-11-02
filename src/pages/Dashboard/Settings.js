@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Header, Form, Button } from 'semantic-ui-react';
 
 function Settings() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [name, setName] = useState('');
     const [schoolName, setSchoolName] = useState('');
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -12,8 +11,7 @@ function Settings() {
     const handleSubmit = () => {
         // TODO: Update Teacher model
         let teacherUpdate = {
-            firstName: firstName,
-            lastName: lastName,
+            name: name,
             schoolName: schoolName,
             email: email,
         };
@@ -38,22 +36,14 @@ function Settings() {
                 </Header>
             </div>
             <Form size='large'>
-                <Form.Group widths={3}>
-                    <Form.Input
-                        type='text'
-                        label='First name'
-                        placeholder='First name'
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
-                    />
-                    <Form.Input
-                        type='text'
-                        label='Last name'
-                        placeholder='Last name'
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
-                    />
-                </Form.Group>
+                <Form.Input
+                    type='text'
+                    label='Full Name'
+                    placeholder='Full Name'
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    width={2}
+                />
                 <Form.Group widths={3}>
                     <Form.Input
                         type='text'
