@@ -10,6 +10,8 @@ import SignupPage from './pages/SignupPage';
 // Dashboard Pages
 import DashboardLayout from './components/TeacherDashboard/DashboardLayout';
 import TeacherDashboardPage from './pages/Dashboard/TeacherDashboardPage';
+import DonationLayout from './components/TeacherDonation/DonationLayout'
+import TeacherDonationPage from './pages/TeacherDonationPage'
 import Settings from './pages/Dashboard/Settings';
 
 function App() {
@@ -37,10 +39,10 @@ function App() {
                         <Route path='settings' element={<Settings />} />
                     </Route>
                     {/* Public Donation */}
-                    {/* <Route path='/donation exect element={}>
-                        {/* <Route path='/teacher/:teacherId' element={} /> */}
+                    <Route path='/donations' exact element={<DonationLayout />}>
+                        <Route index element={<TeacherDonationPage />} />
                     {/* /donation/teacher/:teacherId/ */}
-                    {/* </Route> */}
+                    </Route>
                 </Routes>
             </Router>
         </div>
