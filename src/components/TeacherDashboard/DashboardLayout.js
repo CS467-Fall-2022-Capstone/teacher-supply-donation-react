@@ -63,6 +63,15 @@ function DashboardLayout() {
                             <Icon name='log out' />
                             Log Out
                         </Menu.Item>
+                        <Menu.Item
+                            link
+                            as={Link}
+                            to='/'
+                            name='settings'
+                        >
+                            <Icon name='home' />
+                            Home Page
+                        </Menu.Item>
                     </Menu.Menu>
                 </Menu>
             </div>
