@@ -28,7 +28,7 @@ function DeleteModal({ supply, onDelete }) {
                 </Header>
             </Modal.Content>
             <Modal.Actions>
-                <Button color='white' inverted onClick={() => setOpen(false)}>
+                <Button inverted onClick={() => setOpen(false)}>
                     <Icon name='remove' /> Cancel
                 </Button>
                 <Button

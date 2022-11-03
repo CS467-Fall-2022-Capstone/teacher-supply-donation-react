@@ -36,14 +36,16 @@ function Settings() {
                 </Header>
             </div>
             <Form size='large'>
-                <Form.Input
-                    type='text'
-                    label='Full Name'
-                    placeholder='Full Name'
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    width={2}
-                />
+                <Form.Group widths={3}>
+                    <Form.Input
+                        type='text'
+                        label='Full Name'
+                        placeholder='Full Name'
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                    />
+                </Form.Group>
+
                 <Form.Group widths={3}>
                     <Form.Input
                         type='text'
