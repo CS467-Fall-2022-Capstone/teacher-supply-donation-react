@@ -6,6 +6,12 @@ import AuthService from '../../services/auth.service';
 function DashboardLayout() {
     let navigate = useNavigate();
 
+    const isAuthenticated = AuthService.checkAuthenticated();
+
+    if (!isAuthenticated) {
+        navigate('/login');
+    }
+    
     const logOut = () => {
         // TODO: implement sign out process
         // fetch to backend authenticate
@@ -28,7 +34,7 @@ function DashboardLayout() {
                         />
                     </Menu.Item>
                     <Menu.Item link as={Link} to='/teachers' name='main'>
-                        Main Dashboard
+                        Main - Supplies
                     </Menu.Item>
                     <Menu.Item
                         link
@@ -36,7 +42,7 @@ function DashboardLayout() {
                         to='/teachers/donorList'
                         name='donorList'
                     >
-                        Donor List
+                        Donors
                     </Menu.Item>
                     <Menu.Menu>
                         <Menu.Item
