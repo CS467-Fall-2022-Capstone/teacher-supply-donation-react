@@ -1,16 +1,18 @@
 import React from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
-import { Navigate, Link, Outlet } from 'react-router-dom';
+import { useNavigate, Link, Outlet } from 'react-router-dom';
 import AuthService from '../../services/auth.service';
 
 function DashboardLayout() {
+    let navigate = useNavigate();
+
     const logOut = () => {
         // TODO: implement sign out process
         // fetch to backend authenticate
         // if authenticated
         AuthService.logout();
         console.log('Sign Out');
-        Navigate('/teachers');
+        navigate('/login', { replace: true });
     };
 
     return (
@@ -31,14 +33,6 @@ function DashboardLayout() {
                     <Menu.Item
                         link
                         as={Link}
-                        to='/teachers/createList'
-                        name='createList'
-                    >
-                        Create Supplies List
-                    </Menu.Item>
-                    <Menu.Item
-                        link
-                        as={Link}
                         to='/teachers/donorList'
                         name='donorList'
                     >
@@ -54,21 +48,11 @@ function DashboardLayout() {
                             <Icon name='setting' />
                             Settings
                         </Menu.Item>
-                        <Menu.Item
-                            link
-                            as={Link}
-                            name='logOut'
-                            onClick={logOut}
-                        >
+                        <Menu.Item link name='logOut' onClick={() => logOut()}>
                             <Icon name='log out' />
                             Log Out
                         </Menu.Item>
-                        <Menu.Item
-                            link
-                            as={Link}
-                            to='/'
-                            name='settings'
-                        >
+                        <Menu.Item link as={Link} to='/' name='settings'>
                             <Icon name='home' />
                             Home Page
                         </Menu.Item>
