@@ -75,60 +75,62 @@ function Signup() {
 
     return (
         <Layout header='Sign up to get started'>
-            <Form.Input
-                fluid
-                icon='user'
-                iconPosition='left'
-                placeholder='User name'
-                className='auth-input-field'
-                value={formData.name}
-                name='name'
-                onChange={handleInputChange}
-            />
-            <Form.Input
-                fluid
-                icon='user'
-                iconPosition='left'
-                placeholder='E-mail address'
-                className='auth-input-field'
-                value={formData.email}
-                name='email'
-                onChange={handleInputChange}
-            />
-            <Form.Input
-                fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Password'
-                type='password'
-                className='auth-input-field'
-                name='password'
-                value={formData.password}
-                onChange={handleInputChange}
-            />
+            <Form onSubmit={handleSignup}>
+                <Form.Input
+                    fluid
+                    icon='user'
+                    iconPosition='left'
+                    placeholder='User name'
+                    className='auth-input-field'
+                    value={formData.name}
+                    name='name'
+                    onChange={handleInputChange}
+                />
+                <Form.Input
+                    fluid
+                    icon='user'
+                    iconPosition='left'
+                    placeholder='E-mail address'
+                    className='auth-input-field'
+                    value={formData.email}
+                    name='email'
+                    onChange={handleInputChange}
+                />
+                <Form.Input
+                    fluid
+                    icon='lock'
+                    iconPosition='left'
+                    placeholder='Password'
+                    type='password'
+                    className='auth-input-field'
+                    name='password'
+                    value={formData.password}
+                    onChange={handleInputChange}
+                />
 
-            <Form.Input
-                fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Confirm Password'
-                type='password'
-                className='auth-input-field'
-                name='confirmPassword'
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-            />
+                <Form.Input
+                    fluid
+                    icon='lock'
+                    iconPosition='left'
+                    placeholder='Confirm Password'
+                    type='password'
+                    className='auth-input-field'
+                    name='confirmPassword'
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                />
 
-            <Button
-                type='submit'
-                color='blue'
-                fluid
-                size='huge'
-                style={{ marginBottom: '1em' }}
-                onClick={handleSignup}
-            >
-                Sign up
-            </Button>
+                <Button
+                    type='submit'
+                    color='blue'
+                    fluid
+                    size='huge'
+                    style={{ marginBottom: '1em' }}
+                >
+                    Sign up
+                </Button>
+            </Form>
+
             <Link style={{ color: 'white' }} to='/login'>
                 <Button color='red' fluid size='huge'>
                     Already have account? Log in
