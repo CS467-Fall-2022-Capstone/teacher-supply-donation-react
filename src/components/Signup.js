@@ -7,8 +7,6 @@ import AuthService from './../services/auth.service';
 function Signup() {
     const navigate = useNavigate();
 
-    const [validPassword, setValidPassword] = useState(true);
-
     const [formData, setFormData] = useState({
         name: '',
         email: '',
