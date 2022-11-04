@@ -35,12 +35,11 @@ function App() {
                     </Route>
                     {/* Teacher Protected Dashboard */}
                     <Route
-                        path='/teachers/:teacherId/dashboard'
+                        path='/teachers/dashboard'
                         exact
                         element={<DashboardLayout />}
                     >
                         <Route index element={<TeacherDashboardPage />} />
-                        {/* <Route path='/:teacherId/supplies' element={SuppliesList} /> */}
                         <Route path='donors' element={<DonorDashboardPage />} />
                         <Route path='settings' element={<Settings />} />
                     </Route>
