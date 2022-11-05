@@ -6,6 +6,12 @@ import AuthService from '../../services/auth.service';
 function DashboardLayout() {
     let navigate = useNavigate();
 
+    const isAuthenticated = AuthService.checkAuthenticated();
+
+    if (!isAuthenticated) {
+        navigate('/login');
+    }
+
     const logOut = () => {
         // TODO: implement sign out process
         // fetch to backend authenticate
@@ -23,26 +29,31 @@ function DashboardLayout() {
                         <Image
                             centered
                             alt='logo'
-                            src='../logo.png'
+                            src='../../logo.png'
                             size='small'
                         />
-                    </Menu.Item>
-                    <Menu.Item link as={Link} to='/teachers' name='main'>
-                        Main Dashboard
                     </Menu.Item>
                     <Menu.Item
                         link
                         as={Link}
-                        to='/teachers/donorList'
+                        to='/teachers/dashboard'
+                        name='main'
+                    >
+                        Supplies
+                    </Menu.Item>
+                    <Menu.Item
+                        link
+                        as={Link}
+                        to='/teachers/dashboard/donors'
                         name='donorList'
                     >
-                        Donor List
+                        Donors
                     </Menu.Item>
                     <Menu.Menu>
                         <Menu.Item
                             link
                             as={Link}
-                            to='/teachers/settings'
+                            to='/teachers/dashboard/settings'
                             name='settings'
                         >
                             <Icon name='setting' />
@@ -52,10 +63,12 @@ function DashboardLayout() {
                             <Icon name='log out' />
                             Log Out
                         </Menu.Item>
-                        <Menu.Item link as={Link} to='/' name='settings'>
+                        {/* Note: Do we need a link to home? An authenticated user wouldn't have any use to go home
+                        My thought process was that the landing pages were for unauthenticated users */}
+                        {/* <Menu.Item link as={Link} to='/' name='settings'>
                             <Icon name='home' />
                             Home Page
-                        </Menu.Item>
+                        </Menu.Item> */}
                     </Menu.Menu>
                 </Menu>
             </div>

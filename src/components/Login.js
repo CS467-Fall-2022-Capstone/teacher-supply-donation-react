@@ -50,7 +50,7 @@ function Login() {
                 });
                 //redirect to individual dashboard (currently just general teacher dash endpoint)
                 if (authenticated) {
-                    navigate('/teachers');
+                    navigate('/teachers/dashboard');
                 }
             }
         } catch (error) {
