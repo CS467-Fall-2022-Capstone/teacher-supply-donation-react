@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import './Login.css';
 import Layout from './Layout';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GoogleLoginButton } from 'react-social-login-buttons';
-import AuthService from './../services/auth.service';
+import { useAuth } from '../services/AuthProvider';
+import AuthService from '../services/auth.service';
 
 function Login() {
-    const navigate = useNavigate();
+    const { logIn } = useAuth();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -32,27 +33,17 @@ function Login() {
         });
     };
 
-    async function handleLogIn(event) {
+    const handleLogIn = async (event) => {
+        event.preventDefault();
         try {
-            event.preventDefault();
             setSuccessfulReq({ message: '', successful: false });
-
-            const response = await AuthService.login(
+            const teacher = await AuthService.logIn(
                 formData.email,
                 formData.password
             );
-            if (response.status === 200) {
-                const authenticated = AuthService.checkAuthenticated();
-                console.log('Returning user is authenticated:' + authenticated);
-                setSuccessfulReq({
-                    message: 'Request succeeded',
-                    successful: true,
-                });
-                //redirect to individual dashboard (currently just general teacher dash endpoint)
-                if (authenticated) {
-                    navigate('/teachers/dashboard');
-                }
-            }
+            console.log(teacher);
+            if (!teacher) return; // teacher is null if not found
+            logIn(teacher);
         } catch (error) {
             const resMessage =
                 (error.response &&
@@ -66,7 +57,7 @@ function Login() {
             console.log('Error calling API: ' + resMessage);
             console.log(error.code, error.message);
         }
-    }
+    };
 
     return (
         <Layout header='Log in'>

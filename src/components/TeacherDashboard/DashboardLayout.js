@@ -1,25 +1,14 @@
 import React from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
-import { useNavigate, Link, Outlet } from 'react-router-dom';
-import AuthService from '../../services/auth.service';
+import { Navigate, Link, Outlet } from 'react-router-dom';
+import { useAuth } from '../../services/AuthProvider';
 
 function DashboardLayout() {
-    let navigate = useNavigate();
+    const { teacher, logOut } = useAuth();
 
-    const isAuthenticated = AuthService.checkAuthenticated();
-
-    if (!isAuthenticated) {
-        navigate('/login');
+    if (!teacher) {
+        return <Navigate to='/login' replace />;
     }
-
-    const logOut = () => {
-        // TODO: implement sign out process
-        // fetch to backend authenticate
-        // if authenticated
-        AuthService.logout();
-        console.log('Sign Out');
-        navigate('/login', { replace: true });
-    };
 
     return (
         <div className='container'>
@@ -63,12 +52,6 @@ function DashboardLayout() {
                             <Icon name='log out' />
                             Log Out
                         </Menu.Item>
-                        {/* Note: Do we need a link to home? An authenticated user wouldn't have any use to go home
-                        My thought process was that the landing pages were for unauthenticated users */}
-                        {/* <Menu.Item link as={Link} to='/' name='settings'>
-                            <Icon name='home' />
-                            Home Page
-                        </Menu.Item> */}
                     </Menu.Menu>
                 </Menu>
             </div>

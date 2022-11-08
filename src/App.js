@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Unprotected Landing Pages
+import LandingLayout from './components/LandingLayout';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import AboutPage from './pages/AboutUsPage';
@@ -18,39 +19,37 @@ import TeacherDonationPage from './pages/TeacherDonationPage';
 
 function App() {
     return (
-        <div className='App'>
-            <Router>
-                <Routes>
-                    {/* Landing Page */}
-                    <Route path='/' exact>
-                        <Route index element={<HomePage />} />
-                        <Route path='login' element={<LoginPage />} />
-                        <Route path='aboutus' element={<AboutPage />} />
-                        <Route path='signup' element={<SignupPage />} />
-                        <Route
-                            path='howitworks'
-                            exact
-                            element={<HowItWorksPage />}
-                        />
-                    </Route>
-                    {/* Teacher Protected Dashboard */}
+        <Router>
+            <Routes>
+                {/* Landing Page */}
+                <Route path='/' exact element={<LandingLayout />}>
+                    <Route index element={<HomePage />} />
+                    <Route path='login' element={<LoginPage />} />
+                    <Route path='aboutus' element={<AboutPage />} />
+                    <Route path='signup' element={<SignupPage />} />
                     <Route
-                        path='/teachers/dashboard'
+                        path='howitworks'
                         exact
-                        element={<DashboardLayout />}
-                    >
-                        <Route index element={<TeacherDashboardPage />} />
-                        <Route path='donors' element={<DonorDashboardPage />} />
-                        <Route path='settings' element={<Settings />} />
-                    </Route>
-                    {/* Public Donation */}
-                    <Route path='/donations' exact element={<DonationLayout />}>
-                        <Route index element={<TeacherDonationPage />} />
-                        {/* /donation/teacher/:teacherId/ */}
-                    </Route>
-                </Routes>
-            </Router>
-        </div>
+                        element={<HowItWorksPage />}
+                    />
+                </Route>
+                {/* Teacher Protected Dashboard */}
+                <Route
+                    path='/teachers/dashboard'
+                    exact
+                    element={<DashboardLayout />}
+                >
+                    <Route index element={<TeacherDashboardPage />} />
+                    <Route path='donors' element={<DonorDashboardPage />} />
+                    <Route path='settings' element={<Settings />} />
+                </Route>
+                {/* Public Donation */}
+                <Route path='/donations' exact element={<DonationLayout />}>
+                    <Route index element={<TeacherDonationPage />} />
+                    {/* /donation/teacher/:teacherId/ */}
+                </Route>
+            </Routes>
+        </Router>
     );
 }
 
