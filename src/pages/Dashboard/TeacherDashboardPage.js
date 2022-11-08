@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import SupplyTable from '../../components/TeacherDashboard/SupplyTable.js';
 import MetricsCards from '../../components/TeacherDashboard/MetricsCards';
 import { Header } from 'semantic-ui-react';
-import AuthService from '../../services/auth.service';
+import { useAuth } from '../../services/AuthProvider';
 
 function TeacherDashboardPage() {
+    const { teacher } = useAuth();
     const [supplies, setSupplies] = useState([]);
     const [inEditMode, setInEditMode] = useState({
         status: false,
@@ -38,8 +39,8 @@ function TeacherDashboardPage() {
         setSupplies(testData);
     };
     // For Testing, delete once back-end is integrated
-    const user = AuthService.getCurrentUser();
-    const teacherName = user ? user.name : 'John Doe';
+    // const user = AuthService.getCurrentUser();
+    const teacherName = teacher ? teacher.name : 'John Doe';
     const schoolName = 'BinaryCode High School';
 
     const onDelete = async (id) => {

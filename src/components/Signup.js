@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import Layout from './Layout';
-import { Link, useNavigate } from 'react-router-dom';
-import AuthService from './../services/auth.service';
+import { Link } from 'react-router-dom';
+import AuthService from '../services/auth.service';
+import { useAuth } from '../services/AuthProvider';
 
 function Signup() {
-    const navigate = useNavigate();
+    const { logIn } = useAuth();
+    // const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -33,30 +35,24 @@ function Signup() {
     };
 
     async function handleSignup(event) {
+        event.preventDefault();
         try {
-            event.preventDefault();
             setSuccessfulReq({ message: '', successful: false });
-
             if (formData.password !== formData.confirmPassword) {
                 alert('Passwords Do Not Match!');
             } else {
-                const response = await AuthService.signup(
+                const teacher = await AuthService.signUp(
                     formData.name,
                     formData.email,
                     formData.password
                 );
-                if (response.status === 201) {
-                    const authenticated = AuthService.checkAuthenticated();
-                    console.log('New user is authenticated:' + authenticated);
-                    setSuccessfulReq({
-                        message: 'Request succeeded',
-                        successful: true,
-                    });
-                    //redirect to individual dashboard (currently just general teacher dash endpoint)
-                    if (authenticated) {
-                        navigate('/teachers/dashboard');
-                    }
-                }
+                console.log(teacher);
+                if (!teacher) return;
+                setSuccessfulReq({
+                    message: 'Request succeeded',
+                    successful: true,
+                });
+                logIn(teacher);
             }
         } catch (error) {
             const resMessage =
@@ -80,7 +76,7 @@ function Signup() {
                     fluid
                     icon='user'
                     iconPosition='left'
-                    placeholder='User name'
+                    placeholder='Full Name'
                     className='auth-input-field'
                     value={formData.name}
                     name='name'
