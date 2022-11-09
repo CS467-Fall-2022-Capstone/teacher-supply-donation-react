@@ -47,10 +47,40 @@ class AuthService {
     }
 
     /**
+     * Send Google User Info to backend and return authenticated user
+     */
+
+    async googleLogin(googleToken) {
+        try {
+            // Get user info from Google
+            const googleUser = await axios.get(
+                'https://www.googleapis.com/oauth2/v3/userinfo',
+                {
+                    headers: {
+                        Authorization: `Bearer ${googleToken.access_token}`,
+                    },
+                }
+            );
+            // Send to back-end for authentication
+            const expressResponse = await axios.post(
+                `${API_URL}/auth/google`,
+                googleUser.data
+            );
+
+            if (expressResponse.status === 200) {
+                return expressResponse.data;
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
+    /**
      * Functions for accessing sending requests to the backend
      */
     createAuthRequest(teacher) {
-        return axios.get(API_URL + '/api/teachers/' + teacher._id, { headers: authHeader(teacher) });
+        return axios.get(API_URL + '/api/teachers/' + teacher._id, {
+            headers: authHeader(teacher),
+        });
     }
 
     /**
