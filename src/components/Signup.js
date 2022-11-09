@@ -4,6 +4,8 @@ import Layout from './Layout';
 import { Link } from 'react-router-dom';
 import AuthService from '../services/auth.service';
 import { useAuth } from '../services/AuthProvider';
+import { GoogleLoginButton } from 'react-social-login-buttons';
+import { useGoogleLogin } from '@react-oauth/google';
 
 function Signup() {
     const { logIn } = useAuth();
@@ -69,6 +71,27 @@ function Signup() {
         }
     }
 
+    const googleLogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            const teacher = AuthService.googleLogin(tokenResponse);
+            if (!teacher) return; // teacher is null if not found
+            logIn(teacher);
+        },
+        onError: (errorResponse) => {
+            const resMessage =
+                (errorResponse.response &&
+                    errorResponse.response.data &&
+                    errorResponse.response.data.error) ||
+                errorResponse.message ||
+                errorResponse.toString();
+
+            setSuccessfulReq({ message: resMessage, successful: false });
+            console.log(errorResponse);
+            console.log('Error calling API: ' + resMessage);
+            console.log(errorResponse.code, errorResponse.message);
+        },
+    });
+
     return (
         <Layout header='Sign up to get started'>
             <Form onSubmit={handleSignup}>
@@ -126,6 +149,17 @@ function Signup() {
                     Sign up
                 </Button>
             </Form>
+            <GoogleLoginButton
+                fluid
+                iconSize='45px'
+                align='center'
+                style={{
+                    marginLeft: 0,
+                    marginBottom: '1em',
+                    width: '100%',
+                }}
+                onClick={() => googleLogin()}
+            />
 
             <Link style={{ color: 'white' }} to='/login'>
                 <Button color='red' fluid size='huge'>
