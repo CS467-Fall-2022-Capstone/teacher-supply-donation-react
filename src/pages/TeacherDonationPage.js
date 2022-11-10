@@ -1,46 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import SupplyTableSimple from '../components/TeacherDonation/SupplyTableSimple.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
-import { } from "react-router-dom";
-//import AuthService from '../services/auth.service';
+import SupplyService from '../services/supply.service';
 
 function TeacherDonationPage() {
 
-    const [name, setName, email, setEmail, school, setSchool, message, setMessage, supplies, setSupplies] = useOutletContext();
+    const [name, school, message, supplies] = useOutletContext();
 
-    
-    const loadSupplies = async () => {
-        // TODO: implement data fetch in AuthService
+    //fullSuppliesArr is populated by fetching the objects from 
+    //the teacher's supplies array from the supplies endpoint in the backend
+    const [fullSuppliesArr, setFullSuppliesArr] = useState([]);
 
-        // For Testing, delete once back-end is integrated
-        const testData = [
-            {
-                _id: 1,
-                item: 'Pencils',
-                totalQtyNeeded: 10,
-                qtyDonated: 5,
-            },
-            {
-                _id: 2,
-                item: 'Tissue Boxes',
-                totalQtyNeeded: 5,
-                qtyDonated: 1,
-            },
-            {
-                _id: 3,
-                item: 'Scissors',
-                totalQtyNeeded: 15,
-                qtyDonated: 0,
-            },
-        ];
-        setSupplies(testData);
-    };
-
+    //fetch each object referenced in supplies array by id; load into fullSuppliesArr
     useEffect(() => {
+
+        const loadSupplies = async () => {
+            try {
+                if (supplies.length === 0) {
+
+                    setFullSuppliesArr([{
+                        _id: 1,
+                        item: 'No items registered',
+                        totalQuantityNeeded: 'NA',
+                        quantityDonated: 'NA'
+                    }])
+                } else {
+                    let temp = []
+                    for (let supply of supplies) {
+
+                        let response = await SupplyService.getSupplyRecord(supply);
+                        if (response.status === 200) {
+                            temp.push(response.data)
+                        }
+                    }
+                    setFullSuppliesArr(temp);
+                }
+            } catch (err) {
+                console.log("Error response received from backend")
+                console.log(err);
+                throw err;
+            }
+        }
+
         loadSupplies();
-    }, []);
+    }, [supplies]);
+
 
     return (
         <>
@@ -58,7 +64,7 @@ function TeacherDonationPage() {
             <Header size="large"> Supplies List</Header>
             <Divider fitted />
             <SupplyTableSimple
-                supplies={supplies}
+                supplies={fullSuppliesArr}
             />
             <Container className='buttonRow' textAlign='center'>
                 <Button

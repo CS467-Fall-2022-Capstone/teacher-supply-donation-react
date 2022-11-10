@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = process.env.REACT_APP_API;
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 /**
  * Class for accessing/performing CRUD operations on teacher

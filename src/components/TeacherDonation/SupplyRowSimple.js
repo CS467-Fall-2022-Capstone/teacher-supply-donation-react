@@ -8,8 +8,8 @@ function SupplyRowSimple({ supply }) {
         <>
             <Table.Row>
                 <Table.Cell>{supply.item}</Table.Cell>
-                <Table.Cell>{supply.totalQtyNeeded}</Table.Cell>
-                <Table.Cell>{supply.qtyDonated}</Table.Cell>
+                <Table.Cell>{supply.totalQuantityNeeded}</Table.Cell>
+                <Table.Cell>{supply.quantityDonated}</Table.Cell>
             </Table.Row>
         </>
     );

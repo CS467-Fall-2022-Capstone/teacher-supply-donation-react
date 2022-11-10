@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
-import { Navigate, Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import TeacherService from '../../services/teacher.service';
 import logo from '../../media/logo.png';
 
@@ -17,7 +17,7 @@ function DonationLayout() {
     const [school, setSchool] = useState('BinaryCode High');
     const [message, setMessage] = useState('Thank you for donating to our classroom!');
     const [supplies, setSupplies] = useState([]);
-    
+
 
     //fetch the teacher data from the backend
     useEffect(() => {
@@ -71,7 +71,7 @@ function DonationLayout() {
                 </Menu>
             </div>
             <div className='dashboard'>
-                <Outlet context={[name, setName, email, setEmail, school, setSchool, message, setMessage, supplies, setSupplies ]} />
+                <Outlet context={[name, school, message, supplies]} />
             </div>
         </div>
     );
