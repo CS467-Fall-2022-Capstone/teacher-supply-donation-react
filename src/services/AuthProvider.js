@@ -6,7 +6,6 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [teacher, setTeacher] = useLocalStorage('teacher', null);
-
     // Set authenticated user
     const logIn = async (data) => {
         setTeacher(data);
