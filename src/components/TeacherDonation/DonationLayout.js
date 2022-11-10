@@ -12,8 +12,11 @@ function DonationLayout() {
     console.log("Teacher id is: " + teacherId);
 
     //const [teacher, setTeacher] = useState('John Doe');
-    const [name, setName] = useState('John Doe');
-    const [teacher, setTeacher] = useState({});
+    const [name, setName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [school, setSchool] = useState('BinaryCode High');
+    const [message, setMessage] = useState('Thank you for donating to our classroom!');
+    const [supplies, setSupplies] = useState([]);
     
 
     //fetch the teacher data from the backend
@@ -23,7 +26,11 @@ function DonationLayout() {
                 if (response.status === 200) {
                     console.log("React app received teacher data response");
                     console.log(JSON.stringify(response.data));
-                    setTeacher(response.data);
+                    setName(response.data.name);
+                    setEmail(response.data.email);
+                    //setSchool(response.data.school);
+                    //setMessage(response.data.message);
+                    setSupplies(response.data.supplies);
                 } else {
                     console.log("Another (non 200) response status received: " + JSON.stringify(response.status));
                 }
@@ -64,7 +71,7 @@ function DonationLayout() {
                 </Menu>
             </div>
             <div className='dashboard'>
-                <Outlet context={[teacher, setTeacher]} />
+                <Outlet context={[name, setName, email, setEmail, school, setSchool, message, setMessage, supplies, setSupplies ]} />
             </div>
         </div>
     );

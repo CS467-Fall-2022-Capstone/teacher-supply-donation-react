@@ -8,14 +8,9 @@ import { } from "react-router-dom";
 
 function TeacherDonationPage() {
 
-    const [teacher, setTeacher] = useOutletContext();
+    const [name, setName, email, setEmail, school, setSchool, message, setMessage, supplies, setSupplies] = useOutletContext();
+
     
-
-    const [name, setName] = useState(JSON.stringify(teacher.name));
-    const [message, setMessage] = useState(JSON.stringify(teacher.message));
-    const [school, setSchool] = useState(JSON.stringify(teacher.school));
-    const [supplies, setSupplies] = useState([])
-
     const loadSupplies = async () => {
         // TODO: implement data fetch in AuthService
 
