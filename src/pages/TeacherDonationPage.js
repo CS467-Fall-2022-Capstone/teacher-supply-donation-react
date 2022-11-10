@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import SupplyTableSimple from '../components/TeacherDonation/SupplyTableSimple.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
+import { } from "react-router-dom";
 //import AuthService from '../services/auth.service';
 
 function TeacherDonationPage() {
-    const [teacher, setTeacher] = useState('John Doe')
-    const [school, setSchool] = useState('BinaryCode High School')
-    const [message, setMessage] = useState('Thank you for your donation!')
-    const [supplies, setSupplies] = useState([]);
+
+    const [teacher, setTeacher] = useOutletContext();
+    
+
+    const [name, setName] = useState(JSON.stringify(teacher.name));
+    const [message, setMessage] = useState(JSON.stringify(teacher.message));
+    const [school, setSchool] = useState(JSON.stringify(teacher.school));
+    const [supplies, setSupplies] = useState([])
 
     const loadSupplies = async () => {
         // TODO: implement data fetch in AuthService
@@ -47,7 +52,7 @@ function TeacherDonationPage() {
             <div className='dashboardHeader'>
                 <Header size='huge' textAlign='center'>
                     <Header.Content>
-                        Donate Supplies to {teacher}'s Classroom!
+                        Donate Supplies to {name}'s Classroom!
                         <Header.Subheader>{school}</Header.Subheader>
                     </Header.Content>
                 </Header>
