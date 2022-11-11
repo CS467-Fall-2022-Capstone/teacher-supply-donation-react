@@ -3,17 +3,17 @@ import { Link, useOutletContext } from 'react-router-dom';
 import SupplyTableSimple from '../components/TeacherDonation/SupplyTableSimple.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
-import SupplyService from '../services/supply.service';
 
 function TeacherDonationPage() {
 
-    const [name, school, message, supplies] = useOutletContext();
+    const [name, school, message, supplies, teacher_id] = useOutletContext();
 
     //fullSuppliesArr is populated by fetching the objects from 
     //the teacher's supplies array from the supplies endpoint in the backend
-    const [fullSuppliesArr, setFullSuppliesArr] = useState([]);
+    //const [fullSuppliesArr, setFullSuppliesArr] = useState([]);
 
     //fetch each object referenced in supplies array by id; load into fullSuppliesArr
+    /*
     useEffect(() => {
 
         const loadSupplies = async () => {
@@ -27,26 +27,22 @@ function TeacherDonationPage() {
                         quantityDonated: 'NA'
                     }])
                 } else {
-                    let temp = []
-                    for (let supply of supplies) {
-
-                        let response = await SupplyService.getSupplyRecord(supply);
-                        if (response.status === 200) {
-                            temp.push(response.data)
-                        }
+                    console.log("Teacher Donation Component reading teacher id as: ", teacher_id);
+                    let response = await SupplyService.getSupplyRecord(teacher_id);
+                    if (response.status === 200) {
+                        setFullSuppliesArr(response.data.supplies);
                     }
-                    setFullSuppliesArr(temp);
                 }
             } catch (err) {
-                console.log("Error response received from backend")
+                console.log("Error response received from Donations API")
                 console.log(err);
                 throw err;
             }
         }
 
         loadSupplies();
-    }, [supplies]);
-
+    }, [supplies, teacher_id]);
+    */
 
     return (
         <>
@@ -64,7 +60,7 @@ function TeacherDonationPage() {
             <Header size="large"> Supplies List</Header>
             <Divider fitted />
             <SupplyTableSimple
-                supplies={fullSuppliesArr}
+                supplies={supplies}
             />
             <Container className='buttonRow' textAlign='center'>
                 <Button

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
 import { Link, Outlet, useParams } from 'react-router-dom';
-import TeacherService from '../../services/teacher.service';
+import SupplyService from '../../services/supply.service';
 import logo from '../../media/logo.png';
 
 
@@ -12,35 +12,45 @@ function DonationLayout() {
     console.log("Teacher id is: " + teacherId);
 
     //const [teacher, setTeacher] = useState('John Doe');
-    const [name, setName] = useState(null);
-    const [email, setEmail] = useState(null);
+    const [name, setName] = useState('Waiting...');
+    const [email, setEmail] = useState('Waiting...');
     const [school, setSchool] = useState('BinaryCode High');
     const [message, setMessage] = useState('Thank you for donating to our classroom!');
     const [supplies, setSupplies] = useState([]);
+    const [teacher_id, setTeacher_id] = useState(teacherId);
 
-
-    //fetch the teacher data from the backend
     useEffect(() => {
-        TeacherService.getTeacherPublicRecord(teacherId)
-            .then((response) => {
+
+        const testSupplyData = [{
+            _id: 1,
+            item: 'No items read',
+            totalQuantityNeeded: 'NA',
+            quantityDonated: 'NA',
+        }]
+
+        const loadSupplies = async () => {
+            try {
+                setTeacher_id(teacherId);
+                let response = await SupplyService.getSupplyRecord(teacherId);
                 if (response.status === 200) {
-                    console.log("React app received teacher data response");
-                    console.log(JSON.stringify(response.data));
-                    setName(response.data.name);
-                    setEmail(response.data.email);
-                    //setSchool(response.data.school);
-                    //setMessage(response.data.message);
-                    setSupplies(response.data.supplies);
+                    console.log("RECEIVED DATA: " + JSON.stringify(response.data));
+                    setName(response.data.teacher.name);
+                    setEmail(response.data.teacher.email);
+                    setSupplies(response.data.supplies.length > 0 ? response.data.supplies: 
+                        testSupplyData);
                 } else {
-                    console.log("Another (non 200) response status received: " + JSON.stringify(response.status));
+                    setName("NA");
+                    setEmail("NA")
+                    setSupplies(testSupplyData)
                 }
-            }).catch((err) => {
-                console.log("Error response received from backend")
+            } catch (err) {
+                console.log("Error response received from Donations API")
                 console.log(err);
                 throw err;
-            })
-    }, []
-    );
+            }
+        }
+        loadSupplies();
+    }, [teacherId]);
 
     return (
         <div className='container'>
@@ -71,7 +81,7 @@ function DonationLayout() {
                 </Menu>
             </div>
             <div className='dashboard'>
-                <Outlet context={[name, school, message, supplies]} />
+                <Outlet context={[name, school, message, supplies, teacher_id]} />
             </div>
         </div>
     );
