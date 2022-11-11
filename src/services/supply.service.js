@@ -13,7 +13,7 @@ class SupplyService {
      * @returns array of supply records
      */
     getSupplyRecord(teacher_id) {
-        return axios.get(`${API_URL}/teachers/${teacher_id}/supplies`);
+        return axios.get(`${API_URL}/teachers/${teacher_id}/public`);
     }
 }
 

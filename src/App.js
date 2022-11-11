@@ -15,7 +15,7 @@ import DonorDashboardPage from './pages/Dashboard/DonorDashboardPage';
 import Settings from './pages/Dashboard/Settings';
 // Public Donation Pages
 import DonationLayout from './components/TeacherDonation/DonationLayout';
-import TeacherDonationPage from './pages/TeacherDonationPage';
+import TeacherDonationPage from './pages/Donation/TeacherDonationPage';
 
 function App() {
     return (
@@ -45,7 +45,7 @@ function App() {
                 </Route>
                 {/* Public Donation */}
                 <Route path='/donations/teachers/' exact element={<DonationLayout />}>
-                    <Route index path=':teacherId' element={<TeacherDonationPage />}/>
+                    <Route index path=':teacherId' element={<TeacherDonationPage />} />
                 </Route>
             </Routes>
         </Router>
