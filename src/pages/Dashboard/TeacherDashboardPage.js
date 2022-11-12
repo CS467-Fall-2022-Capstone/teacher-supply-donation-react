@@ -62,12 +62,8 @@ function TeacherDashboardPage() {
     };
 
     const updateSupply = async (supply_id, supplyUpdate) => {
-        console.log(supply_id);
-        console.log(supplyUpdate);
-        console.log(teacher_token);
         try {
             let response = await SupplyService.updateSupplyRecord(supply_id,teacher_token, supplyUpdate);
-            console.log(response);
             if (response.status === 200) {
                 let updatedSupply = response.data;  
                 // find updatedSupply in supplies and update info
