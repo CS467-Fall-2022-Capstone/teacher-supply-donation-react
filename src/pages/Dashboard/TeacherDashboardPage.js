@@ -4,14 +4,18 @@ import MetricsCards from '../../components/TeacherDashboard/MetricsCards';
 import { Header } from 'semantic-ui-react';
 import { useAuth } from '../../services/AuthProvider';
 import SupplyService from '../../services/supply.service';
+import TeacherService from '../../services/teacher.service.js';
 
 function TeacherDashboardPage() {
     const { teacher } = useAuth();
     const teacher_id = teacher.teacher_id;
     const teacherName = teacher.name;
-    const schoolName = teacher.school;
-    console.log(teacher);
+    const teacher_token = teacher.token;
+    //console.log(teacher);
+    
     const [supplies, setSupplies] = useState([]);
+    const [school, setSchool] = useState('Enter your school');
+    const [message, setMessage] = useState('Enter your message');
     const [inEditMode, setInEditMode] = useState({
         status: false,
         supplyKey: null,
@@ -19,13 +23,15 @@ function TeacherDashboardPage() {
     const [inAddMode, setInAddMode] = useState(false);
 
     useEffect(() => {
-        const loadSupplies = async () => {
+        const loadTeacherInfo = async () => {
             try {
                 console.log('inside useEffect');
-                let response = await SupplyService.getSupplyRecord(teacher_id);
+                let response = await TeacherService.getTeacherRecord(teacher_id, teacher_token);
                 if (response.status === 200) {
-                    console.log("RECEIVED DATA: " + JSON.stringify(response.data));
+                    //console.log("RECEIVED DATA: " + JSON.stringify(response.data));
                     setSupplies(response.data.supplies);
+                    setSchool(response.data.teacher.school);
+                    setMessage(response.data.teacher.message);
                 }
             } catch (err) {
                 console.log("Error response received from Donations API")
@@ -33,12 +39,26 @@ function TeacherDashboardPage() {
                 throw err;
             }
         };
-        loadSupplies();
-    }, [teacher_id]);
+        loadTeacherInfo();
+    });
     
-    const onDelete = async (id) => {
+    const onDelete = async (s_id) => {
         // TODO: implement /DELETE supply
-        setSupplies(supplies.filter((supply) => supply._id !== id));
+        try {
+            console.log(s_id);
+            console.log('inside useEffect');
+            let response = await SupplyService.deleteSupplyRecord(s_id,teacher_token);
+            if (response.status === 200) {
+                console.log("DELETE SUCCESSFULLY " + response.status);
+                let newSupplies = supplies.filter((s_id) => supplies.supply_id !== s_id);
+                setSupplies(newSupplies);
+            }
+        } catch (err) {
+            console.log("Error response received from Donations API")
+            console.log(err);
+            throw err;
+        }
+        
     };
 
     const onEdit = (supply) => {
@@ -59,28 +79,28 @@ function TeacherDashboardPage() {
         //loadSupplies();
     };
 
-    const onSave = (id, item, qty) => {
+    const onSave = (supply_id, item, totalQuantityNeeded) => {
         const update = {
-            item: item,
-            totalQtyNeeded: qty,
+            item,
+            totalQuantityNeeded
         };
         console.log(update);
-        updateSupply(id, update);
+        updateSupply(supply_id, update);
     };
 
     const onAdd = () => {
         setInAddMode(true);
     };
 
-    const onSubmit = (itemName, qtyNeeded) => {
+    const onSubmit = (item, totalQuantityNeeded) => {
         // TODO: POST request to create Supply
         // use teacherId as param to create new Supply and push
         // the new supply to Teacher.supplies array
 
         // Test Data
         const newSupply = {
-            item: itemName,
-            totalQuantityNeeded: qtyNeeded,
+            item,
+            totalQuantityNeeded,
             quantityDonated: 0,
         };
         onCancel(); // reset add mode
@@ -101,7 +121,8 @@ function TeacherDashboardPage() {
                 <Header size='huge' textAlign='center'>
                     <Header.Content>
                         Welcome {teacherName}
-                        <Header.Subheader>{schoolName}</Header.Subheader>
+                        <Header.Subheader>School: {school}</Header.Subheader>
+                        <Header.Subheader>Message to Donors: {message}</Header.Subheader>
                     </Header.Content>
                 </Header>
             </div>

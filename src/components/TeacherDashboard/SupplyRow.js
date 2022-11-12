@@ -8,7 +8,7 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
     const [totalQuantityNeeded, setTotalQuantityNeeded] = useState(supply.totalQuantityNeeded);
     return (
         <>
-            {inEditMode.status && inEditMode.supplyKey === supply._id ? (
+            {inEditMode.status && inEditMode.supplyKey === supply.supply_id ? (
                 <Table.Row>
                     <Table.Cell>
                         <Input
@@ -37,7 +37,7 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                             content='Save'
                             primary
                             onClick={() =>
-                                onSave(supply._id, supplyName, totalQuantityNeeded)
+                                onSave(supply.supply_id, supplyName, totalQuantityNeeded)
                             }
                         />
                     </Table.Cell>
