@@ -40,15 +40,14 @@ class SupplyService {
             console.log(supply_id);
             console.log(teacher_token);
             console.log(updatedSupplyData);
-            return axios.patch(`${API_URL}/supplies/${supply_id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${teacher_token}`,
-                    },
-                    body: updatedSupplyData
-
-                }
-            );
+            return axios({
+                method: 'patch',
+                url: `${API_URL}/supplies/${supply_id}`,
+                headers: {
+                    Authorization: `Bearer ${teacher_token}`,
+                },
+                data: updatedSupplyData
+            });
         }
 }
 

@@ -67,13 +67,13 @@ function TeacherDashboardPage() {
         console.log(teacher_token);
         try {
             let response = await SupplyService.updateSupplyRecord(supply_id,teacher_token, supplyUpdate);
+            console.log(response);
             if (response.status === 200) {
-                let updatedSupply = response;
-                console.log(updatedSupply);   
-                // find updatedSupply in supplies, replace 
-                let supplyToUpdate = supplies.find(el => el.supply_id === supply_id);
-                supplyToUpdate = updatedSupply;
-                console.log(supplyToUpdate);
+                let updatedSupply = response.data;  
+                // find updatedSupply in supplies and update info
+                let supplyToUpdateIndex = supplies.findIndex(el => el.supply_id === supply_id);
+                supplies[supplyToUpdateIndex].item = updatedSupply.item;
+                supplies[supplyToUpdateIndex].totalQuantityNeeded = updatedSupply.totalQuantityNeeded;
                 setSupplies(supplies);
             }
         } catch (err) {
