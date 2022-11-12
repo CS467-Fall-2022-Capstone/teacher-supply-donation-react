@@ -15,6 +15,7 @@ class SupplyService {
     getSupplyRecord(teacher_id) {
         return axios.get(`${API_URL}/teachers/${teacher_id}/public`);
     }
+
     /**
      * Deletes a supply associated with a teacher
      * @param supply_id, @param teacher_token
@@ -30,6 +31,25 @@ class SupplyService {
             }
         );
     }
+        /**
+     * Updates a supply associated with a teacher
+     * Only the item or totalQuantityNeeded can be updated
+     * @param supply_id, @param teacher_token
+     */
+         updateSupplyRecord(supply_id, teacher_token, updatedSupplyData) {
+            console.log(supply_id);
+            console.log(teacher_token);
+            console.log(updatedSupplyData);
+            return axios.patch(`${API_URL}/supplies/${supply_id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${teacher_token}`,
+                    },
+                    body: updatedSupplyData
+
+                }
+            );
+        }
 }
 
 export default new SupplyService();
