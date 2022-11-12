@@ -14,12 +14,12 @@ function SupplyTable({
     onSubmit,
 }) {
     const [itemName, setItemName] = useState('');
-    const [totalNeeded, setTotalNeeded] = useState(0);
+    const [totalNeeded, setTotalQuantityNeeded] = useState(0);
 
     const handleSubmit = (item, qty) => {
         onSubmit(item, qty);
         setItemName('');
-        setTotalNeeded(0);
+        setTotalQuantityNeeded(0);
     };
 
     return (
@@ -69,7 +69,7 @@ function SupplyTable({
                                 type='number'
                                 min='0'
                                 onChange={(event) =>
-                                    setTotalNeeded(event.target.value)
+                                    setTotalQuantityNeeded(event.target.value)
                                 }
                             />
                         </Table.Cell>

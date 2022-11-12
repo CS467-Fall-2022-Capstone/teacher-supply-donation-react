@@ -3,54 +3,60 @@ import SupplyTable from '../../components/TeacherDashboard/SupplyTable.js';
 import MetricsCards from '../../components/TeacherDashboard/MetricsCards';
 import { Header } from 'semantic-ui-react';
 import { useAuth } from '../../services/AuthProvider';
+import SupplyService from '../../services/supply.service';
+import TeacherService from '../../services/teacher.service.js';
 
 function TeacherDashboardPage() {
     const { teacher } = useAuth();
+    const teacher_id = teacher.teacher_id;
+    const teacherName = teacher.name;
+    const teacher_token = teacher.token;
+    
     const [supplies, setSupplies] = useState([]);
+    const [school, setSchool] = useState('Enter your school');
+    const [message, setMessage] = useState('Enter your message');
     const [inEditMode, setInEditMode] = useState({
         status: false,
         supplyKey: null,
     });
     const [inAddMode, setInAddMode] = useState(false);
 
-    const loadSupplies = async () => {
-        // TODO: implement data fetch
-        // For Testing, delete once back-end is integrated
-        const testData = [
-            {
-                _id: 1,
-                item: 'Pencils',
-                totalQtyNeeded: 10,
-                qtyDonated: 5,
-            },
-            {
-                _id: 2,
-                item: 'Tissue Boxes',
-                totalQtyNeeded: 5,
-                qtyDonated: 1,
-            },
-            {
-                _id: 3,
-                item: 'Scissors',
-                totalQtyNeeded: 15,
-                qtyDonated: 0,
-            },
-        ];
-        setSupplies(testData);
-    };
-    // For Testing, delete once back-end is integrated
-    // const user = AuthService.getCurrentUser();
-    const teacherName = teacher ? teacher.name : 'John Doe';
-    const schoolName = 'BinaryCode High School';
-
-    const onDelete = async (id) => {
+    useEffect(() => {
+        const loadTeacherInfo = async () => {
+            try {
+                console.log('inside useEffect');
+                let response = await TeacherService.getTeacherRecord(teacher_id, teacher_token);
+                if (response.status === 200) {                    setSupplies(response.data.supplies);
+                    setSchool(response.data.teacher.school);
+                    setMessage(response.data.teacher.message);
+                }
+            } catch (err) {
+                console.log("Error response received from Donations API")
+                console.log(err);
+                throw err;
+            }
+        };
+        loadTeacherInfo();
+    }, []);
+    
+    const onDelete = async (s_id) => {
         // TODO: implement /DELETE supply
-        setSupplies(supplies.filter((supply) => supply._id !== id));
+        try {
+            let response = await SupplyService.deleteSupplyRecord(s_id,teacher_token);
+            if (response.status === 204) {
+                let newSupplies = supplies.filter(supply => supply.supply_id !== s_id);
+                setSupplies(newSupplies);
+            }
+        } catch (err) {
+            console.log("Error response received from Donations API")
+            console.log(err);
+            throw err;
+        }
+        
     };
 
     const onEdit = (supply) => {
         // TODO: implement edit
-        console.log(supply._id);
         setInEditMode({
             status: true,
             supplyKey: supply._id,
@@ -64,34 +70,32 @@ function TeacherDashboardPage() {
         console.log(supplyUpdate);
         onCancel();
         // update table with new values
-        loadSupplies();
+        //loadSupplies();
     };
 
-    const onSave = (id, item, qty) => {
+    const onSave = (supply_id, item, totalQuantityNeeded) => {
         const update = {
-            item: item,
-            totalQtyNeeded: qty,
+            item,
+            totalQuantityNeeded
         };
         console.log(update);
-        updateSupply(id, update);
+        updateSupply(supply_id, update);
     };
 
     const onAdd = () => {
         setInAddMode(true);
     };
 
-    const onSubmit = (itemName, qtyNeeded) => {
+    const onSubmit = (item, totalQuantityNeeded) => {
         // TODO: POST request to create Supply
         // use teacherId as param to create new Supply and push
         // the new supply to Teacher.supplies array
 
         // Test Data
-        const id = supplies.length;
         const newSupply = {
-            _id: id,
-            item: itemName,
-            totalQtyNeeded: qtyNeeded,
-            qtyDonated: 0,
+            item,
+            totalQuantityNeeded,
+            quantityDonated: 0,
         };
         onCancel(); // reset add mode
         setSupplies([...supplies, newSupply]);
@@ -105,17 +109,14 @@ function TeacherDashboardPage() {
         setInAddMode(false);
     };
 
-    useEffect(() => {
-        loadSupplies();
-    }, []);
-
     return (
         <>
             <div className='dashboardHeader'>
                 <Header size='huge' textAlign='center'>
                     <Header.Content>
                         Welcome {teacherName}
-                        <Header.Subheader>{schoolName}</Header.Subheader>
+                        <Header.Subheader>School: {school}</Header.Subheader>
+                        <Header.Subheader>Message to Donors: {message}</Header.Subheader>
                     </Header.Content>
                 </Header>
             </div>
