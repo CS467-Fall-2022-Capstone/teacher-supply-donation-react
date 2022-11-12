@@ -11,7 +11,6 @@ function TeacherDashboardPage() {
     const teacher_id = teacher.teacher_id;
     const teacherName = teacher.name;
     const teacher_token = teacher.token;
-    //console.log(teacher);
     
     const [supplies, setSupplies] = useState([]);
     const [school, setSchool] = useState('Enter your school');
@@ -27,9 +26,7 @@ function TeacherDashboardPage() {
             try {
                 console.log('inside useEffect');
                 let response = await TeacherService.getTeacherRecord(teacher_id, teacher_token);
-                if (response.status === 200) {
-                    //console.log("RECEIVED DATA: " + JSON.stringify(response.data));
-                    setSupplies(response.data.supplies);
+                if (response.status === 200) {                    setSupplies(response.data.supplies);
                     setSchool(response.data.teacher.school);
                     setMessage(response.data.teacher.message);
                 }
@@ -45,13 +42,9 @@ function TeacherDashboardPage() {
     const onDelete = async (s_id) => {
         // TODO: implement /DELETE supply
         try {
-            console.log(s_id);
-            console.log('inside useEffect');
             let response = await SupplyService.deleteSupplyRecord(s_id,teacher_token);
             if (response.status === 204) {
-                console.log("DELETE SUCCESSFULLY " + response.status);
                 let newSupplies = supplies.filter(supply => supply.supply_id !== s_id);
-                console.log(newSupplies);
                 setSupplies(newSupplies);
             }
         } catch (err) {
