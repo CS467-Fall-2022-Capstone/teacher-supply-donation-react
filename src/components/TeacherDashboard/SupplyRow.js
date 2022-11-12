@@ -5,7 +5,7 @@ import DeleteModal from './DeleteModal';
 
 function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
     const [supplyName, setSupplyName] = useState(supply.item);
-    const [qtyNeeded, setQtyNeeded] = useState(supply.totalQtyNeeded);
+    const [totalQuantityNeeded, setTotalQuantityNeeded] = useState(supply.totalQuantityNeeded);
     return (
         <>
             {inEditMode.status && inEditMode.supplyKey === supply._id ? (
@@ -23,21 +23,21 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                     <Table.Cell>
                         <Input
                             size='small'
-                            value={qtyNeeded}
+                            value={totalQuantityNeeded}
                             type='number'
                             min='0'
                             onChange={(event) =>
-                                setQtyNeeded(event.target.value)
+                                setTotalQuantityNeeded(event.target.value)
                             }
                         />
                     </Table.Cell>
-                    <Table.Cell>{supply.qtyDonated}</Table.Cell>
+                    <Table.Cell>{supply.quantityDonated}</Table.Cell>
                     <Table.Cell textAlign='center'>
                         <Button
                             content='Save'
                             primary
                             onClick={() =>
-                                onSave(supply._id, supplyName, qtyNeeded)
+                                onSave(supply._id, supplyName, totalQuantityNeeded)
                             }
                         />
                     </Table.Cell>
@@ -48,8 +48,8 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
             ) : (
                 <Table.Row>
                     <Table.Cell>{supply.item}</Table.Cell>
-                    <Table.Cell>{supply.totalQtyNeeded}</Table.Cell>
-                    <Table.Cell>{supply.qtyDonated}</Table.Cell>
+                    <Table.Cell>{supply.totalQuantityNeeded}</Table.Cell>
+                    <Table.Cell>{supply.quantityDonated}</Table.Cell>
                     <Table.Cell textAlign='center'>
                         <FaEdit as='button' onClick={() => onEdit(supply)} />
                     </Table.Cell>
