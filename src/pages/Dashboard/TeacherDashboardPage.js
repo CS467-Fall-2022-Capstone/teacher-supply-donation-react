@@ -24,7 +24,6 @@ function TeacherDashboardPage() {
     useEffect(() => {
         const loadTeacherInfo = async () => {
             try {
-                console.log('inside useEffect');
                 let response = await TeacherService.getTeacherRecord(teacher_id, teacher_token);
                 if (response.status === 200) {                    setSupplies(response.data.supplies);
                     setSchool(response.data.teacher.school);
@@ -93,19 +92,27 @@ function TeacherDashboardPage() {
         setInAddMode(true);
     };
 
-    const onSubmit = (item, totalQuantityNeeded) => {
-        // TODO: POST request to create Supply
-        // use teacherId as param to create new Supply and push
-        // the new supply to Teacher.supplies array
-
-        // Test Data
+    const onSubmit = async (item, totalQuantityNeeded) => {
         const newSupply = {
             item,
             totalQuantityNeeded,
             quantityDonated: 0,
         };
+
+        try {
+            let response = await SupplyService.createSupplyRecord(teacher_token, newSupply);
+            if (response.status === 201) {
+                let newSupply = response.data;  
+                setSupplies([...supplies, newSupply]);
+            }
+        } catch (err) {
+            console.log("Error response received from Donations API")
+            console.log(err);
+            throw err;
+        }
         onCancel(); // reset add mode
-        setSupplies([...supplies, newSupply]);
+
+
     };
 
     const onCancel = () => {

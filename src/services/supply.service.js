@@ -17,6 +17,20 @@ class SupplyService {
     }
 
     /**
+     * Creates a supply associated with a teacher
+     * @param teacher_token
+     */
+     createSupplyRecord(teacher_token, newSupply) {
+        return axios({
+            method: 'post',
+            url: `${API_URL}/supplies`,
+            headers: {
+                Authorization: `Bearer ${teacher_token}`,
+            },
+            data: newSupply
+        });
+    }
+    /**
      * Deletes a supply associated with a teacher
      * @param supply_id, @param teacher_token
      */
@@ -31,15 +45,12 @@ class SupplyService {
             }
         );
     }
-        /**
+    /**
      * Updates a supply associated with a teacher
      * Only the item or totalQuantityNeeded can be updated
-     * @param supply_id, @param teacher_token
+     * @param supply_id, @param teacher_token, @param updatedSupplyData
      */
          updateSupplyRecord(supply_id, teacher_token, updatedSupplyData) {
-            console.log(supply_id);
-            console.log(teacher_token);
-            console.log(updatedSupplyData);
             return axios({
                 method: 'patch',
                 url: `${API_URL}/supplies/${supply_id}`,
