@@ -40,7 +40,7 @@ function TeacherDashboardPage() {
             }
         };
         loadTeacherInfo();
-    });
+    }, []);
     
     const onDelete = async (s_id) => {
         // TODO: implement /DELETE supply
@@ -48,9 +48,10 @@ function TeacherDashboardPage() {
             console.log(s_id);
             console.log('inside useEffect');
             let response = await SupplyService.deleteSupplyRecord(s_id,teacher_token);
-            if (response.status === 200) {
+            if (response.status === 204) {
                 console.log("DELETE SUCCESSFULLY " + response.status);
-                let newSupplies = supplies.filter((s_id) => supplies.supply_id !== s_id);
+                let newSupplies = supplies.filter(supply => supply.supply_id !== s_id);
+                console.log(newSupplies);
                 setSupplies(newSupplies);
             }
         } catch (err) {
