@@ -24,7 +24,6 @@ function TeacherDashboardPage() {
     useEffect(() => {
         const loadTeacherInfo = async () => {
             try {
-                console.log('inside useEffect');
                 let response = await TeacherService.getTeacherRecord(teacher_id, teacher_token);
                 if (response.status === 200) {                    setSupplies(response.data.supplies);
                     setSchool(response.data.teacher.school);
@@ -39,12 +38,11 @@ function TeacherDashboardPage() {
         loadTeacherInfo();
     }, []);
     
-    const onDelete = async (s_id) => {
-        // TODO: implement /DELETE supply
+    const onDelete = async (supply_id) => {
         try {
-            let response = await SupplyService.deleteSupplyRecord(s_id,teacher_token);
+            let response = await SupplyService.deleteSupplyRecord(supply_id,teacher_token);
             if (response.status === 204) {
-                let newSupplies = supplies.filter(supply => supply.supply_id !== s_id);
+                let newSupplies = supplies.filter(supply => supply.supply_id !== supply_id);
                 setSupplies(newSupplies);
             }
         } catch (err) {
@@ -55,50 +53,66 @@ function TeacherDashboardPage() {
         
     };
 
-    const onEdit = (supply) => {
-        // TODO: implement edit
+    const onEdit = async(supply) => {
         setInEditMode({
             status: true,
-            supplyKey: supply._id,
+            supplyKey: supply.supply_id,
         });
     };
 
-    const updateSupply = async (id, supplyUpdate) => {
-        // TODO: implement fetch PATCH
-        // reset edit mode
-        console.log(id);
-        console.log(supplyUpdate);
+    const updateSupply = async (supply_id, supplyUpdate) => {
+        try {
+            let response = await SupplyService.updateSupplyRecord(supply_id,teacher_token, supplyUpdate);
+            if (response.status === 200) {
+                let updatedSupply = response.data;  
+                // find updatedSupply in supplies and update info
+                let supplyToUpdateIndex = supplies.findIndex(el => el.supply_id === supply_id);
+                supplies[supplyToUpdateIndex].item = updatedSupply.item;
+                supplies[supplyToUpdateIndex].totalQuantityNeeded = updatedSupply.totalQuantityNeeded;
+                setSupplies(supplies);
+            }
+        } catch (err) {
+            console.log("Error response received from Donations API")
+            console.log(err);
+            throw err;
+        }
         onCancel();
-        // update table with new values
-        //loadSupplies();
     };
 
     const onSave = (supply_id, item, totalQuantityNeeded) => {
-        const update = {
+        const supplyUpdate = {
             item,
             totalQuantityNeeded
         };
-        console.log(update);
-        updateSupply(supply_id, update);
+        console.log(supplyUpdate);
+        updateSupply(supply_id, supplyUpdate);
     };
 
     const onAdd = () => {
         setInAddMode(true);
     };
 
-    const onSubmit = (item, totalQuantityNeeded) => {
-        // TODO: POST request to create Supply
-        // use teacherId as param to create new Supply and push
-        // the new supply to Teacher.supplies array
-
-        // Test Data
+    const onSubmit = async (item, totalQuantityNeeded) => {
         const newSupply = {
             item,
             totalQuantityNeeded,
             quantityDonated: 0,
         };
+
+        try {
+            let response = await SupplyService.createSupplyRecord(teacher_token, newSupply);
+            if (response.status === 201) {
+                let newSupply = response.data;  
+                setSupplies([...supplies, newSupply]);
+            }
+        } catch (err) {
+            console.log("Error response received from Donations API")
+            console.log(err);
+            throw err;
+        }
         onCancel(); // reset add mode
-        setSupplies([...supplies, newSupply]);
+
+
     };
 
     const onCancel = () => {
