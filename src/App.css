@@ -25,6 +25,11 @@
     margin: 50px auto;
 }
 
+/* Donation Page */
+.buttonRow {
+    margin-top: 50px;
+}
+
 /*  */
 .photo {
     height: 14rem;
