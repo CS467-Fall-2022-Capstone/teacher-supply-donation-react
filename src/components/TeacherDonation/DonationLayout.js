@@ -73,7 +73,7 @@ function DonationLayout() {
                     </Menu.Item>
                     {recordRetrieved
                         ? <Menu.Item link as={Link} to='/donations' name='main'>
-                            {name}'s Classroom Page
+                            {name}'s Classroom
                         </Menu.Item>
                         : <Menu.Item link as={Link} to='/donations' name='main'>
                             No Classroom Page Found

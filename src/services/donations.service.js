@@ -16,6 +16,10 @@ class DonationService {
     getTeacherPublicRecord(teacher_id) {
         return axios.get(API_URL + '/teachers/' + teacher_id + '/public');
     }
+
+    updateStudentDonations(student_id) {
+        return axios.patch(API_URL + '/students/' + student_id + '/donations');
+    }
 }
 
 export default new DonationService();
