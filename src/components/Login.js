@@ -62,7 +62,7 @@ function Login() {
 
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
-            const teacher = AuthService.googleLogin(tokenResponse);
+            const teacher = await AuthService.googleLogin(tokenResponse);
             if (!teacher) return; // teacher is null if not found
             logIn(teacher);
         },
