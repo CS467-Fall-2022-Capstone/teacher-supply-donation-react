@@ -47,6 +47,8 @@ function DonationLayout() {
                     setName("NA");
                     //setEmail("NA");
                     setSupplies(testSupplyData)
+                    console.log("UNSUCCESSFUL REQUEST. Status code: " + JSON.stringify(response.status));
+        
                 }
             } catch (err) {
                 setRecordRetrieved(false);

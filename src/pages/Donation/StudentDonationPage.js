@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
-import { Header, Button, Container, Message, Divider, Form } from 'semantic-ui-react';
+import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 //import DonationModal from '../../components/TeacherDonation/DonationModal';
 
 
@@ -10,17 +10,31 @@ function StudentDonationPage() {
     const [name, school, message, supplies, teacher_id, recordRetrieved] =
         useOutletContext();
     /*
+    const [inEditMode, setInEditMode] = useState({
+
+    })
+
+    */
+   //For development - Start the object; once student's
+   //prior donations are available, update it with those from 
+   // the start
+    const [updates, setUpdates] = useState({});
+
+    const onInputChange = (supply_id, count) => {
+        const temp = updates;
+        temp[supply_id] = count;
+        setUpdates(temp);
+        console.log("Updates object is: ", JSON.stringify(updates));
+    }
+    /*
         const [donationsArr, setDonationsArr] = useState([]);
         const [newDonation, setNewDonation] = useState({
             student_id: '',
             quantityDonated: '',
         })
 
-        const [formData, setFormData] = useState({
-            email: '',
-            password: '',
-        });
-
+*/
+/*
         const handleInputChange = (event) => {
             const { name, value } = event.target;
     
@@ -33,7 +47,8 @@ function StudentDonationPage() {
                 return nextFormData;
             });
         };
-
+        */
+    /*
         const handleSubmit = (event) => {
             event.preventDefault();
             setDonationsArr([...donationsArr, newDonation])
@@ -76,30 +91,30 @@ function StudentDonationPage() {
             )}
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
-            <Form>
-                <SupplyTableDonate supplies={supplies} />
-                {recordRetrieved ? (
-                    <Container className='buttonRow' textAlign='center'>
-                        <Button>
-                            Submit your donations
-                        </Button>
-                    </Container>
 
-                ) : (
-                    <Container className='buttonRow' textAlign='center'>
-                        <Button
-                            type='submit'
-                            as={Link}
-                            to='/'
-                            color='blue'
-                            size='huge'
-                            style={{ marginBottom: '1em' }}
-                        >
-                            Return Home
-                        </Button>
-                    </Container>
-                )}
-            </Form>
+            <SupplyTableDonate supplies={supplies} onInputChange={onInputChange} />
+            {recordRetrieved ? (
+                <Container className='buttonRow' textAlign='center'>
+                    <Button>
+                        Submit your donations
+                    </Button>
+                </Container>
+
+            ) : (
+                <Container className='buttonRow' textAlign='center'>
+                    <Button
+                        type='submit'
+                        as={Link}
+                        to='/'
+                        color='blue'
+                        size='huge'
+                        style={{ marginBottom: '1em' }}
+                    >
+                        Return Home
+                    </Button>
+                </Container>
+            )}
+
         </>
     );
 }

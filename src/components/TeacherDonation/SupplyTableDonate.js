@@ -3,7 +3,7 @@ import { Table } from 'semantic-ui-react';
 import SupplyRowDonate from './SupplyRowDonate';
 
 function SupplyTableDonate({
-    supplies
+    supplies, onInputChange
 }) {
     const [itemName, setItemName] = useState('');
     const [totalNeeded, setTotalNeeded] = useState(0);
@@ -23,6 +23,7 @@ function SupplyTableDonate({
                     <SupplyRowDonate
                         key={i}
                         supply={supply}
+                        onInputChange={onInputChange}
                     />
                 ))}
             </Table.Body>
