@@ -1,59 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SupplyTable from '../../components/TeacherDashboard/SupplyTable.js';
 import MetricsCards from '../../components/TeacherDashboard/MetricsCards';
 import { Header } from 'semantic-ui-react';
-import { useAuth } from '../../services/AuthProvider';
+import { useOutletContext } from 'react-router-dom';
 import SupplyService from '../../services/supply.service';
-import TeacherService from '../../services/teacher.service.js';
 
 function TeacherDashboardPage() {
-    const { teacher } = useAuth();
-    const teacher_id = teacher.teacher_id;
-    const teacherName = teacher.name;
-    const teacher_token = teacher.token;
-    
-    const [supplies, setSupplies] = useState([]);
-    const [school, setSchool] = useState('Enter your school');
-    const [message, setMessage] = useState('Enter your message');
+    const { teacher, supplies, setSupplies, students, metrics } = useOutletContext();
     const [inEditMode, setInEditMode] = useState({
         status: false,
         supplyKey: null,
     });
     const [inAddMode, setInAddMode] = useState(false);
 
-    useEffect(() => {
-        const loadTeacherInfo = async () => {
-            try {
-                let response = await TeacherService.getTeacherRecord(teacher_id, teacher_token);
-                if (response.status === 200) {                    setSupplies(response.data.supplies);
-                    setSchool(response.data.teacher.school);
-                    setMessage(response.data.teacher.message);
-                }
-            } catch (err) {
-                console.log("Error response received from Donations API")
-                console.log(err);
-                throw err;
-            }
-        };
-        loadTeacherInfo();
-    }, []);
-    
     const onDelete = async (supply_id) => {
         try {
-            let response = await SupplyService.deleteSupplyRecord(supply_id,teacher_token);
+            let response = await SupplyService.deleteSupplyRecord(
+                supply_id,
+                teacher.token
+            );
             if (response.status === 204) {
-                let newSupplies = supplies.filter(supply => supply.supply_id !== supply_id);
+                let newSupplies = supplies.filter(
+                    (supply) => supply.supply_id !== supply_id
+                );
                 setSupplies(newSupplies);
             }
         } catch (err) {
-            console.log("Error response received from Donations API")
+            console.log('Error response received from Donations API');
             console.log(err);
             throw err;
         }
-        
     };
 
-    const onEdit = async(supply) => {
+    const onEdit = async (supply) => {
         setInEditMode({
             status: true,
             supplyKey: supply.supply_id,
@@ -62,17 +41,24 @@ function TeacherDashboardPage() {
 
     const updateSupply = async (supply_id, supplyUpdate) => {
         try {
-            let response = await SupplyService.updateSupplyRecord(supply_id,teacher_token, supplyUpdate);
+            let response = await SupplyService.updateSupplyRecord(
+                supply_id,
+                teacher.token,
+                supplyUpdate
+            );
             if (response.status === 200) {
-                let updatedSupply = response.data;  
+                let updatedSupply = response.data;
                 // find updatedSupply in supplies and update info
-                let supplyToUpdateIndex = supplies.findIndex(el => el.supply_id === supply_id);
+                let supplyToUpdateIndex = supplies.findIndex(
+                    (el) => el.supply_id === supply_id
+                );
                 supplies[supplyToUpdateIndex].item = updatedSupply.item;
-                supplies[supplyToUpdateIndex].totalQuantityNeeded = updatedSupply.totalQuantityNeeded;
+                supplies[supplyToUpdateIndex].totalQuantityNeeded =
+                    updatedSupply.totalQuantityNeeded;
                 setSupplies(supplies);
             }
         } catch (err) {
-            console.log("Error response received from Donations API")
+            console.log('Error response received from Donations API');
             console.log(err);
             throw err;
         }
@@ -82,7 +68,7 @@ function TeacherDashboardPage() {
     const onSave = (supply_id, item, totalQuantityNeeded) => {
         const supplyUpdate = {
             item,
-            totalQuantityNeeded
+            totalQuantityNeeded,
         };
         console.log(supplyUpdate);
         updateSupply(supply_id, supplyUpdate);
@@ -100,19 +86,20 @@ function TeacherDashboardPage() {
         };
 
         try {
-            let response = await SupplyService.createSupplyRecord(teacher_token, newSupply);
+            let response = await SupplyService.createSupplyRecord(
+                teacher.token,
+                newSupply
+            );
             if (response.status === 201) {
-                let newSupply = response.data;  
+                let newSupply = response.data;
                 setSupplies([...supplies, newSupply]);
             }
         } catch (err) {
-            console.log("Error response received from Donations API")
+            console.log('Error response received from Donations API');
             console.log(err);
             throw err;
         }
         onCancel(); // reset add mode
-
-
     };
 
     const onCancel = () => {
@@ -128,14 +115,27 @@ function TeacherDashboardPage() {
             <div className='dashboardHeader'>
                 <Header size='huge' textAlign='center'>
                     <Header.Content>
-                        Welcome {teacherName}
-                        <Header.Subheader>School: {school}</Header.Subheader>
-                        <Header.Subheader>Message to Donors: {message}</Header.Subheader>
+                        Welcome {teacher.name}
+                        {teacher.school && (
+                            <Header.Subheader>
+                                School: {teacher.school}
+                            </Header.Subheader>
+                        )}
+                        {teacher.message && (
+                            <Header.Subheader>
+                                Message to Donors: {teacher.message}
+                            </Header.Subheader>
+                        )}
                     </Header.Content>
                 </Header>
             </div>
             <div className='metrics'>
-                <MetricsCards />
+                <MetricsCards
+                    numStudents={students.length}
+                    numSuppliesWithDonation={metrics.supplyWithDonations}
+                    numSupplies={supplies.length}
+                    totalSumDonations={metrics.sumAllDonations}
+                />
             </div>
 
             <SupplyTable
