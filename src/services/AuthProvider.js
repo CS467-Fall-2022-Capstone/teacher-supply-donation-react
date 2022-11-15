@@ -7,7 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [teacher, setTeacher] = useLocalStorage('teacher', null);
     // Set authenticated user
-    const logIn = async (data) => {
+    const logIn = (data) => {
         setTeacher(data);
         return <Navigate to='/teachers/dashboard' />;
     };
@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
             teacher,
             logIn,
             logOut,
+            setTeacher,
         }),
         [teacher]
     );
