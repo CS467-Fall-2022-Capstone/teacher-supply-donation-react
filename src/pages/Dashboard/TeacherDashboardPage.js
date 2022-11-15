@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import SupplyTable from '../../components/TeacherDashboard/SupplyTable.js';
 import MetricsCards from '../../components/TeacherDashboard/MetricsCards';
 import { Header } from 'semantic-ui-react';
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext } from 'react-router-dom';
 import SupplyService from '../../services/supply.service';
 
-
 function TeacherDashboardPage() {
-    const {teacher, supplies, setSupplies, students} = useOutletContext();
+    const { teacher, supplies, setSupplies, students, metrics } = useOutletContext();
     const [inEditMode, setInEditMode] = useState({
         status: false,
         supplyKey: null,
@@ -111,8 +110,6 @@ function TeacherDashboardPage() {
         setInAddMode(false);
     };
 
-    
-
     return (
         <>
             <div className='dashboardHeader'>
@@ -133,7 +130,12 @@ function TeacherDashboardPage() {
                 </Header>
             </div>
             <div className='metrics'>
-                <MetricsCards numStudents={students.length} />
+                <MetricsCards
+                    numStudents={students.length}
+                    numSuppliesWithDonation={metrics.supplyWithDonations}
+                    numSupplies={supplies.length}
+                    totalSumDonations={metrics.sumAllDonations}
+                />
             </div>
 
             <SupplyTable

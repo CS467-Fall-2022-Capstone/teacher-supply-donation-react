@@ -8,6 +8,7 @@ function DashboardLayout() {
     const { teacher, setTeacher, logOut } = useAuth();
     const [supplies, setSupplies] = useState([]);
     const [students, setStudents] = useState([]);
+    const [metrics, SetMetrics] = useState({});
 
     useEffect(() => {
         async function loadTeacherInfo() {
@@ -18,10 +19,10 @@ function DashboardLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        console.log(response);
+                        setSupplies(response.data.supplies);
+                        setStudents(response.data.students);
+                        SetMetrics(response.data.metrics)
                     }
-                    setSupplies(response.data.supplies);
-                    setStudents(response.data.students);
                 }
             } catch (err) {
                 console.error(err);
@@ -97,6 +98,7 @@ function DashboardLayout() {
                             setStudents,
                             teacher,
                             setTeacher,
+                            metrics
                         }}
                     />
                 </div>
