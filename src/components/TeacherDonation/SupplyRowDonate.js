@@ -1,34 +1,37 @@
-import React, { useState } from 'react';
-import { Table, Input, Form } from 'semantic-ui-react';
+//import { updateSelectionOnFocus } from '@testing-library/user-event/dist/types/event/selection';
+import React, { useState, useEffect } from 'react';
+import { Table, Input } from 'semantic-ui-react';
 
-function SupplyRowDonate({ supply, onInputChange }) {
+function SupplyRowDonate({ supply, setUpdates, updates }) {
 
     let dif = supply.totalQuantityNeeded - supply.quantityDonated
 
     //set count to the prior donations for this item (defaults to 0)
     const [count, setCount] = useState(0);
     const [max] = useState(dif >= 0 ? dif : 0);
-    const [donations] = useState(String(count));
 
-    const onCountChange = (supply_id, newValue) => {
-        const newCount = newValue;
-        setCount(newCount);
-        console.log ("Count is:" + count);
-        onInputChange(supply_id, count);
+    useEffect(() => {
+        console.log("Current count value is: " + count);
+    }, [count]);
+
+    useEffect(() => {
+        console.log("Current updates object is: " + JSON.stringify(updates))
+    }, [updates]);
+
+    const onChange = (event) => {
+
+        let curVal = event.target.value;
+        //ensure that only values between 0 and max are accepted
+        if (curVal === "") {
+            curVal = 0;
+        }
+        if (curVal > max) {
+            curVal = max;
+        }
+
+        setCount(curVal);
+        setUpdates({ ...updates, [event.target.name]: curVal });
     }
-
-    const handleChange = (event) => {
-        const newCount = event.target.value;
-        const name = event.target.name;
-        onCountChange(supply.supply_id, newCount)
-        console.log("Input value is: " + count);
-    }
-
-    //const [supplyName, setSupplyName] = useState(supply.item);
-    //const [qtyNeeded, setQtyNeeded] = useState(supply.totalQtyNeeded);
-    const [supply_id, setSupplyId] = useState(supply.supply_id);
-    const [quantityDonated, setQuantityDonated] = useState(String(count));
-
 
     return (
         <>
@@ -39,12 +42,12 @@ function SupplyRowDonate({ supply, onInputChange }) {
                 <Table.Cell textAlign='left'>
                     <Input
                         type="number"
-                        placeholder={donations}
+                        placeholder={count}
                         min='0'
                         max={max}
-                        value={count}
-                        name="quantityDonated"
-                        onChange={handleChange}
+                        value={count > 0  ? count : ""}
+                        name={supply.supply_id}
+                        onChange={onChange}
                     />
                 </Table.Cell>
             </Table.Row>

@@ -11,50 +11,20 @@ function StudentDonationPage() {
         useOutletContext();
     /*
     const [inEditMode, setInEditMode] = useState({
-
     })
 
     */
-   //For development - Start the object; once student's
-   //prior donations are available, update it with those from 
-   // the start
+    //For development - Start the object; once student's
+    //prior donations are available, update it with those from 
+    // the start
     const [updates, setUpdates] = useState({});
 
-    const onInputChange = (supply_id, count) => {
-        const temp = updates;
-        temp[supply_id] = count;
-        setUpdates(temp);
-        console.log("Updates object is: ", JSON.stringify(updates));
-    }
     /*
-        const [donationsArr, setDonationsArr] = useState([]);
-        const [newDonation, setNewDonation] = useState({
-            student_id: '',
-            quantityDonated: '',
-        })
-
-*/
-/*
-        const handleInputChange = (event) => {
-            const { name, value } = event.target;
-    
-            setFormData((currentFormData) => {
-                const nextFormData = {
-                    ...currentFormData,
-                    [name]: value,
-                };
-                console.log(nextFormData);
-                return nextFormData;
-            });
-        };
-        */
-    /*
-        const handleSubmit = (event) => {
-            event.preventDefault();
-            setDonationsArr([...donationsArr, newDonation])
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setDonationsArr([...donationsArr, newDonation])
         }
-        */
+    */
 
     return (
         <>
@@ -92,7 +62,7 @@ function StudentDonationPage() {
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
 
-            <SupplyTableDonate supplies={supplies} onInputChange={onInputChange} />
+            <SupplyTableDonate supplies={supplies} setUpdates={setUpdates} updates={updates} />
             {recordRetrieved ? (
                 <Container className='buttonRow' textAlign='center'>
                     <Button>
