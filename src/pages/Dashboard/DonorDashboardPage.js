@@ -10,7 +10,6 @@ function DonorDashboardPage() {
     const teacher_token = teacher.token;
 
     const [students, setStudents] = useState([]);
-    const school = 'cool school';
 
     useEffect(() => {
         const loadStudentInfo = async () => {
@@ -52,7 +51,6 @@ function DonorDashboardPage() {
                 <Header size='huge' textAlign='center'>
                     <Header.Content>
                         Donors/Students List
-                        <Header.Subheader>{school}</Header.Subheader>
                     </Header.Content>
                 </Header>
             </div>
