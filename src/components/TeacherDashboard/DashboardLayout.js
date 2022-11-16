@@ -13,7 +13,7 @@ function DashboardLayout() {
     useEffect(() => {
         async function loadTeacherInfo() {
             try {
-                let response = await TeacherService.getTeacherRecord(
+                const response = await TeacherService.getTeacherRecord(
                     teacher.teacher_id,
                     teacher.token
                 );
@@ -21,7 +21,7 @@ function DashboardLayout() {
                     if (!ignore) {
                         setSupplies(response.data.supplies);
                         setStudents(response.data.students);
-                        SetMetrics(response.data.metrics)
+                        SetMetrics(response.data.metrics);
                     }
                 }
             } catch (err) {
@@ -34,7 +34,7 @@ function DashboardLayout() {
             // cleanup code to ensure no race conditions
             ignore = true;
         };
-        // call useEffect on re-render if there are any changes to teacher, supplies, or students
+        // call useEffect on re-render if there are any changes to teacher
     }, [teacher]);
 
     if (!teacher) {
@@ -98,7 +98,7 @@ function DashboardLayout() {
                             setStudents,
                             teacher,
                             setTeacher,
-                            metrics
+                            metrics,
                         }}
                     />
                 </div>

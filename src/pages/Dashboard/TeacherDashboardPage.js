@@ -6,7 +6,8 @@ import { useOutletContext } from 'react-router-dom';
 import SupplyService from '../../services/supply.service';
 
 function TeacherDashboardPage() {
-    const { teacher, supplies, setSupplies, students, metrics } = useOutletContext();
+    const { teacher, supplies, setSupplies, students, metrics } =
+        useOutletContext();
     const [inEditMode, setInEditMode] = useState({
         status: false,
         supplyKey: null,
@@ -15,13 +16,13 @@ function TeacherDashboardPage() {
 
     const onDelete = async (supply_id) => {
         try {
-            let response = await SupplyService.deleteSupplyRecord(
+            const response = await SupplyService.deleteSupplyRecord(
                 supply_id,
                 teacher.token
             );
             if (response.status === 204) {
-                let newSupplies = supplies.filter(
-                    (supply) => supply.supply_id !== supply_id
+                const newSupplies = supplies.filter(
+                    (supply) => supply._id !== supply_id
                 );
                 setSupplies(newSupplies);
             }
@@ -35,7 +36,7 @@ function TeacherDashboardPage() {
     const onEdit = async (supply) => {
         setInEditMode({
             status: true,
-            supplyKey: supply.supply_id,
+            supplyKey: supply._id,
         });
     };
 
@@ -50,7 +51,7 @@ function TeacherDashboardPage() {
                 let updatedSupply = response.data;
                 // find updatedSupply in supplies and update info
                 let supplyToUpdateIndex = supplies.findIndex(
-                    (el) => el.supply_id === supply_id
+                    (el) => el._id === supply_id
                 );
                 supplies[supplyToUpdateIndex].item = updatedSupply.item;
                 supplies[supplyToUpdateIndex].totalQuantityNeeded =
@@ -82,24 +83,8 @@ function TeacherDashboardPage() {
         const newSupply = {
             item,
             totalQuantityNeeded,
-            quantityDonated: 0,
         };
-
-        try {
-            let response = await SupplyService.createSupplyRecord(
-                teacher.token,
-                newSupply
-            );
-            if (response.status === 201) {
-                let newSupply = response.data;
-                setSupplies([...supplies, newSupply]);
-            }
-        } catch (err) {
-            console.log('Error response received from Donations API');
-            console.log(err);
-            throw err;
-        }
-        onCancel(); // reset add mode
+        return await SupplyService.createSupplyRecord(teacher.token, newSupply);
     };
 
     const onCancel = () => {
@@ -140,6 +125,7 @@ function TeacherDashboardPage() {
 
             <SupplyTable
                 supplies={supplies}
+                setSupplies={setSupplies}
                 inEditMode={inEditMode}
                 inAddMode={inAddMode}
                 onDelete={onDelete}
