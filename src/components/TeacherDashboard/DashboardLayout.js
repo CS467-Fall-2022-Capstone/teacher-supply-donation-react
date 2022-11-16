@@ -19,6 +19,7 @@ function DashboardLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
+                        console.log(response.data);
                         setSupplies(response.data.supplies);
                         setStudents(response.data.students);
                         SetMetrics(response.data.metrics);

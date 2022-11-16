@@ -27,23 +27,23 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                             size='small'
                             value={totalQuantityNeeded}
                             type='number'
-                            min='0'
+                            min={supply.totalQuantityDonated}
                             onChange={(event) =>
                                 setTotalQuantityNeeded(event.target.value)
                             }
                         />
                     </Table.Cell>
-                    <Table.Cell>{supply.totalQuantityDonated || 0}</Table.Cell>
+                    <Table.Cell>{supply.totalQuantityDonated}</Table.Cell>
                     <Table.Cell textAlign='center'>
                         <Button
+                            disabled={totalQuantityNeeded < supply.totalQuantityDonated}
                             content='Save'
                             primary
                             onClick={() =>
-                                onSave(
-                                    supply._id,
+                                onSave(supply, {
                                     supplyName,
-                                    totalQuantityNeeded
-                                )
+                                    totalQuantityNeeded,
+                                })
                             }
                         />
                     </Table.Cell>
@@ -55,7 +55,7 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                 <Table.Row>
                     <Table.Cell>{supply.item}</Table.Cell>
                     <Table.Cell>{supply.totalQuantityNeeded}</Table.Cell>
-                    <Table.Cell>{supply.totalQuantityDonated || 0}</Table.Cell>
+                    <Table.Cell>{supply.totalQuantityDonated}</Table.Cell>
                     <Table.Cell textAlign='center'>
                         <FaEdit as='button' onClick={() => onEdit(supply)} />
                     </Table.Cell>

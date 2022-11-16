@@ -22,6 +22,7 @@ function SupplyTable({
             const response = await onSubmit(item, qty);
             if (response.status === 201) {
                 const newSupply = response.data;
+                newSupply.totalQuantityDonated = 0;
                 setSupplies([...supplies, newSupply]);
             }
         } catch (err) {

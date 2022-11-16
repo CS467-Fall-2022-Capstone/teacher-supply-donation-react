@@ -40,18 +40,19 @@ function TeacherDashboardPage() {
         });
     };
 
-    const updateSupply = async (supply_id, supplyUpdate) => {
+    const updateSupply = async (supply, supplyUpdate) => {
         try {
             let response = await SupplyService.updateSupplyRecord(
-                supply_id,
+                supply._id,
                 teacher.token,
                 supplyUpdate
             );
             if (response.status === 200) {
                 let updatedSupply = response.data;
+                updatedSupply.totalQtyDonated = supply.totalQtyDonated
                 // find updatedSupply in supplies and update info
                 let supplyToUpdateIndex = supplies.findIndex(
-                    (el) => el._id === supply_id
+                    (el) => el._id === supply._id
                 );
                 supplies[supplyToUpdateIndex].item = updatedSupply.item;
                 supplies[supplyToUpdateIndex].totalQuantityNeeded =
@@ -66,13 +67,19 @@ function TeacherDashboardPage() {
         onCancel();
     };
 
-    const onSave = (supply_id, item, totalQuantityNeeded) => {
-        const supplyUpdate = {
-            item,
-            totalQuantityNeeded,
-        };
-        console.log(supplyUpdate);
-        updateSupply(supply_id, supplyUpdate);
+    const onSave = (supply, updates) => {
+        if (updates.totalQuantityNeeded < supply.totalQtyDonated) {
+            // prevent request from even being made
+            alert('Quantity needed cannot be less than number donated!')
+        } else {
+            const supplyUpdate = { totalQuantityNeeded: updates.totalQuantityNeeded }
+            if (supply.item !== updates.supplyName) {
+                // only update item name if the value changed
+                supplyUpdate.item = updates.supplyName
+            }
+            console.log(supplyUpdate);
+            updateSupply(supply, supplyUpdate);
+        }
     };
 
     const onAdd = () => {
