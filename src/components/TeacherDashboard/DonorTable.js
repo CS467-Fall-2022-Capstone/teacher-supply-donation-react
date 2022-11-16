@@ -9,7 +9,7 @@ function DonorTable({ students }) {
                 <Table.Row>
                     <Table.HeaderCell>First Name</Table.HeaderCell>
                     <Table.HeaderCell>Last Name</Table.HeaderCell>
-                    <Table.HeaderCell>Donation ID</Table.HeaderCell>
+                    <Table.HeaderCell>Student ID</Table.HeaderCell>
                     <Table.HeaderCell>Supplies Donated</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>

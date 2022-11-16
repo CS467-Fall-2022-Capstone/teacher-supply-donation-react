@@ -9,7 +9,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 class SupplyService {
     /**
      * Retrieves an array of supplies associated with a teacher
-     * @param {*} teacher_id
+     * @param teacher_id
      * @returns array of supply records
      */
     getSupplyRecord(teacher_id) {
