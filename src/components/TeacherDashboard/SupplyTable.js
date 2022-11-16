@@ -4,6 +4,7 @@ import SupplyRow from './SupplyRow';
 
 function SupplyTable({
     supplies,
+    setSupplies,
     inEditMode,
     inAddMode,
     onDelete,
@@ -16,10 +17,24 @@ function SupplyTable({
     const [itemName, setItemName] = useState('');
     const [totalNeeded, setTotalQuantityNeeded] = useState(0);
 
-    const handleSubmit = (item, qty) => {
-        onSubmit(item, qty);
-        setItemName('');
-        setTotalQuantityNeeded(0);
+    const handleSubmit = async (item, qty) => {
+        try {
+            const response = await onSubmit(item, qty);
+            if (response.status === 201) {
+                const newSupply = response.data;
+                newSupply.totalQuantityDonated = 0;
+                setSupplies([...supplies, newSupply]);
+            }
+        } catch (err) {
+            console.log('Error response received from Donations API');
+            console.log(err);
+            throw err;
+        } finally {
+            // always executes after try {} or catch {}
+            setItemName('');
+            setTotalQuantityNeeded(0);
+            onCancel(); // reset add mode
+        }
     };
 
     return (
@@ -117,7 +132,7 @@ function SupplyTable({
                                 labelPosition='left'
                                 primary
                                 size='small'
-                                onClick={onAdd}
+                                onClick={() => onAdd()}
                             >
                                 <Icon name='add' />
                                 Add Item

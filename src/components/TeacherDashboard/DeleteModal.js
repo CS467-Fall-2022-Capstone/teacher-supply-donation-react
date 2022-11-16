@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import { FaTrashAlt } from 'react-icons/fa';
-import { useAuth } from '../../services/AuthProvider';
 
 function DeleteModal({ supply, onDelete }) {
-    const { teacher } = useAuth();
-    const teacher_token = teacher.token;
     const [open, setOpen] = useState(false);
     const handleDelete = (id) => {
-        onDelete(id, teacher_token);
-        setOpen(false);
+        try {
+            onDelete(id);
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setOpen(false);
+        }
     };
 
     return (
@@ -37,7 +39,7 @@ function DeleteModal({ supply, onDelete }) {
                 <Button
                     color='red'
                     inverted
-                    onClick={() => handleDelete(supply.supply_id)}
+                    onClick={() => handleDelete(supply._id)}
                 >
                     <Icon name='checkmark' /> Delete Item
                 </Button>
