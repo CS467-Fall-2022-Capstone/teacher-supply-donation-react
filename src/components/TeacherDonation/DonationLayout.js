@@ -9,8 +9,6 @@ function DonationLayout() {
 
     const { teacherId } = useParams();
 
-    //console.log("Teacher id is: " + teacherId);
-
     const [name, setName] = useState('Waiting...');
     //const [email, setEmail] = useState('Waiting...');
     const [school, setSchool] = useState('BinaryCode High');

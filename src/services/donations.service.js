@@ -17,9 +17,18 @@ class DonationService {
     getTeacherPublicRecord(teacher_id) {
         return axios.get(API_URL + '/teachers/' + teacher_id + '/public');
     }
-
-    updateStudentDonations(student_id) {
-        return axios.patch(API_URL + '/students/' + student_id + '/donations');
+    /**
+     * Sends an object representing students donations toward class supply list
+     * @param {} student_id 
+     * @param {*} donations 
+     * @returns 
+     */
+    updateStudentDonations(student_id, donations) {
+        return axios({
+            method: 'patch',
+            url: `${API_URL}/students/${student_id}/donations`,
+            data: donations,
+        })
     }
 }
 

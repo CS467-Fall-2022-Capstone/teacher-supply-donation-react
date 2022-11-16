@@ -2,9 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Input } from 'semantic-ui-react';
 
+
 function SupplyRowDonate({ supply, setUpdates, updates }) {
 
-    let dif = supply.totalQuantityNeeded - supply.quantityDonated
+    //For development - set the current donations at half of the supplies.
+    //current public endpoint does not contain totalQuantityDonated
+    let tempQuantityDonated = Math.floor((supply.totalQuantityNeeded) * .5);
+    let dif = supply.totalQuantityNeeded - tempQuantityDonated;
+
+    //let dif = supply.totalQuantityNeeded - supply.totalQuantityDonated
 
     //set count to the prior donations for this item (defaults to 0)
     const [count, setCount] = useState(0);
@@ -23,7 +29,7 @@ function SupplyRowDonate({ supply, setUpdates, updates }) {
         let curVal = event.target.value;
         //ensure that only values between 0 and max are accepted
         if (curVal === "") {
-            curVal = 0;
+            curVal = '0';
         }
         if (curVal > max) {
             curVal = max;
@@ -32,20 +38,19 @@ function SupplyRowDonate({ supply, setUpdates, updates }) {
         setCount(curVal);
         setUpdates({ ...updates, [event.target.name]: curVal });
     }
-
     return (
         <>
             <Table.Row>
                 <Table.Cell>{supply.item}</Table.Cell>
                 <Table.Cell>{supply.totalQuantityNeeded}</Table.Cell>
-                <Table.Cell>{supply.quantityDonated}</Table.Cell>
+                <Table.Cell>{tempQuantityDonated}</Table.Cell>
                 <Table.Cell textAlign='left'>
                     <Input
                         type="number"
                         placeholder={count}
                         min='0'
                         max={max}
-                        value={count > 0  ? count : ""}
+                        value={count > 0 ? count : ""}
                         name={supply.supply_id}
                         onChange={onChange}
                     />

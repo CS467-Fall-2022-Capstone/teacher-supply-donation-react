@@ -5,8 +5,8 @@ import SupplyRowDonate from './SupplyRowDonate';
 function SupplyTableDonate({
     supplies, setUpdates, updates
 }) {
-    const [itemName, setItemName] = useState('');
-    const [totalNeeded, setTotalNeeded] = useState(0);
+    //const [itemName, setItemName] = useState('');
+    //const [totalNeeded, setTotalNeeded] = useState(0);
 
     return (
         <Table basic="very" celled selectable>
