@@ -24,7 +24,7 @@ class TeacherService {
      * Retrieves an existing protected teacher record, which
      * includes teacher_id, email, name, school,
      * message, a supplies array, and a students array
-     * @param {*} teacher_id
+     * @param teacher_id, @param teacher_token
      * @returns teacher record
      */
     getTeacherRecord(teacher_id, teacher_token) {
@@ -47,6 +47,22 @@ class TeacherService {
             headers: authHeader(teacher),
         });
     }
+
+    /**
+     * Update an existing protected teacher record, which
+     * includes teacher_id, email, name, school, and
+     * message.  Password is optional
+     * @param teacher_id, @param teacher_token 
+     * @returns Teacher.toAuthJSON() document
+     */
+    getStudents(teacher_id, teacher_token) {
+        return axios.get(`${API_URL}/teachers/${teacher_id}/students`, {
+            headers: {
+                Authorization: `Bearer ${teacher_token}`,
+            },
+        });
+    }
+
 }
 
 export default new TeacherService();
