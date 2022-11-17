@@ -5,7 +5,6 @@ import {
     Icon,
     Modal,
     Divider,
-    Input,
     Grid,
     Segment,
     Form,

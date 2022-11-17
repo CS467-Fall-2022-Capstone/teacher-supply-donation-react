@@ -8,6 +8,12 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
     const [totalQuantityNeeded, setTotalQuantityNeeded] = useState(
         supply.totalQuantityNeeded
     );
+
+    const handleCancelEdit = () => {
+        setSupplyName(supply.item);
+        setTotalQuantityNeeded(supply.totalQuantityNeeded)
+        onCancel()
+    }
     return (
         <>
             {inEditMode.status && inEditMode.supplyKey === supply._id ? (
@@ -24,6 +30,10 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                     </Table.Cell>
                     <Table.Cell>
                         <Input
+                            error={
+                                totalQuantityNeeded <
+                                supply.totalQuantityDonated
+                            }
                             size='small'
                             value={totalQuantityNeeded}
                             type='number'
@@ -36,19 +46,26 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                     <Table.Cell>{supply.totalQuantityDonated}</Table.Cell>
                     <Table.Cell textAlign='center'>
                         <Button
-                            disabled={totalQuantityNeeded < supply.totalQuantityDonated}
+                            disabled={
+                                totalQuantityNeeded <
+                                supply.totalQuantityDonated
+                            }
                             content='Save'
                             primary
-                            onClick={() =>
-                                onSave(supply, {
-                                    supplyName,
-                                    totalQuantityNeeded,
-                                })
+                            onClick={(e) =>
+                                e.target.value < supply.totalQuantityDonated
+                                    ? setTotalQuantityNeeded(
+                                          supply.totalQuantityNeeded
+                                      )
+                                    : onSave(supply, {
+                                          supplyName,
+                                          totalQuantityNeeded,
+                                      })
                             }
                         />
                     </Table.Cell>
                     <Table.Cell textAlign='center'>
-                        <Button content='Cancel' onClick={() => onCancel()} />
+                        <Button content='Cancel' onClick={() => handleCancelEdit()} />
                     </Table.Cell>
                 </Table.Row>
             ) : (
