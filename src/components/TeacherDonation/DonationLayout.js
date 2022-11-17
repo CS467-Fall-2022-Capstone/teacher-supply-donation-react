@@ -9,8 +9,6 @@ function DonationLayout() {
 
     const { teacherId } = useParams();
 
-    //console.log("Teacher id is: " + teacherId);
-
     const [name, setName] = useState('Waiting...');
     //const [email, setEmail] = useState('Waiting...');
     const [school, setSchool] = useState('BinaryCode High');
@@ -47,6 +45,8 @@ function DonationLayout() {
                     setName("NA");
                     //setEmail("NA");
                     setSupplies(testSupplyData)
+                    console.log("UNSUCCESSFUL REQUEST. Status code: " + JSON.stringify(response.status));
+        
                 }
             } catch (err) {
                 setRecordRetrieved(false);
@@ -73,7 +73,7 @@ function DonationLayout() {
                     </Menu.Item>
                     {recordRetrieved
                         ? <Menu.Item link as={Link} to='/donations' name='main'>
-                            {name}'s Classroom Page
+                            {name}'s Classroom
                         </Menu.Item>
                         : <Menu.Item link as={Link} to='/donations' name='main'>
                             No Classroom Page Found
