@@ -141,11 +141,8 @@ function TeacherDashboardPage() {
                 </Header>
             </div>
 
-            <div className='publish-segment'>
-                <Header textAlign='center' as='h3' attached='top'>
-                    Donation Page Publish Settings
-                </Header>
-                <Segment color='orange' compact attached textAlign='right'>
+            <div>
+                <Segment raised color='orange' compact>
                     <Segment.Inline>
                         {teacher.isPublished ? (
                             <Button
@@ -168,7 +165,6 @@ function TeacherDashboardPage() {
                         )}
                         <div className='donationUrl'>
                             <Input
-                                fluid
                                 action
                                 disabled={!teacher.isPublished}
                                 defaultValue={
@@ -194,7 +190,9 @@ function TeacherDashboardPage() {
                         </div>
                     </Segment.Inline>
                 </Segment>
-                <Segment attached='bottom' compact color='orange'>
+            </div>
+            <div className='metrics'>
+                <Segment compact color='orange' textAlign='center'>
                     <MetricsCards
                         numStudents={students.length}
                         numSuppliesWithDonation={metrics.supplyWithDonations}
@@ -203,7 +201,6 @@ function TeacherDashboardPage() {
                     />
                 </Segment>
             </div>
-
             <SupplyTable
                 supplies={supplies}
                 setSupplies={setSupplies}
