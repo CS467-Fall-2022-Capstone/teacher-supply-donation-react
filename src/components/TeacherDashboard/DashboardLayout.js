@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Menu, Icon } from 'semantic-ui-react';
+import { Image, Menu, Icon, Container } from 'semantic-ui-react';
 import { Navigate, Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../../services/AuthProvider';
 import TeacherService from '../../services/teacher.service.js';
@@ -43,8 +43,8 @@ function DashboardLayout() {
     } else {
         return (
             <div className='container'>
-                <div className='sidebar'>
-                    <Menu icon='labeled' fluid borderless inverted vertical>
+                <aside className='sidebarContainer'>
+                    <Menu className='nav' icon='labeled' fluid borderless inverted vertical>
                         <Menu.Item>
                             <Image
                                 centered
@@ -89,19 +89,21 @@ function DashboardLayout() {
                             </Menu.Item>
                         </Menu.Menu>
                     </Menu>
-                </div>
-                <div className='dashboard'>
-                    <Outlet
-                        context={{
-                            supplies,
-                            setSupplies,
-                            students,
-                            setStudents,
-                            teacher,
-                            setTeacher,
-                            metrics,
-                        }}
-                    />
+                </aside>
+                <div className='dashboardContainer'>
+                    <div className='dashboardContent'>
+                        <Outlet
+                            context={{
+                                supplies,
+                                setSupplies,
+                                students,
+                                setStudents,
+                                teacher,
+                                setTeacher,
+                                metrics,
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
         );

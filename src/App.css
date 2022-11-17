@@ -1,28 +1,41 @@
 /* Dashboard General */
 .dashboardHeader {
-    margin-bottom: 50px;
+    margin: 25px 50px;
 }
 
 .container {
+    width: 100%;
+    height: 100vh;
     display: flex;
 }
 
-.sidebar {
-    position: sticky;
-    height: 100vh;
-    display: flex;
+.sidebarContainer {
+    max-width: 200px;
     flex: 1;
 }
 
-.dashboard {
-    flex: 4;
-    margin: 50px;
-    text-align: left;
+.nav {
+    left: 0;
+    top: 0;
+    max-width: 200px;
+    position: fixed;
+    height: 100%;
 }
 
 /* Dashboard - Main Page */
-.metrics {
-    margin: 50px auto;
+.dashboardContainer {
+    flex: 4;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.dashboardContent {
+    margin: 25px;
+}
+
+.publish-controls {
+    max-width: 750px;
+    margin: 25px auto;
 }
 
 /* Donation Page */
