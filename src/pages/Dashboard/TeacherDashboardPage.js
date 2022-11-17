@@ -124,7 +124,7 @@ function TeacherDashboardPage() {
     return (
         <>
             <div className='dashboardHeader'>
-                <Header size='huge' textAlign='center'>
+                <Header size='huge' textAlign='center' attached='top'>
                     <Header.Content>
                         Welcome {teacher.name}
                         {teacher.school && (
@@ -139,11 +139,22 @@ function TeacherDashboardPage() {
                         )}
                     </Header.Content>
                 </Header>
+                <Segment compact color='orange' textAlign='center' attached>
+                    <MetricsCards
+                        numStudents={students.length}
+                        numSuppliesWithDonation={metrics.supplyWithDonations}
+                        numSupplies={supplies.length}
+                        totalSumDonations={metrics.sumAllDonations}
+                    />
+                </Segment>
             </div>
 
-            <div>
-                <Segment raised color='orange' compact>
-                    <Segment.Inline>
+            <div className='publish-controls'>
+                <Segment.Group>
+                    <Segment>
+                        <Header>Publish Controls</Header>
+                    </Segment>
+                    <Segment clearing>
                         {teacher.isPublished ? (
                             <Button
                                 floated='left'
@@ -163,44 +174,32 @@ function TeacherDashboardPage() {
                                 onClick={() => togglePublish()}
                             />
                         )}
-                        <div className='donationUrl'>
-                            <Input
-                                action
+                        <Input
+                            fluid
+                            action
+                            disabled={!teacher.isPublished}
+                            defaultValue={API_URL + '/' + teacher.teacher_id}
+                        >
+                            <input />
+                            <Button
                                 disabled={!teacher.isPublished}
-                                defaultValue={
-                                    API_URL + '/' + teacher.teacher_id
-                                }
-                            >
-                                <input />
-                                <Button
-                                    disabled={!teacher.isPublished}
-                                    labelPosition='right'
-                                    icon='copy'
-                                    content='Copy'
-                                    color='teal'
-                                />
-                                <Button
-                                    disabled={!teacher.isPublished}
-                                    labelPosition='right'
-                                    icon='send'
-                                    content='Send'
-                                    color='black'
-                                />
-                            </Input>
-                        </div>
-                    </Segment.Inline>
-                </Segment>
+                                labelPosition='right'
+                                icon='copy'
+                                content='Copy'
+                                color='teal'
+                            />
+                            <Button
+                                disabled={!teacher.isPublished}
+                                labelPosition='right'
+                                icon='send'
+                                content='Send'
+                                color='black'
+                            />
+                        </Input>
+                    </Segment>
+                </Segment.Group>
             </div>
-            <div className='metrics'>
-                <Segment compact color='orange' textAlign='center'>
-                    <MetricsCards
-                        numStudents={students.length}
-                        numSuppliesWithDonation={metrics.supplyWithDonations}
-                        numSupplies={supplies.length}
-                        totalSumDonations={metrics.sumAllDonations}
-                    />
-                </Segment>
-            </div>
+
             <SupplyTable
                 supplies={supplies}
                 setSupplies={setSupplies}

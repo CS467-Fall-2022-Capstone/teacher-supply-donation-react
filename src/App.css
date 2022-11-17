@@ -1,6 +1,6 @@
 /* Dashboard General */
 .dashboardHeader {
-    margin: 25px 0;
+    margin: 25px 50px;
 }
 
 .container {
@@ -33,8 +33,9 @@
     margin: 25px;
 }
 
-.metrics {
-    margin: 50px auto;
+.publish-controls {
+    max-width: 750px;
+    margin: 25px auto;
 }
 
 /* Donation Page */

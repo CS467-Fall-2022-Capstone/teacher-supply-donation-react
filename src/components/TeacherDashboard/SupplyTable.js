@@ -123,10 +123,11 @@ function SupplyTable({
                     </Table.Row>
                 ) : (
                     <Table.Row>
-                        <Table.HeaderCell/>
-                        <Table.HeaderCell textAlign='left' colSpan='2'>
-                            
-                        </Table.HeaderCell>
+                        <Table.HeaderCell />
+                        <Table.HeaderCell
+                            textAlign='left'
+                            colSpan='2'
+                        ></Table.HeaderCell>
                         <Table.HeaderCell textAlign='center' colSpan='2'>
                             <Button
                                 icon
