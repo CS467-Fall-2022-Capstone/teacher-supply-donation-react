@@ -8,27 +8,37 @@ const API_URL = process.env.REACT_APP_API;
 
 class DonationService {
     /**
-     * Retrieves an existing public teacher record, which 
-     * includes teacher_id, email, name, school, 
+     * Retrieves an existing public teacher record, which
+     * includes teacher_id, email, name, school,
      * message, and a supplies array
-     * @param {*} teacher_id 
+     * @param {*} teacher_id
      * @returns teacher record
      */
     getTeacherPublicRecord(teacher_id) {
         return axios.get(API_URL + '/teachers/' + teacher_id + '/public');
     }
+
+    /**
+     * Retrieves Student record including their existing donations
+     * @param {*} student_id
+     * @returns student record & donations
+     */
+    getStudentRecord(student_id) {
+        return axios.get(`${API_URL}/students/${student_id}`);
+    }
+
     /**
      * Sends an object representing students donations toward class supply list
-     * @param {} student_id 
-     * @param {*} donations 
-     * @returns 
+     * @param {} student_id
+     * @param {*} donations
+     * @returns
      */
     updateStudentDonations(student_id, donations) {
         return axios({
             method: 'patch',
             url: `${API_URL}/students/${student_id}/donations`,
             data: donations,
-        })
+        });
     }
 
     getStudentDonations(student_id) {

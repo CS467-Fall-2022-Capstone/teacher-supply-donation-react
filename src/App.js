@@ -47,9 +47,9 @@ function App() {
                     <Route path='settings' element={<Settings />} />
                 </Route>
                 {/* Public Donation */}
-                <Route path='/donations/teachers/' element={<DonationLayout />}>
-                    <Route index path=':teacherId/' exact element={<TeacherDonationPage />} />
-                    <Route path=':teacherId/students' exact element={<StudentDonationPage />} />
+                <Route path='/donations/teachers/:teacherId' element={<DonationLayout />}>
+                    <Route index exact element={<TeacherDonationPage />} />
+                    <Route path='students' exact element={<StudentDonationPage />} />
                 </Route>
                 <Route path='/donations/students/' element={<ThankyouLayout />}>
                     <Route index path=':studentId' exact element={<ThankyouPage/>}/>

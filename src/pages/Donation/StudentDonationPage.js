@@ -3,19 +3,22 @@ import {
     Link,
     useOutletContext,
     useNavigate,
-    useParams,
 } from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 //import DonationModal from '../../components/TeacherDonation/DonationModal';
-//import DonationService from '../../services/donations.service';
+// import DonationService from '../../services/donations.service';
 
 function StudentDonationPage() {
-    const [name, school, message, supplies, teacher_id, recordRetrieved] =
+    // Don't need use params because DonationLayout has it and will
+    // always pull teacher's data to pass down as context
+    const {teacher, supplies, recordRetrieved} =
         useOutletContext();
 
-    const { teacherId } = useParams();
+// Note From Sean:
+// Use DonationService getStudentRecord to get student and their donations
+// 
 
     //For development - Start the object as empty; once student's
     //prior donations are available, update it with those from
@@ -56,7 +59,7 @@ function StudentDonationPage() {
             //For development - Return to teacher's public classroom page
             //eventually, on success go to the thank you page, or
             //handle unsuccessful attempt to donate
-            navigate('/donations/teachers/' + teacherId);
+            navigate('/donations/teachers/' + teacher._id);
         }
     };
 
@@ -66,13 +69,13 @@ function StudentDonationPage() {
                 <div className='dashboardHeader'>
                     <Header size='huge' textAlign='center'>
                         <Header.Content>
-                            Donate Supplies to {name}'s Classroom!
-                            <Header.Subheader>{school}</Header.Subheader>
+                            Donate Supplies to {teacher.name}'s Classroom!
+                            <Header.Subheader>{teacher.school}</Header.Subheader>
                         </Header.Content>
                     </Header>
 
                     <Message size='big' color='olive' compact>
-                        {message}
+                        {teacher.message}
                     </Message>
                 </div>
             ) : (
@@ -87,7 +90,7 @@ function StudentDonationPage() {
                     </Header>
 
                     <Message size='big' color='olive' compact>
-                        Check that the id '{teacher_id}' is correct
+                        Check that the id '{teacher._id}' is correct
                     </Message>
                 </div>
             )}

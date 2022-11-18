@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Menu, Icon, Container } from 'semantic-ui-react';
+import { Image, Menu, Icon } from 'semantic-ui-react';
 import { Navigate, Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../../services/AuthProvider';
 import TeacherService from '../../services/teacher.service.js';
@@ -19,7 +19,6 @@ function DashboardLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        console.log(response.data);
                         setSupplies(response.data.supplies);
                         setStudents(response.data.students);
                         SetMetrics(response.data.metrics);
@@ -44,7 +43,14 @@ function DashboardLayout() {
         return (
             <div className='container'>
                 <aside className='sidebarContainer'>
-                    <Menu className='nav' icon='labeled' fluid borderless inverted vertical>
+                    <Menu
+                        className='nav'
+                        icon='labeled'
+                        fluid
+                        borderless
+                        inverted
+                        vertical
+                    >
                         <Menu.Item>
                             <Image
                                 centered
