@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import SupplyTable from '../../components/TeacherDashboard/SupplyTable.js';
 import MetricsCards from '../../components/TeacherDashboard/MetricsCards';
-import { Header, Segment, Button, Icon, Input, Label } from 'semantic-ui-react';
+import {
+    Header,
+    Segment,
+    Button,
+    Input,
+    Label,
+    Popup,
+} from 'semantic-ui-react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useOutletContext } from 'react-router-dom';
 import SupplyService from '../../services/supply.service';
 import TeacherService from '../../services/teacher.service';
@@ -15,6 +23,10 @@ function TeacherDashboardPage() {
         supplyKey: null,
     });
     const [inAddMode, setInAddMode] = useState(false);
+    const [donationUrl, setDonationUrl] = useState(
+        API_URL + '/' + teacher.teacher_id
+    );
+    const [isCopied, setIsCopied] = useState(false);
 
     const onDelete = async (supply_id) => {
         try {
@@ -121,6 +133,19 @@ function TeacherDashboardPage() {
         }
     };
 
+    const preventUrlChange = (url) => {
+        if (url !== donationUrl) {
+            setDonationUrl(donationUrl);
+        }
+    };
+
+    const onCopyText = () => {
+        setIsCopied(true);
+        setTimeout(() => {
+            setIsCopied(false);
+        }, 1000);
+    };
+
     return (
         <>
             <div className='dashboardHeader'>
@@ -139,7 +164,7 @@ function TeacherDashboardPage() {
                         )}
                     </Header.Content>
                 </Header>
-                <Segment compact color='orange' textAlign='center' attached>
+                <Segment color='orange' textAlign='center' attached>
                     <MetricsCards
                         numStudents={students.length}
                         numSuppliesWithDonation={metrics.supplyWithDonations}
@@ -150,11 +175,26 @@ function TeacherDashboardPage() {
             </div>
 
             <div className='publish-controls'>
-                <Segment.Group>
-                    <Segment>
-                        <Header>Publish Controls</Header>
+                <Segment.Group raised>
+                    <Segment color='orange'>
+                        <Header>
+                            Publish Donation Page Controls
+                            <Header.Subheader>
+                                <Label
+                                    content={
+                                        teacher.isPublished
+                                            ? 'Active'
+                                            : 'Inactive'
+                                    }
+                                    icon={teacher.isPublished ? 'check' : 'x'}
+                                    color={
+                                        teacher.isPublished ? 'green' : 'red'
+                                    }
+                                />
+                            </Header.Subheader>
+                        </Header>
                     </Segment>
-                    <Segment clearing>
+                    <Segment color='orange' clearing>
                         {teacher.isPublished ? (
                             <Button
                                 floated='left'
@@ -174,28 +214,56 @@ function TeacherDashboardPage() {
                                 onClick={() => togglePublish()}
                             />
                         )}
-                        <Input
-                            fluid
-                            action
-                            disabled={!teacher.isPublished}
-                            defaultValue={API_URL + '/' + teacher.teacher_id}
-                        >
-                            <input />
-                            <Button
-                                disabled={!teacher.isPublished}
-                                labelPosition='right'
-                                icon='copy'
-                                content='Copy'
-                                color='teal'
-                            />
-                            <Button
-                                disabled={!teacher.isPublished}
-                                labelPosition='right'
-                                icon='send'
-                                content='Send'
-                                color='black'
-                            />
-                        </Input>
+                        <Popup
+                        inverted
+                            size='large'
+                            content='Copied!'
+                            position='top center'
+                            open={isCopied}
+                            trigger={
+                                <Input
+                                    type='text'
+                                    fluid
+                                    action
+                                    disabled={!teacher.isPublished}
+                                    defaultValue={donationUrl}
+                                    value={donationUrl}
+                                    onChange={(e) =>
+                                        preventUrlChange(e.target.value)
+                                    }
+                                >
+                                    <input />
+                                    {teacher.isPublished ? (
+                                        <CopyToClipboard
+                                            text={donationUrl}
+                                            onCopy={onCopyText}
+                                        >
+                                            <Button
+                                                labelPosition='right'
+                                                icon='copy'
+                                                content='Copy'
+                                                color='teal'
+                                            />
+                                        </CopyToClipboard>
+                                    ) : (
+                                        <Button
+                                            disabled={true}
+                                            labelPosition='right'
+                                            icon='copy'
+                                            content='Copy'
+                                            color='teal'
+                                        />
+                                    )}
+                                    <Button
+                                        disabled={!teacher.isPublished}
+                                        labelPosition='right'
+                                        icon='send'
+                                        content='Send'
+                                        color='blue'
+                                    />
+                                </Input>
+                            }
+                        />
                     </Segment>
                 </Segment.Group>
             </div>
