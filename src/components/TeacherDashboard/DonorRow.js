@@ -2,21 +2,19 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 
 function DonorRow({ student }) {
-    let donations = student.donations;
-    console.log(donations); // an array of strings in format "supply - quantityDonated"
-    let donationsList = donations.map(donation => {
-        return <ul>{donation}</ul>
+    const formattedDonations = student.donations.map((donation, i) => {
+        let supply = donation.supply_id.item;
+        let quantityDonated = donation.quantityDonated;
+        return <li key={i}>{supply} - {quantityDonated}</li>;
     });
 
     return (
         <Table.Row>
             <Table.Cell>{student.firstName}</Table.Cell>
             <Table.Cell>{student.lastName}</Table.Cell>
-            <Table.Cell>{student.student_id}</Table.Cell>
+            <Table.Cell>{student._id}</Table.Cell>
             <Table.Cell>
-                <ul>
-                    {donationsList}
-                </ul>
+                <ul>{formattedDonations}</ul>
             </Table.Cell>
         </Table.Row>
     );

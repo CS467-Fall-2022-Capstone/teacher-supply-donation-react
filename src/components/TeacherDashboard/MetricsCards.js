@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Header, } from 'semantic-ui-react';
+import { Card, Header } from 'semantic-ui-react';
 
 function MetricsCards({
     numStudents,
@@ -8,30 +8,30 @@ function MetricsCards({
     totalSumDonations,
 }) {
     return (
-        <Card.Group centered>
+        <Card.Group centered itemsPerRow={3}>
             <Card raised color='blue'>
-                <Card.Content textAlign='left'>
+                <Card.Content>
                     <Card.Header as={Header} color='blue' size='huge'>
                         {numStudents}
                     </Card.Header>
-                    <Card.Meta># Students Donated</Card.Meta>
                 </Card.Content>
+                <Card.Content extra># Students Donated</Card.Content>
             </Card>
             <Card raised color='blue'>
-                <Card.Content textAlign='left'>
+                <Card.Content>
                     <Card.Header as={Header} color='blue' size='huge'>
                         {numSuppliesWithDonation} / {numSupplies}
                     </Card.Header>
-                    <Card.Meta>Supplies with Donation</Card.Meta>
                 </Card.Content>
+                <Card.Content extra>Supplies with Donation</Card.Content>
             </Card>
             <Card raised color='blue'>
-                <Card.Content textAlign='left'>
+                <Card.Content>
                     <Card.Header as={Header} color='blue' size='huge'>
                         {totalSumDonations}
                     </Card.Header>
-                    <Card.Meta>Grand Total Donations</Card.Meta>
                 </Card.Content>
+                <Card.Content extra>Donated Grand Total</Card.Content>
             </Card>
         </Card.Group>
     );

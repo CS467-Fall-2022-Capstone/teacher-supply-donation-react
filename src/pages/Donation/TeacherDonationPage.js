@@ -5,7 +5,7 @@ import SupplyTableSimple from '../../components/TeacherDonation/SupplyTableSimpl
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 import DonationModal from '../../components/TeacherDonation/DonationModal';
 function TeacherDonationPage() {
-    const [name, school, message, supplies, teacher_id, recordRetrieved] =
+    const {teacher, supplies, recordRetrieved} =
         useOutletContext();
 
     return (
@@ -15,12 +15,12 @@ function TeacherDonationPage() {
                     <>
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
-                                Donate Supplies to {name}'s Classroom!
-                                <Header.Subheader>{school}</Header.Subheader>
+                                Donate Supplies to {teacher.name}'s Classroom!
+                                <Header.Subheader>{teacher.school}</Header.Subheader>
                             </Header.Content>
                         </Header>
                         <Message size='big' color='olive' compact>
-                            {message}
+                            {teacher.message}
                         </Message>
                     </>
                 ) : (
@@ -34,7 +34,7 @@ function TeacherDonationPage() {
                             </Header.Content>
                         </Header>
                         <Message size='big' color='olive' compact>
-                            Check that the id '{teacher_id}' is correct
+                            Check that the id '{teacher._id}' is correct
                         </Message>
                     </>
                 )}
