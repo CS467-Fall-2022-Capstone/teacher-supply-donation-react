@@ -59,7 +59,7 @@ function DonationLayout() {
                         <Image centered alt='logo' src={logo} size='small' />
                     </Menu.Item>
                     {recordRetrieved ? (
-                        <Menu.Item link as={Link} to='/donations' name='main'>
+                        <Menu.Item link as={Link} name='main'>
                             {teacher.name}'s Classroom
                         </Menu.Item>
                     ) : (
@@ -68,7 +68,7 @@ function DonationLayout() {
                         </Menu.Item>
                     )}
                     <Menu.Menu>
-                        <Menu.Item link as={Link} to='/' name='settings'>
+                        <Menu.Item link as={Link} to='/'>
                             <Icon name='home' />
                             Home Page
                         </Menu.Item>

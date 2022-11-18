@@ -13,7 +13,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useOutletContext } from 'react-router-dom';
 import SupplyService from '../../services/supply.service';
 import TeacherService from '../../services/teacher.service';
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+const clientDomain = window.origin; // http(s)://domain
 
 function TeacherDashboardPage() {
     const { teacher, setTeacher, supplies, setSupplies, students, metrics } =
@@ -24,7 +24,7 @@ function TeacherDashboardPage() {
     });
     const [inAddMode, setInAddMode] = useState(false);
     const [donationUrl, setDonationUrl] = useState(
-        API_URL + '/' + teacher.teacher_id
+        clientDomain + '/donations/teachers/' + teacher.teacher_id
     );
     const [isCopied, setIsCopied] = useState(false);
 
@@ -149,89 +149,97 @@ function TeacherDashboardPage() {
     return (
         <>
             <div className='dashboardHeader'>
-                <Header size='huge' textAlign='center' attached='top'>
-                    <Header.Content>
-                        Welcome {teacher.name}
-                        {teacher.school && (
-                            <Header.Subheader>
-                                School: {teacher.school}
-                            </Header.Subheader>
-                        )}
-                        {teacher.message && (
-                            <Header.Subheader>
-                                Message to Donors: {teacher.message}
-                            </Header.Subheader>
-                        )}
-                    </Header.Content>
-                </Header>
-                <Segment color='orange' textAlign='center' attached>
-                    <MetricsCards
-                        numStudents={students.length}
-                        numSuppliesWithDonation={metrics.supplyWithDonations}
-                        numSupplies={supplies.length}
-                        totalSumDonations={metrics.sumAllDonations}
-                    />
-                </Segment>
-            </div>
-
-            <div className='publish-controls'>
                 <Segment.Group raised>
                     <Segment color='orange'>
-                        <Header>
-                            Publish Donation Page Controls
-                            <Header.Subheader>
-                                <Label
-                                    content={
-                                        teacher.isPublished
-                                            ? 'Active'
-                                            : 'Inactive'
-                                    }
-                                    icon={teacher.isPublished ? 'check' : 'x'}
-                                    color={
-                                        teacher.isPublished ? 'green' : 'red'
-                                    }
-                                />
-                            </Header.Subheader>
+                        <Header size='huge' textAlign='center'>
+                            <Header.Content>
+                                Welcome {teacher.name}
+                                <Header.Subheader>
+                                    <strong>School:</strong> {teacher.school}
+                                </Header.Subheader>
+                                <Header.Subheader>
+                                    <strong>Message to Donors:</strong>{' '}
+                                    {teacher.message}
+                                </Header.Subheader>
+                            </Header.Content>
                         </Header>
                     </Segment>
-                    <Segment color='orange' clearing>
-                        {teacher.isPublished ? (
-                            <Button
-                                floated='left'
-                                icon='lock'
-                                content='Unpublish List'
-                                labelPosition='left'
-                                secondary
-                                onClick={() => togglePublish()}
-                            />
-                        ) : (
-                            <Button
-                                floated='left'
-                                icon='unlock'
-                                content='Publish List'
-                                labelPosition='left'
-                                positive
-                                onClick={() => togglePublish()}
-                            />
-                        )}
+                    <Segment color='grey' textAlign='center'>
+                        <Label size='large' color='blue' attached='top left'>
+                            Metrics
+                        </Label>
+                        <MetricsCards
+                            numStudents={students.length}
+                            numSuppliesWithDonation={
+                                metrics.supplyWithDonations
+                            }
+                            numSupplies={supplies.length}
+                            totalSumDonations={metrics.sumAllDonations}
+                        />
+                    </Segment>
+                </Segment.Group>
+            </div>
+
+            <Segment color='orange' raised>
+                <Label size='large' color='blue' attached='top left'>
+                    Publish/Share Donation URL
+                </Label>
+                <Segment.Group basic horizontal>
+                    <div>
+                        <Segment basic>
+                            {teacher.isPublished ? (
+                                <Button
+                                    icon='lock'
+                                    content='Unpublish List'
+                                    labelPosition='left'
+                                    negative
+                                    onClick={() => togglePublish()}
+                                />
+                            ) : (
+                                <Button
+                                    icon='unlock'
+                                    content='Publish List'
+                                    labelPosition='left'
+                                    positive
+                                    onClick={() => togglePublish()}
+                                />
+                            )}
+                        </Segment>
+                    </div>
+                    <Segment basic>
                         <Popup
-                        inverted
+                            inverted
                             size='large'
                             content='Copied!'
                             position='top center'
                             open={isCopied}
                             trigger={
                                 <Input
-                                    type='text'
                                     fluid
+                                    labelPosition='left'
+                                    type='text'
                                     action
                                     disabled={!teacher.isPublished}
-                                    defaultValue={donationUrl}
                                     value={donationUrl}
                                     onChange={(e) =>
                                         preventUrlChange(e.target.value)
                                     }
                                 >
+                                    <Label
+                                        content={
+                                            teacher.isPublished
+                                                ? 'Active'
+                                                : 'Inactive'
+                                        }
+                                        icon={
+                                            teacher.isPublished ? 'check' : 'x'
+                                        }
+                                        color={
+                                            teacher.isPublished
+                                                ? 'green'
+                                                : 'red'
+                                        }
+                                    />
                                     <input />
                                     {teacher.isPublished ? (
                                         <CopyToClipboard
@@ -266,20 +274,25 @@ function TeacherDashboardPage() {
                         />
                     </Segment>
                 </Segment.Group>
-            </div>
+            </Segment>
 
-            <SupplyTable
-                supplies={supplies}
-                setSupplies={setSupplies}
-                inEditMode={inEditMode}
-                inAddMode={inAddMode}
-                onDelete={onDelete}
-                onEdit={onEdit}
-                onAdd={onAdd}
-                onSubmit={onSubmit}
-                onSave={onSave}
-                onCancel={onCancel}
-            />
+            <Segment raised color='orange'>
+                <Label size='large' color='blue' attached='top left'>
+                    Supplies List
+                </Label>
+                <SupplyTable
+                    supplies={supplies}
+                    setSupplies={setSupplies}
+                    inEditMode={inEditMode}
+                    inAddMode={inAddMode}
+                    onDelete={onDelete}
+                    onEdit={onEdit}
+                    onAdd={onAdd}
+                    onSubmit={onSubmit}
+                    onSave={onSave}
+                    onCancel={onCancel}
+                />
+            </Segment>
         </>
     );
 }
