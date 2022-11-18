@@ -1,6 +1,6 @@
 import axios from 'axios';
-const API_URL = process.env.REACT_APP_BACKEND_URL;
-//const API_URL = process.env.REACT_APP_API;
+//const API_URL = process.env.REACT_APP_BACKEND_URL;
+const API_URL = process.env.REACT_APP_API;
 
 /**
  * Class for accessing donations data from backend
@@ -29,6 +29,10 @@ class DonationService {
             url: `${API_URL}/students/${student_id}/donations`,
             data: donations,
         })
+    }
+
+    getStudentDonations(student_id) {
+        return axios.get(`${API_URL}/students/${student_id}/donations`);
     }
 }
 

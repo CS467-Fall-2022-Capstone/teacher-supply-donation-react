@@ -1,5 +1,49 @@
 /* Dashboard General */
 .dashboardHeader {
+    margin-bottom: 50px;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    position: sticky;
+    height: 100vh;
+    display: flex;
+    flex: 1;
+}
+
+.dashboard {
+    flex: 4;
+    margin: 50px;
+    text-align: left;
+}
+
+/* Dashboard - Main Page */
+.metrics {
+    margin: 50px auto;
+}
+
+/* Donation Page */
+.buttonRow {
+    margin-top: 50px;
+}
+
+/*  */
+.photo {
+    height: 14rem;
+    margin-bottom: 3rem;
+}
+
+
+
+
+
+/******************* UPDATED VERSION BELOW
+/* Dashboard General */
+/*
+.dashboardHeader {
     margin: 25px 50px;
 }
 
@@ -23,6 +67,7 @@
 }
 
 /* Dashboard - Main Page */
+/*
 .dashboardContainer {
     flex: 4;
     overflow-x: hidden;
@@ -39,12 +84,15 @@
 }
 
 /* Donation Page */
+/*
 .buttonRow {
     margin-top: 50px;
 }
 
-/*  */
+/*
 .photo {
     height: 14rem;
     margin-bottom: 3rem;
 }
+*/
+
