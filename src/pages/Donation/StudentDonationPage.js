@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
-import { Link, useOutletContext, useNavigate, useParams } from 'react-router-dom';
+import {
+    Link,
+    useOutletContext,
+    useNavigate,
+    useParams,
+} from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 //import DonationModal from '../../components/TeacherDonation/DonationModal';
 //import DonationService from '../../services/donations.service';
 
-
 function StudentDonationPage() {
     const [name, school, message, supplies, teacher_id, recordRetrieved] =
         useOutletContext();
-    
+
     const { teacherId } = useParams();
 
     //For development - Start the object as empty; once student's
-    //prior donations are available, update it with those from 
+    //prior donations are available, update it with those from
     // the start
     const [updates, setUpdates] = useState({});
 
@@ -28,9 +32,9 @@ function StudentDonationPage() {
             newDonations.updatedDonations.push({
                 supply_id: key,
                 quantityDonated: updatedSupplies[key],
-            })
+            });
         }
-        console.log("Object to submit: " + JSON.stringify(newDonations));
+        console.log('Object to submit: ' + JSON.stringify(newDonations));
         return 201;
 
         //return await DonationService.updateStudentDonations(student);
@@ -40,9 +44,9 @@ function StudentDonationPage() {
         try {
             const response = onSubmit(updates);
             if (response === 201) {
-                console.log("Fake send successful");
+                console.log('Fake send successful');
             } else {
-                console.log("Fake send unsuccessful");
+                console.log('Fake send unsuccessful');
             }
         } catch (err) {
             console.log('Error response received from Donations API');
@@ -52,9 +56,9 @@ function StudentDonationPage() {
             //For development - Return to teacher's public classroom page
             //eventually, on success go to the thank you page, or
             //handle unsuccessful attempt to donate
-            navigate("/donations/teachers/" + teacherId);
+            navigate('/donations/teachers/' + teacherId);
         }
-    }
+    };
 
     return (
         <>
@@ -66,11 +70,10 @@ function StudentDonationPage() {
                             <Header.Subheader>{school}</Header.Subheader>
                         </Header.Content>
                     </Header>
-                    <Container textAlign='center'>
-                        <Message size='big' color='olive' compact>
-                            {message}
-                        </Message>
-                    </Container>
+
+                    <Message size='big' color='olive' compact>
+                        {message}
+                    </Message>
                 </div>
             ) : (
                 <div className='dashboardHeader'>
@@ -82,28 +85,29 @@ function StudentDonationPage() {
                             </Header.Subheader>
                         </Header.Content>
                     </Header>
-                    <Container textAlign='center'>
-                        <Message size='big' color='olive' compact>
-                            Check that the id '{teacher_id}' is correct
-                        </Message>
-                    </Container>
+
+                    <Message size='big' color='olive' compact>
+                        Check that the id '{teacher_id}' is correct
+                    </Message>
                 </div>
             )}
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
 
-            <SupplyTableDonate supplies={supplies} setUpdates={setUpdates} updates={updates} />
+            <SupplyTableDonate
+                supplies={supplies}
+                setUpdates={setUpdates}
+                updates={updates}
+            />
             {recordRetrieved ? (
                 <Container className='buttonRow' textAlign='center'>
                     <Button
                         type='submit'
                         size='medium'
                         content='Submit your donations'
-                        onClick={() =>
-                            handleSubmit(updates)}
+                        onClick={() => handleSubmit(updates)}
                     />
                 </Container>
-
             ) : (
                 <Container className='buttonRow' textAlign='center'>
                     <Button
@@ -118,7 +122,6 @@ function StudentDonationPage() {
                     </Button>
                 </Container>
             )}
-
         </>
     );
 }
