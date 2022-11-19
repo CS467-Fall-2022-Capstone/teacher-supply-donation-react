@@ -23,7 +23,8 @@ function SupplyTable({
             if (response.status === 201) {
                 const newSupply = response.data;
                 newSupply.totalQuantityDonated = 0;
-                setSupplies([...supplies, newSupply]);
+                console.log(newSupply)
+                setSupplies((prevSupplies) => [...prevSupplies, newSupply]);
             }
         } catch (err) {
             console.log('Error response received from Donations API');
@@ -33,7 +34,6 @@ function SupplyTable({
             // always executes after try {} or catch {}
             setItemName('');
             setTotalQuantityNeeded(0);
-            onCancel(); // reset add mode
         }
     };
 
@@ -50,9 +50,9 @@ function SupplyTable({
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {supplies.map((supply, i) => (
+                {supplies.map((supply) => (
                     <SupplyRow
-                        key={i}
+                        key={supply._id}
                         supply={supply}
                         inEditMode={inEditMode}
                         inAddMode={inAddMode}

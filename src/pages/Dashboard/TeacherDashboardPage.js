@@ -47,10 +47,11 @@ function TeacherDashboardPage() {
         }
     };
 
-    const onEdit = async (supply) => {
+    const onEdit = (supply_id) => {
+        console.log(supply_id);
         setInEditMode({
             status: true,
-            supplyKey: supply._id,
+            supplyKey: supply_id,
         });
     };
 
@@ -64,12 +65,16 @@ function TeacherDashboardPage() {
             if (response.status === 200) {
                 // find updatedSupply in supplies and replace with updates
                 let updatedSupply = response.data;
-                updatedSupply.totalQtyDonated = supply.totalQtyDonated;
-                let supplyToUpdateIndex = supplies.findIndex(
-                    (el) => el._id === supply._id
-                );
-                supplies[supplyToUpdateIndex] = updatedSupply;
-                setSupplies(supplies);
+                updatedSupply.totalQuantityDonated =
+                    supply.totalQuantityDonated;
+                let newSupplies = supplies.map((supply) => {
+                    if (supply._id === updatedSupply._id) {
+                        return updatedSupply;
+                    } else {
+                        return supply;
+                    }
+                });
+                setSupplies(newSupplies);
             }
         } catch (err) {
             console.log('Error response received from Donations API');
@@ -81,7 +86,7 @@ function TeacherDashboardPage() {
     };
 
     const onSave = (supply, updates) => {
-        if (updates.totalQuantityNeeded < supply.totalQtyDonated) {
+        if (updates.totalQuantityNeeded < supply.totalQuantityDonated) {
             // prevent request from even being made
             alert('Quantity needed cannot be less than number donated!');
         } else {
@@ -101,12 +106,13 @@ function TeacherDashboardPage() {
         setInAddMode(true);
     };
 
-    const onSubmit = async (item, totalQuantityNeeded) => {
+    const onSubmit = (item, totalQuantityNeeded) => {
+        onCancel(); // reset add mode
         const newSupply = {
             item,
             totalQuantityNeeded,
         };
-        return await SupplyService.createSupplyRecord(teacher.token, newSupply);
+        return SupplyService.createSupplyRecord(teacher.token, newSupply);
     };
 
     const onCancel = () => {
@@ -150,7 +156,7 @@ function TeacherDashboardPage() {
         <>
             <div className='dashboardHeader'>
                 <Segment.Group raised>
-                    <Segment color='orange'>
+                    <Segment color='blue'>
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
                                 Welcome {teacher.name}
@@ -164,8 +170,8 @@ function TeacherDashboardPage() {
                             </Header.Content>
                         </Header>
                     </Segment>
-                    <Segment color='grey' textAlign='center'>
-                        <Label size='large' color='blue' attached='top left'>
+                    <Segment textAlign='center'>
+                        <Label size='large' color='black' attached='top left'>
                             Metrics
                         </Label>
                         <MetricsCards
@@ -180,11 +186,11 @@ function TeacherDashboardPage() {
                 </Segment.Group>
             </div>
 
-            <Segment color='orange' raised>
-                <Label size='large' color='blue' attached='top left'>
+            <Segment color='blue' raised>
+                <Label size='large' color='black' attached='top left'>
                     Publish/Share Donation URL
                 </Label>
-                <Segment.Group basic horizontal>
+                <Segment.Group horizontal>
                     <div>
                         <Segment basic>
                             {teacher.isPublished ? (
@@ -276,8 +282,8 @@ function TeacherDashboardPage() {
                 </Segment.Group>
             </Segment>
 
-            <Segment raised color='orange'>
-                <Label size='large' color='blue' attached='top left'>
+            <Segment raised color='blue'>
+                <Label size='large' color='black' attached='top left'>
                     Supplies List
                 </Label>
                 <SupplyTable
