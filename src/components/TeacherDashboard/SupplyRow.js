@@ -11,9 +11,9 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
 
     const handleCancelEdit = () => {
         setSupplyName(supply.item);
-        setTotalQuantityNeeded(supply.totalQuantityNeeded)
-        onCancel()
-    }
+        setTotalQuantityNeeded(supply.totalQuantityNeeded);
+        onCancel();
+    };
     return (
         <>
             {inEditMode.status && inEditMode.supplyKey === supply._id ? (
@@ -65,7 +65,10 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                         />
                     </Table.Cell>
                     <Table.Cell textAlign='center'>
-                        <Button content='Cancel' onClick={() => handleCancelEdit()} />
+                        <Button
+                            content='Cancel'
+                            onClick={() => handleCancelEdit()}
+                        />
                     </Table.Cell>
                 </Table.Row>
             ) : (
@@ -74,7 +77,10 @@ function SupplyRow({ supply, inEditMode, onDelete, onEdit, onSave, onCancel }) {
                     <Table.Cell>{supply.totalQuantityNeeded}</Table.Cell>
                     <Table.Cell>{supply.totalQuantityDonated}</Table.Cell>
                     <Table.Cell textAlign='center'>
-                        <FaEdit as='button' onClick={() => onEdit(supply)} />
+                        <FaEdit
+                            as='button'
+                            onClick={() => onEdit(supply._id)}
+                        />
                     </Table.Cell>
                     <Table.Cell textAlign='center'>
                         <DeleteModal onDelete={onDelete} supply={supply} />

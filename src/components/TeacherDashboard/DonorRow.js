@@ -1,11 +1,11 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, List } from 'semantic-ui-react';
 
 function DonorRow({ student }) {
     const formattedDonations = student.donations.map((donation, i) => {
         let supply = donation.supply_id.item;
         let quantityDonated = donation.quantityDonated;
-        return <li key={i}>{supply} - {quantityDonated}</li>;
+        return `${supply} - ${quantityDonated}`;
     });
 
     return (
@@ -14,7 +14,7 @@ function DonorRow({ student }) {
             <Table.Cell>{student.lastName}</Table.Cell>
             <Table.Cell>{student._id}</Table.Cell>
             <Table.Cell>
-                <ul>{formattedDonations}</ul>
+                <List items={formattedDonations} />
             </Table.Cell>
         </Table.Row>
     );

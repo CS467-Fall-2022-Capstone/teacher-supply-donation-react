@@ -3,6 +3,7 @@ import { Image, Menu, Icon } from 'semantic-ui-react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import TeacherService from '../../services/teacher.service';
 import logo from '../../media/logo.png';
+import Loading from '../Loading';
 
 function DonationLayout() {
     // This donations layout will always have the latest
@@ -11,6 +12,7 @@ function DonationLayout() {
     const [teacher, setTeacher] = useState({});
     const [supplies, setSupplies] = useState([]);
     const [recordRetrieved, setRecordRetrieved] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function loadTeacherInfo() {
@@ -28,8 +30,9 @@ function DonationLayout() {
                         };
                         setTeacher(teacherData);
                         setSupplies(response.data.supplies);
+                        setRecordRetrieved(true);
+                        setLoading(false);
                     }
-                    setRecordRetrieved(true);
                 }
             } catch (err) {
                 console.error(err);
@@ -42,7 +45,7 @@ function DonationLayout() {
             ignore = true;
         };
         // call useEffect on re-render if there are any changes to teacher
-    }, [teacherId]);
+    },[]);
 
     return (
         <div className='container'>
@@ -59,7 +62,7 @@ function DonationLayout() {
                         <Image centered alt='logo' src={logo} size='small' />
                     </Menu.Item>
                     {recordRetrieved ? (
-                        <Menu.Item link as={Link} to='/donations' name='main'>
+                        <Menu.Item link as={Link} name='main'>
                             {teacher.name}'s Classroom
                         </Menu.Item>
                     ) : (
@@ -68,7 +71,7 @@ function DonationLayout() {
                         </Menu.Item>
                     )}
                     <Menu.Menu>
-                        <Menu.Item link as={Link} to='/' name='settings'>
+                        <Menu.Item link as={Link} to='/'>
                             <Icon name='home' />
                             Home Page
                         </Menu.Item>
@@ -77,13 +80,17 @@ function DonationLayout() {
             </div>
             <div className='dashboardContainer'>
                 <div className='dashboardContent'>
-                    <Outlet
-                        context={{
-                            teacher,
-                            supplies,
-                            recordRetrieved,
-                        }}
-                    />
+                    {loading ? (
+                        <Loading />
+                    ) : (
+                        <Outlet
+                            context={{
+                                teacher,
+                                supplies,
+                                recordRetrieved,
+                            }}
+                        />
+                    )}
                 </div>
             </div>
         </div>
