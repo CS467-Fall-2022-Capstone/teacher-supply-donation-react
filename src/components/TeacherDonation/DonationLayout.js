@@ -20,17 +20,22 @@ function DonationLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        console.log("Raw response data is: " + JSON.stringify(response.data))
+                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const teacherData = {
                             name: response.data.name,
                             school: response.data.school,
                             isPublished: response.data.isPublished,
                             message: response.data.message,
                         };
+                        //create property for potential student record intersection
+                        const tempSupplies = response.data.supplies.map((element) => ({
+                            ...element,
+                            quantityDonatedByStudent: 0
+                          }));
+
                         setTeacher(teacherData);
-                        setSupplies(response.data.supplies);
-                        console.log("Teacher data is: " + JSON.stringify(teacher))
-                        console.log("Supply data is: " + JSON.stringify(supplies))
+                        setSupplies(tempSupplies);
+                        
                     }
                     setRecordRetrieved(true);
                 }
@@ -46,6 +51,10 @@ function DonationLayout() {
         };
         // call useEffect on re-render if there are any changes to teacher
     }, [teacherId]);
+
+    useEffect(() => {
+        console.log("Current supplies array is: " + JSON.stringify(supplies))
+    }, [supplies]);
 
     return (
         <div className='container'>
@@ -84,6 +93,7 @@ function DonationLayout() {
                         context={{
                             teacher,
                             supplies,
+                            setSupplies,
                             recordRetrieved,
                         }}
                     />

@@ -34,7 +34,6 @@ function SupplyRowDonate({ supply, setUpdates, updates }) {
         if (curVal > max) {
             curVal = max;
         }
-
         setCount(curVal);
         setUpdates({ ...updates, [event.target.name]: curVal });
     }

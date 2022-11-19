@@ -10,11 +10,12 @@ import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonat
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 //import DonationModal from '../../components/TeacherDonation/DonationModal';
 import DonationService from '../../services/donations.service';
+import _ from 'lodash';
 
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
     // always pull teacher's data to pass down as context
-    const { teacher, supplies, recordRetrieved } =
+    const { teacher, supplies, setSupplies, recordRetrieved } =
         useOutletContext();
     const { studentId } = useParams();
 
@@ -33,6 +34,7 @@ function StudentDonationPage() {
     // 
 
     useEffect(() => {
+
         async function loadStudentInfo() {
             try {
                 const response = await DonationService.getStudentRecord(
@@ -40,15 +42,14 @@ function StudentDonationPage() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        console.log("Raw response data is: " + JSON.stringify(response.data))
+                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const studentData = {
                             fname: response.data.firstName,
                             lname: response.data.lastName,
                         };
                         setStudent(studentData);
-                        setDonations(response.data.donations); 
+                        setDonations(response.data.donations);
                     }
-                    setStudentRetrieved(true);
                 }
             } catch (err) {
                 console.error(err);
@@ -61,23 +62,49 @@ function StudentDonationPage() {
             ignore = true;
         };
         // call useEffect on re-render if there are any changes to student
-    }, [studentId]);
+    }, [studentId, studentRetrieved]);
 
     useEffect(() => {
-        console.log("Current student data is: " + JSON.stringify(student))
-    }, [student]);
+        if (donations.length > 0 && supplies.length > 0) {
+            setStudentRetrieved(true);
+            console.log("Setting student retrieved to true");
+        } else {
+            setStudentRetrieved(false);
+            console.log("Setting student retrieved to false")
+        }
+    }, [donations, supplies]);
 
+    //Once donations is available, this will revise the supplies array
+    // to include any donations already made by this student
     useEffect(() => {
-        console.log("Donations data is: " + JSON.stringify(donations))
-    }, [donations]);
+        //make deep copy because array has mutable objects
+        if (supplies.length > 0 && donations.length > 0) {
+            let tempSupplies = _.cloneDeep(supplies);
 
+            //add quantityDonatedByStudent field to all elements of supplies array
+            for (let supply of tempSupplies) {
+                supply.quantityDonatedByStudent = 1;
+            }
+            //if student has prior donations, update the variable in supply record
+            for (let donation of donations) {
+                let searchIndex = tempSupplies.findIndex((supply) => supply._id === donation.supply_id._id);
+                console.log("Search index is: " + searchIndex);
+                if (searchIndex >= 0) {
+                    tempSupplies[searchIndex].quantityDonatedByStudent = donation.quantityDonated;
+                }
+            }
+            setSupplies(tempSupplies);
+        }
+
+    }, [studentRetrieved]);
+
+    /*
+    useEffect(() => {
+        console.log("Student retrieved: " + studentRetrieved);
+    }, [studentRetrieved]);
+    */
     //add any prior student donation data to the associated supplies record
     // so that it can be displayed in the table
-    /*
-    const updateSuppliesWithDonations = () => {
-        return;
-    };
-    */
 
     const onSubmit = /*async*/ (updatedSupplies) => {
         const newDonations = {
