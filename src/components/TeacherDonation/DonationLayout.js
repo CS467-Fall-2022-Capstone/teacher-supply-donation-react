@@ -20,6 +20,7 @@ function DonationLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
+                        console.log("Raw response data is: " + JSON.stringify(response.data))
                         const teacherData = {
                             name: response.data.name,
                             school: response.data.school,
@@ -28,6 +29,8 @@ function DonationLayout() {
                         };
                         setTeacher(teacherData);
                         setSupplies(response.data.supplies);
+                        console.log("Teacher data is: " + JSON.stringify(teacher))
+                        console.log("Supply data is: " + JSON.stringify(supplies))
                     }
                     setRecordRetrieved(true);
                 }

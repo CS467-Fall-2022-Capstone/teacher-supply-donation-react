@@ -1,31 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Link,
     useOutletContext,
     useNavigate,
+    useParams
 } from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 //import DonationModal from '../../components/TeacherDonation/DonationModal';
-// import DonationService from '../../services/donations.service';
+import DonationService from '../../services/donations.service';
 
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
     // always pull teacher's data to pass down as context
-    const {teacher, supplies, recordRetrieved} =
+    const { teacher, supplies, recordRetrieved } =
         useOutletContext();
+    const { studentId } = useParams();
 
-// Note From Sean:
-// Use DonationService getStudentRecord to get student and their donations
-// 
+    const [student, setStudent] = useState({});
+    const [donations, setDonations] = useState([]);;
+    const [studentRetrieved, setStudentRetrieved] = useState(false);
 
     //For development - Start the object as empty; once student's
     //prior donations are available, update it with those from
     // the start
     const [updates, setUpdates] = useState({});
-
     const navigate = useNavigate();
+
+    // Note From Sean:
+    // Use DonationService getStudentRecord to get student and their donations
+    // 
+
+    useEffect(() => {
+        async function loadStudentInfo() {
+            try {
+                const response = await DonationService.getStudentRecord(
+                    studentId
+                );
+                if (response.status === 200) {
+                    if (!ignore) {
+                        console.log("Raw response data is: " + JSON.stringify(response.data))
+                        const studentData = {
+                            fname: response.data.firstName,
+                            lname: response.data.lastName,
+                        };
+                        setStudent(studentData);
+                        setDonations(response.data.donations); 
+                    }
+                    setStudentRetrieved(true);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        let ignore = false;
+        loadStudentInfo();
+        return () => {
+            // cleanup code to ensure no race conditions
+            ignore = true;
+        };
+        // call useEffect on re-render if there are any changes to student
+    }, [studentId]);
+
+    useEffect(() => {
+        console.log("Current student data is: " + JSON.stringify(student))
+    }, [student]);
+
+    useEffect(() => {
+        console.log("Donations data is: " + JSON.stringify(donations))
+    }, [donations]);
+
+    //add any prior student donation data to the associated supplies record
+    // so that it can be displayed in the table
+    /*
+    const updateSuppliesWithDonations = () => {
+        return;
+    };
+    */
 
     const onSubmit = /*async*/ (updatedSupplies) => {
         const newDonations = {
@@ -90,7 +142,7 @@ function StudentDonationPage() {
                     </Header>
 
                     <Message size='big' color='olive' compact>
-                        Check that the id '{teacher._id}' is correct
+                        Check that the id url is correct
                     </Message>
                 </div>
             )}

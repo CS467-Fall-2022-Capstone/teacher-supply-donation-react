@@ -49,10 +49,10 @@ function App() {
                 {/* Public Donation */}
                 <Route path='/donations/teachers/:teacherId' element={<DonationLayout />}>
                     <Route index exact element={<TeacherDonationPage />} />
-                    <Route path='students' exact element={<StudentDonationPage />} />
+                    <Route path='students/:studentId' exact element={<StudentDonationPage />} />
                 </Route>
                 <Route path='/donations/students/' element={<ThankyouLayout />}>
-                    <Route index path=':studentId' exact element={<ThankyouPage/>}/>
+                    <Route index path=':studentId' exact element={<ThankyouPage />} />
                 </Route>
             </Routes>
         </Router>
