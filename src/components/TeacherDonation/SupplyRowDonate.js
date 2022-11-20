@@ -37,6 +37,7 @@ function SupplyRowDonate({ supply, setUpdates, updates }) {
         if (isNaN(curVal)) {
             curVal = null;
         }
+
         if (curVal > max) {
             curVal = max;
         }

@@ -63,6 +63,10 @@ function StudentDonationPage() {
         // call useEffect on re-render if there are any changes to student
     }, [studentId, studentRetrieved]);
 
+    //If there are updates to donations or supplies arrays, this fires
+    // and checks whether donation and supply data is available,
+    // if so, signals student data is retrieved, which is noticed
+    // by the next useEffect hook
     useEffect(() => {
         if (donations.length > 0 && supplies.length > 0) {
             setStudentRetrieved(true);
@@ -73,7 +77,7 @@ function StudentDonationPage() {
         }
     }, [donations, supplies]);
 
-    //Once donations is available, this will revise the supplies array
+    //Once supplies and donations  available, this will revise the supplies array
     // to include any donations already made by this student
     useEffect(() => {
         //make deep copy because array has mutable objects
