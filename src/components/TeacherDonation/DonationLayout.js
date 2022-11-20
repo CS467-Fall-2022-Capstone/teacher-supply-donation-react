@@ -20,13 +20,15 @@ function DonationLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        //console.log("Raw response data is: " + JSON.stringify(response.data))
+                        console.log("Raw response data is: " + JSON.stringify(response.data))
                         const teacherData = {
+                            _id: response.data._id,
                             name: response.data.name,
                             school: response.data.school,
                             isPublished: response.data.isPublished,
                             message: response.data.message,
                         };
+                        //console.log(Json.stringify(teacherData))
                         //create property for potential student record intersection
                         const tempSupplies = response.data.supplies.map((element) => ({
                             ...element,
