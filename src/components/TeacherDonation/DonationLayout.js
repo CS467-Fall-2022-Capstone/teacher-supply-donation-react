@@ -22,7 +22,7 @@ function DonationLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        console.log("Raw response data is: " + JSON.stringify(response.data))
+                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const teacherData = {
                             _id: response.data._id,
                             name: response.data.name,
@@ -54,10 +54,11 @@ function DonationLayout() {
             ignore = true;
         };
         // call useEffect on re-render if there are any changes to teacher
+        // eslint-disable-next-line
     },[]);
 
     useEffect(() => {
-        console.log("Current supplies array is: " + JSON.stringify(supplies))
+        //console.log("Current supplies array is: " + JSON.stringify(supplies))
     }, [supplies]);
 
     return (

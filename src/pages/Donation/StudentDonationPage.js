@@ -23,9 +23,6 @@ function StudentDonationPage() {
     const [donations, setDonations] = useState([]);;
     const [studentRetrieved, setStudentRetrieved] = useState(false);
 
-    //For development - Start the object as empty; once student's
-    //prior donations are available, update it with those from
-    // the start
     const [updates, setUpdates] = useState({});
     const navigate = useNavigate();
 
@@ -43,6 +40,7 @@ function StudentDonationPage() {
                     if (!ignore) {
                         //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const studentData = {
+                            _id: response.data._id,
                             fname: response.data.firstName,
                             lname: response.data.lastName,
                         };
@@ -86,17 +84,18 @@ function StudentDonationPage() {
 
             //add quantityDonatedByStudent field to all elements of supplies array
             for (let supply of tempSupplies) {
-                supply.quantityDonatedByStudent = 1;
+                supply.quantityDonatedByStudent = 0;
             }
             //if student has prior donations, update the variable in supply record
             for (let donation of donations) {
                 let searchIndex = tempSupplies.findIndex((supply) => supply._id === donation.supply_id._id);
-                console.log("Search index is: " + searchIndex);
+                //console.log("Search index is: " + searchIndex);
                 if (searchIndex >= 0) {
                     tempSupplies[searchIndex].quantityDonatedByStudent = donation.quantityDonated;
                 }
             }
             setSupplies(tempSupplies);
+            //eslint-disable-next-line react-hooks/exhaustive-deps
         }
     }, [studentRetrieved]);
 
@@ -104,30 +103,36 @@ function StudentDonationPage() {
     //add any prior student donation data to the associated supplies record
     // so that it can be displayed in the table
 
-    const onSubmit = /*async*/ (updatedSupplies) => {
-        const newDonations = {
-            updatedDonations: [],
-        };
-        for (const key of Object.keys(updatedSupplies)) {
-            newDonations.updatedDonations.push({
-                supply_id: key,
-                quantityDonated: updatedSupplies[key] != null ? parseInt(updatedSupplies[key]): 0,
-            });
-        }
-        console.log('Object to submit: ' + JSON.stringify(newDonations));
-        return 201;
+    const onSubmit = async (updatedSupplies) => {
+        try {
+            const newDonations = {
+                updatedDonations: [],
+            };
+            for (const key of Object.keys(updatedSupplies)) {
+                newDonations.updatedDonations.push({
+                    supply_id: key,
+                    quantityDonated: updatedSupplies[key] != null ? parseInt(updatedSupplies[key]) : 0,
+                });
+            }
+            //console.log('Object to submit: ' + JSON.stringify(newDonations));
+            return await DonationService.updateStudentDonations(student._id, newDonations);
 
-        //return await DonationService.updateStudentDonations(student);
+        } catch (err) {
+            console.log('Error response received from Donations API');
+            console.log(err);
+            throw err;
+        }
     };
 
-    const handleSubmit = /*async*/ () => {
+    const handleSubmit = async () => {
         try {
-            const response = onSubmit(updates);
-            if (response === 201) {
-                console.log('Fake send successful');
+            const response = await onSubmit(updates);
+            if (response.status === 200) {
+                console.log('Send successful');
             } else {
-                console.log('Fake send unsuccessful');
+                console.log('Send unsuccessful');
             }
+            //console.log("Response returned from backend on Update Donations: " + JSON.stringify(response.data));
         } catch (err) {
             console.log('Error response received from Donations API');
             console.log(err);
@@ -136,7 +141,8 @@ function StudentDonationPage() {
             //For development - Return to teacher's public classroom page
             //eventually, on success go to the thank you page, or
             //handle unsuccessful attempt to donate
-            navigate('/donations/teachers/' + teacher._id);
+            //navigate('/donations/teachers/' + teacher._id);
+            navigate('/donations/students/' + student._id);
         }
     };
 

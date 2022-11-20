@@ -14,30 +14,28 @@ function ThankyouLayout() {
     const [recordRetrieved, setRecordRetrieved] = useState(false);
 
     useEffect(() => {
-
+        
         const testDonationData = {
             donations: [
-                {donation_id: "123", item: "box of chalk", quantityDonated: 1},
-                {donation_id: "235", item: "package of markers", quantityDonated: 2}
+                {donation_id: "NA", item: "No item retrieved", quantityDonated: "NA"}
             ]
         }
-
+        
         const loadDonations = async () => {
             try {
-                setStudentId(studentId ? studentId: "234");
+                setStudentId(studentId);
                 let response = await DonationService.getStudentDonations(studentId);
                 if (response.status === 200) {
                     console.log("RECEIVED DATA: " + JSON.stringify(response.data));
                     setRecordRetrieved(true);
-                    //setDonations(response.data.donations);
-                    setDonations(testDonationData.donations)
+                    setDonations(response.data.donations);
+                    //setDonations(testDonationData.donations)
 
                 } else {
                     setRecordRetrieved(false);
                     //setName("NA");
                     setDonations(testDonationData)
                     console.log("UNSUCCESSFUL REQUEST. Status code: " + JSON.stringify(response.status));
-        
                 }
             } catch (err) {
                 setRecordRetrieved(false);
@@ -52,7 +50,7 @@ function ThankyouLayout() {
 
     return (
         <div className='container'>
-            <div className='sidebar'>
+            <div className='sidebarContainer'>
                 <Menu icon='labeled' fluid borderless inverted vertical>
                     <Menu.Item>
                         <Image
@@ -64,7 +62,7 @@ function ThankyouLayout() {
                     </Menu.Item>
                     {recordRetrieved
                         ? <Menu.Item link as={Link} to='/donations' name='main'>
-                            Spock's Classroom
+                            Thank You!
                         </Menu.Item>
                         : <Menu.Item link as={Link} to='/donations' name='main'>
                             No Record Found

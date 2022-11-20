@@ -5,20 +5,18 @@ import { Table, Input } from 'semantic-ui-react';
 
 function SupplyRowDonate({ supply, setUpdates, updates }) {
 
-    //For development - set the current donations at half of the supplies.
-    //current public endpoint does not contain totalQuantityDonated
-    //let tempQuantityDonated = Math.floor((supply.totalQuantityNeeded) * .5);
     let dif = supply.totalQuantityNeeded - supply.totalQuantityDonated;
-    
+
     const [count, setCount] = useState(supply.quantityDonatedByStudent);
     const [max] = useState(dif >= 0 ? dif : 0);
-    
+
     useEffect(() => {
         setCount(supply.quantityDonatedByStudent);
+        
     }, []);
 
     useEffect(() => {
-        setUpdates({...updates, [supply._id]: supply.quantityDonatedByStudent});
+        setUpdates({ ...updates, [supply._id]: supply.quantityDonatedByStudent });
         setCount(supply.quantityDonatedByStudent);
     }, [supply])
 
@@ -27,17 +25,14 @@ function SupplyRowDonate({ supply, setUpdates, updates }) {
     }, [count]);
 
     useEffect(() => {
-        console.log("Current updates object is: " + JSON.stringify(updates))
+        //console.log("Current updates object is: " + JSON.stringify(updates))
     }, [updates, setUpdates]);
 
     const onChange = (event) => {
         let curVal = parseInt(event.target.value);
-        //curVal.replace(/\b0+/g, '');
-        //ensure that only values between 0 and max are accepted
         if (isNaN(curVal)) {
             curVal = null;
         }
-
         if (curVal > max) {
             curVal = max;
         }
