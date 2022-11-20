@@ -32,7 +32,6 @@ function StudentDonationPage() {
     // Note From Sean:
     // Use DonationService getStudentRecord to get student and their donations
     // 
-
     useEffect(() => {
 
         async function loadStudentInfo() {
@@ -95,14 +94,9 @@ function StudentDonationPage() {
             }
             setSupplies(tempSupplies);
         }
-
     }, [studentRetrieved]);
 
-    /*
-    useEffect(() => {
-        console.log("Student retrieved: " + studentRetrieved);
-    }, [studentRetrieved]);
-    */
+
     //add any prior student donation data to the associated supplies record
     // so that it can be displayed in the table
 
@@ -113,7 +107,7 @@ function StudentDonationPage() {
         for (const key of Object.keys(updatedSupplies)) {
             newDonations.updatedDonations.push({
                 supply_id: key,
-                quantityDonated: updatedSupplies[key],
+                quantityDonated: updatedSupplies[key] != null ? parseInt(updatedSupplies[key]): 0,
             });
         }
         console.log('Object to submit: ' + JSON.stringify(newDonations));
