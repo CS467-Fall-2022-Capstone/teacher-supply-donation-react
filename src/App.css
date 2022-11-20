@@ -5,6 +5,7 @@
 } */
 
 /* Dashboard General */
+
 .dashboardHeader {
     margin: 25px 50px;
 }
@@ -29,6 +30,7 @@
 }
 
 /* Dashboard - Main Page */
+
 .dashboardContainer {
     flex: 4;
     overflow-x: hidden;
@@ -40,12 +42,15 @@
 }
 
 /* Donation Page */
+
 .buttonRow {
     margin-top: 50px;
 }
 
-/*  */
+
 .photo {
     height: 14rem;
     margin-bottom: 3rem;
 }
+
+

@@ -22,14 +22,23 @@ function DonationLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
+                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const teacherData = {
+                            _id: response.data._id,
                             name: response.data.name,
                             school: response.data.school,
                             isPublished: response.data.isPublished,
                             message: response.data.message,
                         };
+                        //console.log(Json.stringify(teacherData))
+                        //create property for potential student record intersection
+                        const tempSupplies = response.data.supplies.map((element) => ({
+                            ...element,
+                            quantityDonatedByStudent: 0
+                          }));
+
                         setTeacher(teacherData);
-                        setSupplies(response.data.supplies);
+                        setSupplies(tempSupplies);
                         setRecordRetrieved(true);
                         setLoading(false);
                     }
@@ -45,7 +54,12 @@ function DonationLayout() {
             ignore = true;
         };
         // call useEffect on re-render if there are any changes to teacher
+        // eslint-disable-next-line
     },[]);
+
+    useEffect(() => {
+        //console.log("Current supplies array is: " + JSON.stringify(supplies))
+    }, [supplies]);
 
     return (
         <div className='container'>
@@ -87,6 +101,7 @@ function DonationLayout() {
                             context={{
                                 teacher,
                                 supplies,
+                                setSupplies,
                                 recordRetrieved,
                             }}
                         />

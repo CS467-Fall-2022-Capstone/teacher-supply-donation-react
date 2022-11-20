@@ -3,7 +3,6 @@ import authHeader from './auth-header'
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 //const API_URL = process.env.REACT_APP_API;
 
-
 /**
  * Class for accessing/performing CRUD operations on teacher
  * records in backend

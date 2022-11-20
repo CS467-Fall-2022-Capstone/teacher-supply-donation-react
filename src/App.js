@@ -17,6 +17,8 @@ import Settings from './pages/Dashboard/Settings';
 import DonationLayout from './components/TeacherDonation/DonationLayout';
 import TeacherDonationPage from './pages/Donation/TeacherDonationPage';
 import StudentDonationPage from './pages/Donation/StudentDonationPage';
+import ThankyouLayout from './components/TeacherDonation/ThankyouLayout';
+import ThankyouPage from './pages/Donation/ThankyouPage';
 
 function App() {
     return (
@@ -52,8 +54,11 @@ function App() {
                     <Route exact index element={<TeacherDonationPage />} />
                     <Route
                         exact
-                        path='students'
-                        element={<StudentDonationPage />}
+                        path='students/:studentId'
+                        element={<StudentDonationPage />} />
+                </Route>
+                <Route path='/donations/students/' element={<ThankyouLayout />}>
+                    <Route index path=':studentId' exact element={<ThankyouPage />}
                     />
                 </Route>
             </Routes>
