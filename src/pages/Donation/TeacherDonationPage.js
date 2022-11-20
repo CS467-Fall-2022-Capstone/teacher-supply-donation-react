@@ -4,9 +4,9 @@ import SupplyTableSimple from '../../components/TeacherDonation/SupplyTableSimpl
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 import DonationModal from '../../components/TeacherDonation/DonationModal';
+
 function TeacherDonationPage() {
-    const {teacher, supplies, recordRetrieved} =
-        useOutletContext();
+    const { teacher, supplies, recordRetrieved } = useOutletContext();
 
     return (
         <>
@@ -16,7 +16,9 @@ function TeacherDonationPage() {
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
                                 Donate Supplies to {teacher.name}'s Classroom!
-                                <Header.Subheader>{teacher.school}</Header.Subheader>
+                                <Header.Subheader>
+                                    {teacher.school}
+                                </Header.Subheader>
                             </Header.Content>
                         </Header>
                         <Message size='big' color='olive' compact>

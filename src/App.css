@@ -1,3 +1,8 @@
+/* Loading component */
+/* .dashboardLoader {
+    height: 100%;
+    margin: 50px auto;
+} */
 
 /* Dashboard General */
 
@@ -34,11 +39,6 @@
 
 .dashboardContent {
     margin: 25px;
-}
-
-.publish-controls {
-    max-width: 750px;
-    margin: 25px auto;
 }
 
 /* Donation Page */

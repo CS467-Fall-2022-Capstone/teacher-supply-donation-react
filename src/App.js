@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Unprotected Landing Pages
@@ -47,12 +47,19 @@ function App() {
                     <Route path='settings' element={<Settings />} />
                 </Route>
                 {/* Public Donation */}
-                <Route path='/donations/teachers/:teacherId' element={<DonationLayout />}>
-                    <Route index exact element={<TeacherDonationPage />} />
-                    <Route path='students/:studentId' exact element={<StudentDonationPage />} />
+                <Route
+                    path='/donations/teachers/:teacherId'
+                    element={<DonationLayout />}
+                >
+                    <Route exact index element={<TeacherDonationPage />} />
+                    <Route
+                        exact
+                        path='students/:studentId'
+                        element={<StudentDonationPage />} />
                 </Route>
                 <Route path='/donations/students/' element={<ThankyouLayout />}>
-                    <Route index path=':studentId' exact element={<ThankyouPage />} />
+                    <Route index path=':studentId' exact element={<ThankyouPage />}
+                    />
                 </Route>
             </Routes>
         </Router>
