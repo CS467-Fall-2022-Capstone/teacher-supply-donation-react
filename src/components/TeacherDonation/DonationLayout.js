@@ -30,15 +30,15 @@ function DonationLayout() {
                             isPublished: response.data.isPublished,
                             message: response.data.message,
                         };
-                        //console.log(Json.stringify(teacherData))
-                        //create property for potential student record intersection
-                        const tempSupplies = response.data.supplies.map((element) => ({
-                            ...element,
-                            quantityDonatedByStudent: 0
-                          }));
+                        // //console.log(Json.stringify(teacherData))
+                        // //create property for potential student record intersection
+                        // const tempSupplies = response.data.supplies.map((element) => ({
+                        //     ...element,
+                        //     quantityDonatedByStudent: 0
+                        //   }));
 
                         setTeacher(teacherData);
-                        setSupplies(tempSupplies);
+                        setSupplies(response.data.supplies);
                         setRecordRetrieved(true);
                         setLoading(false);
                     }

@@ -53,12 +53,16 @@ function App() {
                 >
                     <Route exact index element={<TeacherDonationPage />} />
                     <Route
-                        exact
                         path='students/:studentId'
-                        element={<StudentDonationPage />} />
+                        element={<StudentDonationPage />}
+                    />
                 </Route>
                 <Route path='/donations/students/' element={<ThankyouLayout />}>
-                    <Route index path=':studentId' exact element={<ThankyouPage />}
+                    <Route
+                        index
+                        path=':studentId'
+                        exact
+                        element={<ThankyouPage />}
                     />
                 </Route>
             </Routes>

@@ -3,34 +3,95 @@ import {
     Link,
     useOutletContext,
     useNavigate,
-    useParams
+    useParams,
 } from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
-//import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
-//import DonationModal from '../../components/TeacherDonation/DonationModal';
 import DonationService from '../../services/donations.service';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
     // always pull teacher's data to pass down as context
-    const { teacher, supplies, setSupplies, recordRetrieved } =
-        useOutletContext();
+    const { teacher, supplies } = useOutletContext();
     const { studentId } = useParams();
-
     const [student, setStudent] = useState({});
-    const [donations, setDonations] = useState([]);;
+    const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
     const [studentRetrieved, setStudentRetrieved] = useState(false);
-
-    const [updates, setUpdates] = useState({});
     const navigate = useNavigate();
 
     // Note From Sean:
     // Use DonationService getStudentRecord to get student and their donations
-    // 
-    useEffect(() => {
+    //
 
+    const initializeDonations = (studentId, supplies, donations) => {
+        if (donations.length === 0) {
+            // First time donating, all insert operations
+            const insertOneObjects = supplies.map((supply) => {
+                const supplyItem = {
+                    supply_id: supply._id,
+                    supplyName: supply.item,
+                    totalQuantityNeeded: supply.totalQuantityNeeded,
+                    totalQuantityDonated: supply.totalQuantityDonated,
+                    update: false,
+                    donationFields: {
+                        student_id: studentId,
+                        supply_id: supply._id,
+                        supplyItem: supply.item,
+                        quantityDonated: 0,
+                    },
+                };
+                return supplyItem;
+            });
+            // bulk form data to be all insert operations
+            setStudentRetrieved(true);
+
+            return insertOneObjects;
+        } else {
+            // if there are donations then map the supply to the donation
+            const insertOrUpdateObjects = supplies.map((supply) => {
+                // Find a matching donation
+                let donatedItem = donations.find(
+                    (donation) => donation.supply_id._id === supply._id
+                );
+                if (donatedItem) {
+                    // donation exists
+                    return {
+                        supply_id: supply._id,
+                        supplyName: supply.item,
+                        totalQuantityNeeded: supply.totalQuantityNeeded,
+                        totalQuantityDonated: supply.totalQuantityDonated,
+                        update: true,
+                        donationFields: {
+                            // Only thing we can update is the quantity to donate
+                            donation_id: donatedItem._id,
+                            quantityDonated: donatedItem.quantityDonated,
+                        },
+                    };
+                } else {
+                    // no matching donation so it would be an insertOne
+                    return {
+                        supply_id: supply._id,
+                        supplyName: supply.item,
+                        totalQuantityNeeded: supply.totalQuantityNeeded,
+                        totalQuantityDonated: supply.totalQuantityDonated,
+                        update: false,
+                        donationFields: {
+                            student_id: studentId,
+                            supply_id: supply._id,
+                            supplyItem: supply.item,
+                            quantityDonated: 0,
+                        },
+                    };
+                }
+            });
+            setStudentRetrieved(true);
+
+            return insertOrUpdateObjects;
+        }
+    };
+
+    useEffect(() => {
         async function loadStudentInfo() {
             try {
                 const response = await DonationService.getStudentRecord(
@@ -45,7 +106,13 @@ function StudentDonationPage() {
                             lname: response.data.lastName,
                         };
                         setStudent(studentData);
-                        setDonations(response.data.donations);
+                        // merge supplies with donations and create bulk write objects for update
+                        const donationsForBulkWrite = initializeDonations(
+                            studentData._id,
+                            supplies,
+                            response.data.donations
+                        );
+                        setSuppliesAndDonations(donationsForBulkWrite);
                     }
                 }
             } catch (err) {
@@ -58,75 +125,16 @@ function StudentDonationPage() {
             // cleanup code to ensure no race conditions
             ignore = true;
         };
-        // call useEffect on re-render if there are any changes to student
-    }, [studentId, studentRetrieved]);
+    }, []);
 
-    //If there are updates to donations or supplies arrays, this fires
-    // and checks whether donation and supply data is available,
-    // if so, signals student data is retrieved, which is noticed
-    // by the next useEffect hook
-    useEffect(() => {
-        if (donations.length > 0 && supplies.length > 0) {
-            setStudentRetrieved(true);
-            console.log("Setting student retrieved to true");
-        } else {
-            setStudentRetrieved(false);
-            console.log("Setting student retrieved to false")
-        }
-    }, [donations, supplies]);
-
-    //Once supplies and donations  available, this will revise the supplies array
-    // to include any donations already made by this student
-    useEffect(() => {
-        //make deep copy because array has mutable objects
-        if (supplies.length > 0 && donations.length > 0) {
-            let tempSupplies = _.cloneDeep(supplies);
-
-            //add quantityDonatedByStudent field to all elements of supplies array
-            for (let supply of tempSupplies) {
-                supply.quantityDonatedByStudent = 0;
-            }
-            //if student has prior donations, update the variable in supply record
-            for (let donation of donations) {
-                let searchIndex = tempSupplies.findIndex((supply) => supply._id === donation.supply_id._id);
-                //console.log("Search index is: " + searchIndex);
-                if (searchIndex >= 0) {
-                    tempSupplies[searchIndex].quantityDonatedByStudent = donation.quantityDonated;
-                }
-            }
-            setSupplies(tempSupplies);
-            //eslint-disable-next-line react-hooks/exhaustive-deps
-        }
-    }, [studentRetrieved]);
-
-
-    //add any prior student donation data to the associated supplies record
-    // so that it can be displayed in the table
-
-    const onSubmit = async (updatedSupplies) => {
+    const handleSubmit = async (submitData) => {
+        const student_id = student._id;
+        console.log(submitData);
         try {
-            const newDonations = {
-                updatedDonations: [],
-            };
-            for (const key of Object.keys(updatedSupplies)) {
-                newDonations.updatedDonations.push({
-                    supply_id: key,
-                    quantityDonated: updatedSupplies[key] != null ? parseInt(updatedSupplies[key]) : 0,
-                });
-            }
-            //console.log('Object to submit: ' + JSON.stringify(newDonations));
-            return await DonationService.updateStudentDonations(student._id, newDonations);
-
-        } catch (err) {
-            console.log('Error response received from Donations API');
-            console.log(err);
-            throw err;
-        }
-    };
-
-    const handleSubmit = async () => {
-        try {
-            const response = await onSubmit(updates);
+            const response = await DonationService.updateStudentDonations(
+                student_id,
+                submitData
+            );
             if (response.status === 200) {
                 console.log('Send successful');
             } else {
@@ -141,19 +149,35 @@ function StudentDonationPage() {
             //For development - Return to teacher's public classroom page
             //eventually, on success go to the thank you page, or
             //handle unsuccessful attempt to donate
-            //navigate('/donations/teachers/' + teacher._id);
-            navigate('/donations/students/' + student._id);
+            navigate('/donations/teachers/' + teacher._id);
+            // navigate('/donations/students/' + student._id);
         }
+    };
+
+    const handleDonationChange = (e, donationUpdater) => {
+        const updatedDonation = donationUpdater(e);
+
+        setSuppliesAndDonations((prevItems) =>
+            prevItems.map((item) => {
+                if (item.supply_id === updatedDonation.supply_id) {
+                    return updatedDonation;
+                } else {
+                    return item;
+                }
+            })
+        );
     };
 
     return (
         <>
-            {recordRetrieved ? (
+            {studentRetrieved ? (
                 <div className='dashboardHeader'>
                     <Header size='huge' textAlign='center'>
                         <Header.Content>
                             Donate Supplies to {teacher.name}'s Classroom!
-                            <Header.Subheader>{teacher.school}</Header.Subheader>
+                            <Header.Subheader>
+                                {teacher.school}
+                            </Header.Subheader>
                         </Header.Content>
                     </Header>
 
@@ -177,21 +201,21 @@ function StudentDonationPage() {
                     </Message>
                 </div>
             )}
+
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
 
             <SupplyTableDonate
-                supplies={supplies}
-                setUpdates={setUpdates}
-                updates={updates}
+                suppliesAndDonations={suppliesAndDonations}
+                handleDonationChange={handleDonationChange}
             />
-            {recordRetrieved ? (
+            {studentRetrieved ? (
                 <Container className='buttonRow' textAlign='center'>
                     <Button
                         type='submit'
                         size='medium'
                         content='Submit your donations'
-                        onClick={() => handleSubmit(updates)}
+                        onClick={() => handleSubmit(suppliesAndDonations)}
                     />
                 </Container>
             ) : (

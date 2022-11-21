@@ -1,12 +1,53 @@
 //import React, { useState, useEffect } from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext, useNavigate } from 'react-router-dom';
 import SupplyTableSimple from '../../components/TeacherDonation/SupplyTableSimple.js';
 //import MetricsCards from '../components/TeacherDashboard/MetricsCards';
 import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
 import DonationModal from '../../components/TeacherDonation/DonationModal';
+import DonationService from '../../services/donations.service';
 
 function TeacherDonationPage() {
+    let navigate = useNavigate();
     const { teacher, supplies, recordRetrieved } = useOutletContext();
+
+    const handleNewDonorSubmit = async (fName, lName, email) => {
+        const studentData = {
+            firstName: fName,
+            lastName: lName,
+            email: email,
+            teacher_id: teacher._id,
+        };
+        try {
+            const response = await DonationService.createNewStudentRecord(
+                studentData
+            );
+            if (response.status === 201) {
+                const student_id = response.data.student_id;
+                navigate(`students/${student_id}`);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    // http://localhost:8000/donations/teachers/637346a75ece0f247d3f19f0/donations/teachers/637346a75ece0f247d3f19f0/students/637ae2eef1b9b08b3afa769e
+
+    const handleReturningDonorSubmit = async (donationId) => {
+        try {
+            const response = await DonationService.getStudentByDonationCode(
+                donationId
+            );
+            if (response.status === 200) {
+                const student_id = response.data.student_id;
+                navigate(`students/${student_id}`);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    // const handleSendEmailDonationId = () => {
+    //     // handle send email code once emailer is up
+    // };
 
     return (
         <>
@@ -48,7 +89,12 @@ function TeacherDonationPage() {
             {recordRetrieved ? (
                 <>
                     <Container className='buttonRow' textAlign='center'>
-                        <DonationModal />
+                        <DonationModal
+                            handleNewDonorSubmit={handleNewDonorSubmit}
+                            handleReturningDonorSubmit={
+                                handleReturningDonorSubmit
+                            }
+                        />
                     </Container>
                 </>
             ) : (

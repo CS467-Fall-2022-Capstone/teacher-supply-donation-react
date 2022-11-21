@@ -10,18 +10,15 @@ import {
     Form,
 } from 'semantic-ui-react';
 
-function DonationModal() {
+function DonationModal({
+    handleNewDonorSubmit,
+    handleReturningDonorSubmit,
+}) {
     const [open, setOpen] = useState(false);
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
     const [email, setEmail] = useState('');
     const [donationId, setDonationId] = useState('');
-
-    const handleNewDonorSubmit = () => {};
-
-    const handleReturningDonorSubmit = () => {};
-
-    const handleSendEmailDonationId = () => {};
 
     return (
         <Modal
@@ -72,7 +69,13 @@ function DonationModal() {
                                     }
                                     content='Start New Donation'
                                     primary
-                                    onClick={() => handleNewDonorSubmit()}
+                                    onClick={() =>
+                                        handleNewDonorSubmit(
+                                            fName,
+                                            lName,
+                                            email
+                                        )
+                                    }
                                 />
                             </Form>
                         </Grid.Column>
@@ -95,7 +98,9 @@ function DonationModal() {
                                     disabled={donationId.length === 0}
                                     content='Update Donations'
                                     primary
-                                    onClick={() => handleReturningDonorSubmit()}
+                                    onClick={() =>
+                                        handleReturningDonorSubmit(donationId)
+                                    }
                                 />
                             </Form>
                             <Divider />
@@ -114,7 +119,6 @@ function DonationModal() {
                                     disabled={email.length === 0}
                                     content='Email Me My Donation ID'
                                     color='teal'
-                                    onClick={() => handleSendEmailDonationId()}
                                 />
                             </Form>
                         </Grid.Column>

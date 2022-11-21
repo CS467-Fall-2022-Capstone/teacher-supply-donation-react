@@ -19,12 +19,30 @@ class DonationService {
     }
 
     /**
+     * Create Student record
+     * @param {*}
+     * @returns student record & donations
+     */
+    createNewStudentRecord(studentInfo) {
+        return axios.post(`${API_URL}/students/`, studentInfo);
+    }
+
+    /**
      * Retrieves Student record including their existing donations
      * @param {*} student_id
      * @returns student record & donations
      */
     getStudentRecord(student_id) {
         return axios.get(`${API_URL}/students/${student_id}`);
+    }
+
+    /**
+     * Retrieves Student's objectId value
+     * @param {*} donation_code
+     * @returns student_id: student._id
+     */
+    getStudentByDonationCode(donation_code) {
+        return axios.get(`${API_URL}/students/${donation_code}/donations`)
     }
 
     /**
@@ -35,8 +53,8 @@ class DonationService {
      */
     updateStudentDonations(student_id, donations) {
         return axios({
-            method: 'patch',
-            url: `${API_URL}/students/${student_id}/donations`,
+            method: 'post',
+            url: `${API_URL}/donations/${student_id}`,
             data: donations,
         });
     }
