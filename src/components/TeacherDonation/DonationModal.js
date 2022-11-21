@@ -23,10 +23,6 @@ function DonationModal({
     const [donationId, setDonationId] = useState('');
     const { teacher } = useOutletContext();
 
-    const handleNewDonorSubmit = () => {};
-
-    const handleReturningDonorSubmit = () => {};
-
     const handleSendEmailDonationId = () => {
         DonationService.sendEmailDonationId(email, teacher.name);
     };
@@ -130,6 +126,7 @@ function DonationModal({
                                     disabled={email.length === 0}
                                     content='Email Me My Donation ID'
                                     color='teal'
+                                    onClick={() => handleSendEmailDonationId()}
                                 />
                             </Form>
                         </Grid.Column>

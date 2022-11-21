@@ -29,7 +29,6 @@ function TeacherDonationPage() {
             console.error(err);
         }
     };
-    // http://localhost:8000/donations/teachers/637346a75ece0f247d3f19f0/donations/teachers/637346a75ece0f247d3f19f0/students/637ae2eef1b9b08b3afa769e
 
     const handleReturningDonorSubmit = async (donationId) => {
         try {
@@ -44,10 +43,6 @@ function TeacherDonationPage() {
             console.error(err);
         }
     };
-
-    // const handleSendEmailDonationId = () => {
-    //     // handle send email code once emailer is up
-    // };
 
     return (
         <>

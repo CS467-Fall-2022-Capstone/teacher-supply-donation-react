@@ -49,10 +49,6 @@ class DonationService {
         });
     }
 
-    getStudentDonations(student_id) {
-        return axios.get(`${API_URL}/students/${student_id}/donations`);
-    }
-
     sendEmailDonationId(email, teacher_name) {
         let req_body = {
             email,
