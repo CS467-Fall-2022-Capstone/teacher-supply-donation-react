@@ -20,10 +20,6 @@ function StudentDonationPage() {
     const [studentRetrieved, setStudentRetrieved] = useState(false);
     const navigate = useNavigate();
 
-    // Note From Sean:
-    // Use DonationService getStudentRecord to get student and their donations
-    //
-
     const initializeDonations = (studentId, supplies, donations) => {
         if (donations.length === 0) {
             // First time donating, all insert operations

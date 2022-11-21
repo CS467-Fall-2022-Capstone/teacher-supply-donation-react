@@ -58,10 +58,6 @@ class DonationService {
             data: donations,
         });
     }
-
-    getStudentDonations(student_id) {
-        return axios.get(`${API_URL}/students/${student_id}/donations`);
-    }
 }
 
 export default new DonationService();
