@@ -58,7 +58,15 @@ class DonationService {
             method: 'post',
             url: `${API_URL}/emailDonationId`,
             data: req_body,
-        });
+        })
     }
+
+    handleDownloadCsv(teacher_id) {
+        return axios({
+            method: 'get',
+            url: `${API_URL}/downloadCsv?t=${teacher_id}`,
+        })
+    }
+
 }
 export default new DonationService();
