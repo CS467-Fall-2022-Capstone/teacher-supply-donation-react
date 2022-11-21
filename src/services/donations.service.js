@@ -36,6 +36,15 @@ class DonationService {
     }
 
     /**
+     * Finds Student record by Donation and return 200 if found
+     * @param {*} donation_code
+     * @returns status 200
+     */
+    getStudentByDonationCode(donation_code) {
+        return axios.get(`/students/${donation_code}/donations`);
+    }
+
+    /**
      * Sends an object representing students donations toward class supply list
      * @param {} student_id
      * @param {*} donations
@@ -52,8 +61,8 @@ class DonationService {
     sendEmailDonationId(email, teacher_name) {
         let req_body = {
             email,
-            teacher_name
-        }
+            teacher_name,
+        };
         return axios({
             method: 'post',
             url: `${API_URL}/emailDonationId`,
