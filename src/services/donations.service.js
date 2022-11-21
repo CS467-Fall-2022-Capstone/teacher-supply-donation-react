@@ -5,7 +5,6 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 /**
  * Class for accessing donations data from backend
  */
-
 class DonationService {
     /**
      * Retrieves an existing public teacher record, which
