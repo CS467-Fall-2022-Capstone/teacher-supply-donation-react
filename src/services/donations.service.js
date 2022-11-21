@@ -5,7 +5,6 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 /**
  * Class for accessing donations data from backend
  */
-
 class DonationService {
     /**
      * Retrieves an existing public teacher record, which
@@ -16,6 +15,15 @@ class DonationService {
      */
     getTeacherPublicRecord(teacher_id) {
         return axios.get(API_URL + '/teachers/' + teacher_id + '/public');
+    }
+
+    /**
+     * Create Student record
+     * @param {*}
+     * @returns student record & donations
+     */
+    createNewStudentRecord(studentInfo) {
+        return axios.post(`${API_URL}/students/`, studentInfo);
     }
 
     /**
@@ -35,14 +43,10 @@ class DonationService {
      */
     updateStudentDonations(student_id, donations) {
         return axios({
-            method: 'patch',
-            url: `${API_URL}/students/${student_id}/donations`,
+            method: 'post',
+            url: `${API_URL}/donations/${student_id}`,
             data: donations,
         });
-    }
-
-    getStudentDonations(student_id) {
-        return axios.get(`${API_URL}/students/${student_id}/donations`);
     }
 
     sendEmailDonationId(email, teacher_name) {

@@ -19,9 +19,9 @@ function ThankyouPage() {
                     <Container textAlign='left'>
                         <Header as="h3">Please bring your donations to class with you:</Header>
                         <List bulleted>
-                            {donations.map((donation, i) => (
+                            {donations.map((donation) => (
                                 <List.Item
-                                    key={i}
+                                    key={donation.donation_id}
                                     donation={donation.donation_id}
                                     content={<Header as="h3">Donation ID: {donation.donation_id}, Quantity Donated: {donation.quantityDonated}</Header>}
                                 />

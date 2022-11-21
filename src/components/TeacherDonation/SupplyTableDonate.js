@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Table } from 'semantic-ui-react';
 import SupplyRowDonate from './SupplyRowDonate';
 
-function SupplyTableDonate({
-    supplies, setUpdates, updates
-}) {
-    //const [itemName, setItemName] = useState('');
-    //const [totalNeeded, setTotalNeeded] = useState(0);
-
+function SupplyTableDonate({ suppliesAndDonations, handleDonationChange }) {
     return (
-        <Table basic="very" celled selectable>
-            <Table.Header >
+        <Table basic='very' celled selectable>
+            <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>Item</Table.HeaderCell>
                     <Table.HeaderCell>Quantity Needed</Table.HeaderCell>
-                    <Table.HeaderCell>Quantity Donated By the Class</Table.HeaderCell>
-                    <Table.HeaderCell>Quantity You're Donating</Table.HeaderCell>
+                    <Table.HeaderCell>
+                        Quantity Donated By the Class
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                        Quantity You're Donating
+                    </Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {supplies.map((supply, i) => (
+                {suppliesAndDonations.map((supply) => (
                     <SupplyRowDonate
-                        key={i}
+                        key={supply.supply_id}
+                        id={supply.supply_id}
                         supply={supply}
-                        setUpdates={setUpdates}
-                        updates={updates}
+                        handleDonationChange={handleDonationChange}
                     />
                 ))}
             </Table.Body>
