@@ -9,6 +9,8 @@ import {
     Segment,
     Form,
 } from 'semantic-ui-react';
+import DonationService from '../../services/donations.service';
+import { useOutletContext } from 'react-router-dom';
 
 function DonationModal() {
     const [open, setOpen] = useState(false);
@@ -16,12 +18,15 @@ function DonationModal() {
     const [lName, setLName] = useState('');
     const [email, setEmail] = useState('');
     const [donationId, setDonationId] = useState('');
+    const { teacher } = useOutletContext();
 
     const handleNewDonorSubmit = () => {};
 
     const handleReturningDonorSubmit = () => {};
 
-    const handleSendEmailDonationId = () => {};
+    const handleSendEmailDonationId = () => {
+        DonationService.sendEmailDonationId(email, teacher.name);
+    };
 
     return (
         <Modal
@@ -99,7 +104,7 @@ function DonationModal() {
                                 />
                             </Form>
                             <Divider />
-                            <Header textAlign='center' as='h3'>
+                            <Header as='h3'>
                                 Forgot your Donation ID?
                             </Header>
                             <Form>
