@@ -36,15 +36,6 @@ class DonationService {
     }
 
     /**
-     * Retrieves Student's objectId value
-     * @param {*} donation_code
-     * @returns student_id: student._id
-     */
-    getStudentByDonationCode(donation_code) {
-        return axios.get(`${API_URL}/students/${donation_code}/donations`)
-    }
-
-    /**
      * Sends an object representing students donations toward class supply list
      * @param {} student_id
      * @param {*} donations
@@ -57,6 +48,21 @@ class DonationService {
             data: donations,
         });
     }
-}
 
+    getStudentDonations(student_id) {
+        return axios.get(`${API_URL}/students/${student_id}/donations`);
+    }
+
+    sendEmailDonationId(email, teacher_name) {
+        let req_body = {
+            email,
+            teacher_name
+        }
+        return axios({
+            method: 'post',
+            url: `${API_URL}/emailDonationId`,
+            data: req_body,
+        });
+    }
+}
 export default new DonationService();
