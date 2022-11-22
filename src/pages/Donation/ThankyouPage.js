@@ -3,7 +3,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { Header, Button, Container, Divider, Message, List } from 'semantic-ui-react';
 
 function ThankyouPage() {
-    const [student_id, donations, recordRetrieved] =
+    const [student, donations, recordRetrieved] =
         useOutletContext();
 
     return (
@@ -12,26 +12,25 @@ function ThankyouPage() {
                 <div className='dashboardHeader'>
                     <Header size='huge' textAlign='center'>
                         <Header.Content>
-                            Thank you for your donation!
+                            Thank you for your donation, {student.fname}! Your unique donation code is: {student.donationCode}
                         </Header.Content>
+                        <Divider />
+
                     </Header>
-                    <Divider />
-                    <Container textAlign='left'>
+
+                    <Container textAlign='Center'>
                         <Header as="h3">Please bring your donations to class with you:</Header>
                         <List bulleted>
                             {donations.map((donation) => (
                                 <List.Item
-                                    key={donation.donation_id}
+                                    key={donation._id}
                                     donation={donation.donation_id}
-                                    content={<Header as="h3">Donation ID: {donation.donation_id}, Quantity Donated: {donation.quantityDonated}</Header>}
+                                    content={<Header as="h3">Item: {donation.supply_id.item} | Quantity Donated: {donation.quantityDonated}</Header>}
                                 />
                             ))}
                         </List>
                     </Container>
                     <Divider />
-                    <Container textAlign='left'>
-                        <Header as="h3">Your unique donation ID is: {student_id}. If you need to update or delete your donation form...</Header>
-                    </Container>
                 </div>
             ) : (
                 <div className='dashboardHeader'>
@@ -45,7 +44,7 @@ function ThankyouPage() {
                     </Header>
                     <Container textAlign='center'>
                         <Message size='big' color='olive' compact>
-                            Check that the student id '{student_id}' is correct
+                            Check that the student id '{student._id}' is correct
                         </Message>
                     </Container>
                 </div>
