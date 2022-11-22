@@ -1,8 +1,16 @@
 import React from 'react';
 import { Table, Header, Button, Icon } from 'semantic-ui-react';
 import DonorRow from './DonorRow';
-
+import { useOutletContext } from 'react-router-dom';
+import DonationService from '../../services/donations.service';
 function DonorTable({ students }) {
+
+    const { teacher } = useOutletContext();
+
+    const handleDownloadCsv = () => {
+        DonationService.handleDownloadCsv(teacher.teacher_id);
+    };
+
     return (
         <Table inverted celled selectable>
             <Table.Header>
@@ -36,6 +44,7 @@ function DonorTable({ students }) {
                             icon
                             labelPosition='left'
                             primary
+                            onClick={() => handleDownloadCsv()}
                         >
                             <Icon name='download' />
                             Download to .csv
