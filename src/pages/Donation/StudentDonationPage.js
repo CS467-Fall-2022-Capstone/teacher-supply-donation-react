@@ -123,6 +123,8 @@ function StudentDonationPage() {
         };
     }, []);
 
+    // TODO: add automated email after student submits donation 
+    // contains donation code and donations they've committed
     const handleSubmit = async (submitData) => {
         const student_id = student._id;
         console.log(submitData);
