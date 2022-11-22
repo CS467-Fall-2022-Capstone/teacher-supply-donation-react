@@ -12,7 +12,7 @@ function DonorRow({ student }) {
         <Table.Row>
             <Table.Cell>{student.firstName}</Table.Cell>
             <Table.Cell>{student.lastName}</Table.Cell>
-            <Table.Cell>{student._id}</Table.Cell>
+            <Table.Cell>{student.donation_code}</Table.Cell>
             <Table.Cell>
                 <List items={formattedDonations} />
             </Table.Cell>
