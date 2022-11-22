@@ -1,16 +1,26 @@
 import React from 'react';
 import { Table, Header, Button, Icon } from 'semantic-ui-react';
 import DonorRow from './DonorRow';
-import { useOutletContext } from 'react-router-dom';
-import DonationService from '../../services/donations.service';
+import CsvDownloader from 'react-csv-downloader';
+
 function DonorTable({ students }) {
 
-    const { teacher } = useOutletContext();
-
-    const handleDownloadCsv = () => {
-        DonationService.handleDownloadCsv(teacher.teacher_id);
-    };
-
+        // datas contains donors list that can be downloaded as .csv file
+        const datas = [];
+        students.forEach(student => {
+            let studentData = {};
+            studentData.lastName = student.lastName;
+            studentData.firstName = student.firstName;           
+            let formattedDonations = student.donations.map( donation => {
+                let supply = donation.supply_id.item;
+                let quantityDonated = donation.quantityDonated;
+                return `${supply} - ${quantityDonated}`;
+            });
+            studentData.donations = formattedDonations;
+            studentData.email = student.email;
+            studentData.donation_code = student.donation_code;
+            datas.push(studentData);
+        });
     return (
         <Table inverted celled selectable>
             <Table.Header>
@@ -39,16 +49,19 @@ function DonorTable({ students }) {
                     />
                     <Table.HeaderCell />
                     <Table.HeaderCell>
-                        <Button
-                            floated='right'
-                            icon
-                            labelPosition='left'
-                            primary
-                            onClick={() => handleDownloadCsv()}
-                        >
-                            <Icon name='download' />
-                            Download to .csv
-                        </Button>
+                       
+                            
+                             <div style={{height: '20px'}} >
+                            <CsvDownloader
+                                filename="donorsList"
+                                extension=".csv"
+                                separator=","
+                                wrapColumnChar=""
+                                datas={datas}
+                                text="Download to .csv"
+                                style={{ backgroundColor: 'lightblue'}} 
+                            />   
+                          </div>                        
                     </Table.HeaderCell>
                 </Table.Row>
             </Table.Footer>
