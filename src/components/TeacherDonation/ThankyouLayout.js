@@ -8,45 +8,43 @@ import logo from '../../media/logo.png';
 function ThankyouLayout() {
 
     const { studentId } = useParams();
-
-    const [student_id, setStudentId] = useState(studentId);
+    const [student, setStudent] = useState({});
+    //const [student_id, setStudentId] = useState(studentId);
     const [donations, setDonations] = useState([]);
     const [recordRetrieved, setRecordRetrieved] = useState(false);
 
     useEffect(() => {
-        
-        const testDonationData = {
-            donations: [
-                {donation_id: "NA", item: "No item retrieved", quantityDonated: "NA"}
-            ]
-        }
-        
-        const loadDonations = async () => {
+        async function loadStudentInfo() {
             try {
-                setStudentId(studentId);
-                let response = await DonationService.getStudentDonations(studentId);
+                const response = await DonationService.getStudentRecord(
+                    studentId
+                );
                 if (response.status === 200) {
-                    console.log("RECEIVED DATA: " + JSON.stringify(response.data));
-                    setRecordRetrieved(true);
-                    setDonations(response.data.donations);
-                    //setDonations(testDonationData.donations)
-
-                } else {
-                    setRecordRetrieved(false);
-                    //setName("NA");
-                    setDonations(testDonationData)
-                    console.log("UNSUCCESSFUL REQUEST. Status code: " + JSON.stringify(response.status));
+                    if (!ignore) {
+                        //console.log("Raw response data is: " + JSON.stringify(response.data))
+                        const studentData = {
+                            _id: response.data._id,
+                            fname: response.data.firstName,
+                            lname: response.data.lastName,
+                            donationCode: response.data.donation_code
+                        };
+                        setStudent(studentData);
+                        setDonations(response.data.donations)
+                        setRecordRetrieved(true)
+                        //console.log(JSON.stringify(studentData));
+                        //console.log(JSON.stringify(response.data.donations))
+                    }
                 }
             } catch (err) {
-                setRecordRetrieved(false);
-                console.log("Error response received from Donations API")
-                console.log(err);
-                throw err;
+                console.error(err);
             }
         }
-
-        loadDonations();
-    }, [studentId]);
+        let ignore = false;
+        loadStudentInfo();
+        return () => {
+            ignore = true;
+        };
+    }, []);
 
     return (
         <div className='container'>
@@ -82,7 +80,7 @@ function ThankyouLayout() {
                 </Menu>
             </div>
             <div className='dashboard'>
-                <Outlet context={[student_id, donations, recordRetrieved]} />
+                <Outlet context={[student, donations, recordRetrieved]} />
             </div>
         </div>
     );
