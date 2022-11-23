@@ -178,11 +178,8 @@ function StudentDonationPage() {
             console.log(err);
             throw err;
         } finally {
-            //For development - Return to teacher's public classroom page
-            //eventually, on success go to the thank you page, or
-            //handle unsuccessful attempt to donate
-            navigate('/donations/teachers/' + teacher._id, { replace: true });
-            // navigate('/donations/students/' + student._id);
+            // TODO: handle unsuccessful attempt to donate
+            navigate('/donations/students/' + student._id, { replace: true });
         }
     };
 
