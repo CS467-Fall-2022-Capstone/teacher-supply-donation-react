@@ -70,12 +70,19 @@ class DonationService {
         })
     }
 
-    handleDownloadCsv(teacher_id) {
+    sendEmailAfterSubmitDonation(teacher, student, studentDonations) {
+        let req_body = {
+            email: student.email,
+            studentName: student.fname + " " + student.lname,
+            donationCode: student.donationCode,
+            teacherName: teacher.name,
+            studentDonations
+        }
         return axios({
-            method: 'get',
-            url: `${API_URL}/downloadCsv?t=${teacher_id}`,
+            method: 'post',
+            url: `${API_URL}/emailAfterSubmitDonation`,
+            data: req_body,
         })
     }
-
 }
 export default new DonationService();

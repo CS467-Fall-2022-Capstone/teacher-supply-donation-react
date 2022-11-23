@@ -117,6 +117,8 @@ function StudentDonationPage() {
                             _id: response.data._id,
                             fname: response.data.firstName,
                             lname: response.data.lastName,
+                            donationCode: response.data.donation_code,
+                            email: response.data.email
                         };
                         setStudent(studentData);
                         // merge supplies with donations and create bulk write objects for update
@@ -141,11 +143,15 @@ function StudentDonationPage() {
         };
     }, []);
 
+    const handleSendEmailAfterSubmitDonation = (studentDonations) => {
+        DonationService.sendEmailAfterSubmitDonation(teacher, student, studentDonations);
+    };
+
+
     // TODO: add automated email after student submits donation 
     // contains donation code and donations they've committed
     const handleSubmit = async (submitData) => {
         const student_id = student._id;
-        console.log(submitData);
         try {
             const response = await DonationService.updateStudentDonations(
                 student_id,
@@ -153,6 +159,16 @@ function StudentDonationPage() {
             );
             if (response.status === 200) {
                 console.log('Send successful');
+                let studentDonations = [];
+                submitData.forEach( supply => {
+                    let supplyName = supply.supplyName;
+                    let quantityDonated = supply.donationFields.quantityDonated;
+                    if (quantityDonated > 0) {
+                        let donation = `${supplyName} - ${quantityDonated}`;
+                        studentDonations.push(donation);
+                    }
+                });
+                handleSendEmailAfterSubmitDonation(studentDonations);
             } else {
                 console.log('Send unsuccessful');
             }
