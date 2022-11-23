@@ -20,9 +20,8 @@ import DonationService from '../../services/donations.service';
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
     // always pull teacher's data to pass down as context
-    const { teacher, supplies } = useOutletContext();
+    const { teacher, supplies, student, setStudent } = useOutletContext();
     const { studentId } = useParams();
-    const [student, setStudent] = useState({});
     const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
     const [studentRetrieved, setStudentRetrieved] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -115,8 +114,8 @@ function StudentDonationPage() {
                         //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const studentData = {
                             _id: response.data._id,
-                            fname: response.data.firstName,
-                            lname: response.data.lastName,
+                            firstName: response.data.firstName,
+                            lastName: response.data.lastName,
                             donationCode: response.data.donation_code,
                             email: response.data.email
                         };
