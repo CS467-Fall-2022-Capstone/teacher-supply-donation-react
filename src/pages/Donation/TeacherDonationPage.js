@@ -1,8 +1,13 @@
-//import React, { useState, useEffect } from 'react';
 import { Link, useOutletContext, useNavigate } from 'react-router-dom';
 import SupplyTableSimple from '../../components/TeacherDonation/SupplyTableSimple.js';
-//import MetricsCards from '../components/TeacherDashboard/MetricsCards';
-import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
+import {
+    Header,
+    Button,
+    Container,
+    Message,
+    Divider,
+    Segment,
+} from 'semantic-ui-react';
 import DonationModal from '../../components/TeacherDonation/DonationModal';
 import DonationService from '../../services/donations.service';
 
@@ -23,7 +28,7 @@ function TeacherDonationPage() {
             );
             if (response.status === 201) {
                 const student_id = response.data.student_id;
-                navigate(`students/${student_id}`);
+                navigate(`students/${student_id}`, {replace: true});
             }
         } catch (err) {
             console.error(err);
@@ -37,7 +42,7 @@ function TeacherDonationPage() {
             );
             if (response.status === 200) {
                 const student_id = response.data.student_id;
-                navigate(`students/${student_id}`);
+                navigate(`students/${student_id}`, {replace: true});
             }
         } catch (err) {
             console.error(err);
@@ -80,7 +85,10 @@ function TeacherDonationPage() {
 
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
-            <SupplyTableSimple supplies={supplies} />
+            <Segment raised color='blue'>
+                <SupplyTableSimple supplies={supplies} />
+            </Segment>
+
             {recordRetrieved ? (
                 <>
                     <Container className='buttonRow' textAlign='center'>

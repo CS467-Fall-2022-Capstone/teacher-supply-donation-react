@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import TeacherService from '../../services/teacher.service';
 import logo from '../../media/logo.png';
 import Loading from '../Loading';
 
 function DonationLayout() {
+    // Use location so refreshed are done on every redirect
+    const location = useLocation();
     // This donations layout will always have the latest
     // data for the Teacher's supplies
     const { teacherId } = useParams();
@@ -30,12 +32,6 @@ function DonationLayout() {
                             isPublished: response.data.isPublished,
                             message: response.data.message,
                         };
-                        // //console.log(Json.stringify(teacherData))
-                        // //create property for potential student record intersection
-                        // const tempSupplies = response.data.supplies.map((element) => ({
-                        //     ...element,
-                        //     quantityDonatedByStudent: 0
-                        //   }));
 
                         setTeacher(teacherData);
                         setSupplies(response.data.supplies);
@@ -53,13 +49,7 @@ function DonationLayout() {
             // cleanup code to ensure no race conditions
             ignore = true;
         };
-        // call useEffect on re-render if there are any changes to teacher
-        // eslint-disable-next-line
-    },[]);
-
-    useEffect(() => {
-        //console.log("Current supplies array is: " + JSON.stringify(supplies))
-    }, [supplies]);
+    }, [location.key]);
 
     return (
         <div className='container'>
