@@ -268,13 +268,6 @@ function TeacherDashboardPage() {
                                             color='teal'
                                         />
                                     )}
-                                    <Button
-                                        disabled={!teacher.isPublished}
-                                        labelPosition='right'
-                                        icon='send'
-                                        content='Send'
-                                        color='blue'
-                                    />
                                 </Input>
                             }
                         />
