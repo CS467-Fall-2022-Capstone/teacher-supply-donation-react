@@ -1,27 +1,24 @@
-import keepItSimple from './media/keepItSimple.png';
-import aboutUs from './media/aboutUs.png';
-import howItWorks from './media/howItWorks.png';
-import logo from './media/logo.png';
-
+import logo from './media/TSDlogo-transparent.png';
+import whiteBackground from './media/whiteBackground.png';
 export const viewConfig = {
     mission: {
       textDisplay: 'mission',
-      imageDisplay: keepItSimple
+      imageDisplay: logo
     },
     aboutUs: {
       textDisplay: 'aboutUs',
-      imageDisplay: aboutUs
+      imageDisplay: logo
     },
     howItWorks: {
       textDisplay: 'howItWorks',
-      imageDisplay: howItWorks
+      imageDisplay: logo
     },
     login: {
       textDisplay: 'login',
-      imageDisplay: logo
+      imageDisplay: whiteBackground
     },
     signup: {
       textDisplay: 'signup',
-      imageDisplay: logo
+      imageDisplay: whiteBackground
     }
   }

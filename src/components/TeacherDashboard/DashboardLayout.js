@@ -4,6 +4,7 @@ import { Navigate, Link, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../services/AuthProvider';
 import TeacherService from '../../services/teacher.service.js';
 import Loading from '../Loading';
+import logo from '../../media/TSDLogoWhite.png';
 
 function DashboardLayout() {
     // Use location so refreshed are done on every redirect
@@ -60,8 +61,8 @@ function DashboardLayout() {
                             <Image
                                 centered
                                 alt='logo'
-                                src='../../logo.png'
-                                size='small'
+                                src={logo}
+                                size='medium'
                             />
                         </Menu.Item>
                         <Menu.Item
