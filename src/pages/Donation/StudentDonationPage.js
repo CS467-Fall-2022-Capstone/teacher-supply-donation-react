@@ -6,7 +6,14 @@ import {
     useParams,
 } from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
-import { Header, Button, Container, Message, Divider } from 'semantic-ui-react';
+import {
+    Header,
+    Button,
+    Container,
+    Message,
+    Divider,
+    Segment,
+} from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
 // import _ from 'lodash';
 
@@ -18,6 +25,7 @@ function StudentDonationPage() {
     const [student, setStudent] = useState({});
     const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
     const [studentRetrieved, setStudentRetrieved] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const navigate = useNavigate();
 
     const initializeDonations = (studentId, supplies, donations) => {
@@ -29,6 +37,9 @@ function StudentDonationPage() {
                     supplyName: supply.item,
                     totalQuantityNeeded: supply.totalQuantityNeeded,
                     totalQuantityDonated: supply.totalQuantityDonated,
+                    maxAllowed:
+                        supply.totalQuantityNeeded -
+                        supply.totalQuantityDonated,
                     update: false,
                     donationFields: {
                         student_id: studentId,
@@ -41,7 +52,6 @@ function StudentDonationPage() {
             });
             // bulk form data to be all insert operations
             setStudentRetrieved(true);
-
             return insertOneObjects;
         } else {
             // if there are donations then map the supply to the donation
@@ -57,6 +67,10 @@ function StudentDonationPage() {
                         supplyName: supply.item,
                         totalQuantityNeeded: supply.totalQuantityNeeded,
                         totalQuantityDonated: supply.totalQuantityDonated,
+                        maxAllowed:
+                            supply.totalQuantityNeeded +
+                            donatedItem.quantityDonated -
+                            supply.totalQuantityDonated,
                         update: true,
                         donationFields: {
                             // Only thing we can update is the quantity to donate
@@ -71,6 +85,9 @@ function StudentDonationPage() {
                         supplyName: supply.item,
                         totalQuantityNeeded: supply.totalQuantityNeeded,
                         totalQuantityDonated: supply.totalQuantityDonated,
+                        maxAllowed:
+                            supply.totalQuantityNeeded -
+                            supply.totalQuantityDonated,
                         update: false,
                         donationFields: {
                             student_id: studentId,
@@ -108,6 +125,7 @@ function StudentDonationPage() {
                             supplies,
                             response.data.donations
                         );
+                        console.log(donationsForBulkWrite);
                         setSuppliesAndDonations(donationsForBulkWrite);
                     }
                 }
@@ -147,14 +165,22 @@ function StudentDonationPage() {
             //For development - Return to teacher's public classroom page
             //eventually, on success go to the thank you page, or
             //handle unsuccessful attempt to donate
-            navigate('/donations/teachers/' + teacher._id);
+            navigate('/donations/teachers/' + teacher._id, { replace: true });
             // navigate('/donations/students/' + student._id);
         }
     };
 
     const handleDonationChange = (e, donationUpdater) => {
         const updatedDonation = donationUpdater(e);
-
+        console.log(updatedDonation);
+        if (
+            updatedDonation.donationFields.quantityDonated >
+            updatedDonation.maxAllowed
+        ) {
+            setDisabled(true);
+        } else {
+            setDisabled(false);
+        }
         setSuppliesAndDonations((prevItems) =>
             prevItems.map((item) => {
                 if (item.supply_id === updatedDonation.supply_id) {
@@ -203,13 +229,18 @@ function StudentDonationPage() {
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
 
-            <SupplyTableDonate
-                suppliesAndDonations={suppliesAndDonations}
-                handleDonationChange={handleDonationChange}
-            />
+            <Segment>
+                <SupplyTableDonate
+                    suppliesAndDonations={suppliesAndDonations}
+                    handleDonationChange={handleDonationChange}
+                />
+            </Segment>
+
             {studentRetrieved ? (
                 <Container className='buttonRow' textAlign='center'>
                     <Button
+                        primary
+                        disabled={disabled}
                         type='submit'
                         size='medium'
                         content='Submit your donations'

@@ -58,7 +58,7 @@ class DonationService {
         });
     }
 
-    sendEmailDonationId(email, teacher_name) {
+    sendEmailDonationCode(email, teacher_name) {
         let req_body = {
             email,
             teacher_name,

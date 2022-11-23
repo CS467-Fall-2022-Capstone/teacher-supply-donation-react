@@ -20,11 +20,11 @@ function DonationModal({
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
     const [email, setEmail] = useState('');
-    const [donationId, setDonationId] = useState('');
+    const [donationCode, setDonationCode] = useState('');
     const { teacher } = useOutletContext();
 
-    const handleSendEmailDonationId = () => {
-        DonationService.sendEmailDonationId(email, teacher.name);
+    const handleSendEmailDonationCode = () => {
+        DonationService.sendEmailDonationCode(email, teacher.name);
     };
 
     return (
@@ -94,25 +94,25 @@ function DonationModal({
                             <Form>
                                 <Form.Input
                                     size='mini'
-                                    label='Donation ID'
-                                    placeholder='Donation ID'
+                                    label='Donation Code'
+                                    placeholder='Donation Code'
                                     onChange={(e) =>
-                                        setDonationId(e.target.value)
+                                        setDonationCode(e.target.value)
                                     }
                                 />
                                 <Button
                                     size='small'
-                                    disabled={donationId.length === 0}
+                                    disabled={donationCode.length === 0}
                                     content='Update Donations'
                                     primary
                                     onClick={() =>
-                                        handleReturningDonorSubmit(donationId)
+                                        handleReturningDonorSubmit(donationCode)
                                     }
                                 />
                             </Form>
                             <Divider />
                             <Header as='h3'>
-                                Forgot your Donation ID?
+                                Forgot your Donation Code?
                             </Header>
                             <Form>
                                 <Form.Input
@@ -124,9 +124,9 @@ function DonationModal({
                                 <Button
                                     size='small'
                                     disabled={email.length === 0}
-                                    content='Email Me My Donation ID'
+                                    content='Email Me My Donation Code'
                                     color='teal'
-                                    onClick={() => handleSendEmailDonationId()}
+                                    onClick={() => handleSendEmailDonationCode()}
                                 />
                             </Form>
                         </Grid.Column>
