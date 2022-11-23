@@ -18,7 +18,7 @@ function DonorTable({ students }) {
             if(formattedDonations.length > 0) {
                 formattedDonations += " - ";
             }
-            formattedDonations += `${supply} (${quantityDonated})`;
+            formattedDonations += `${supply}(${quantityDonated})`;
         });
         studentData.donations = formattedDonations;
         studentData.email = student.email;
