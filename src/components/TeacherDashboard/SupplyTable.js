@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Icon, Input } from 'semantic-ui-react';
 import SupplyRow from './SupplyRow';
+import { useNavigate } from 'react-router-dom'
 
 function SupplyTable({
     supplies,
@@ -14,6 +15,7 @@ function SupplyTable({
     onAdd,
     onSubmit,
 }) {
+    const navigate = useNavigate();
     const [itemName, setItemName] = useState('');
     const [totalNeeded, setTotalQuantityNeeded] = useState(0);
 
@@ -21,10 +23,8 @@ function SupplyTable({
         try {
             const response = await onSubmit(item, qty);
             if (response.status === 201) {
-                const newSupply = response.data;
-                newSupply.totalQuantityDonated = 0;
-                console.log(newSupply)
-                setSupplies((prevSupplies) => [...prevSupplies, newSupply]);
+                // force refresh to sync data
+                navigate('/teachers/dashboard')
             }
         } catch (err) {
             console.log('Error response received from Donations API');

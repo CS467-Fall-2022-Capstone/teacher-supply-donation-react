@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
-import { Navigate, Link, Outlet } from 'react-router-dom';
+import { Navigate, Link, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../services/AuthProvider';
 import TeacherService from '../../services/teacher.service.js';
 import Loading from '../Loading';
 
 function DashboardLayout() {
+    // Use location so refreshed are done on every redirect
+    const location = useLocation();
     const { teacher, setTeacher, logOut } = useAuth();
     const [supplies, setSupplies] = useState([]);
     const [students, setStudents] = useState([]);
@@ -38,7 +40,7 @@ function DashboardLayout() {
             // cleanup code to ensure no race conditions
             ignore = true;
         };
-    }, []);
+    }, [location.key]);
 
     if (!teacher) {
         return <Navigate to='/login' replace />;
