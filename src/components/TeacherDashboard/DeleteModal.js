@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Header, Icon, Modal } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Popup } from 'semantic-ui-react';
 import { FaTrashAlt } from 'react-icons/fa';
 
 function DeleteModal({ supply, onDelete }) {
@@ -8,7 +8,7 @@ function DeleteModal({ supply, onDelete }) {
         try {
             onDelete(id);
         } catch (err) {
-            console.error(err)
+            console.error(err);
         } finally {
             setOpen(false);
         }
@@ -29,7 +29,9 @@ function DeleteModal({ supply, onDelete }) {
             </Header>
             <Modal.Content>
                 <Header as='h3' inverted>
-                    Are you sure you want to delete {supply.item} from the list?
+                    {supply.totalQuantityDonated > 0
+                        ? `Cannot delete ${supply.item} because there are ${supply.totalQuantityDonated} donations for the supply`
+                        : `Are you sure you want to delete ${supply.item} from the list?`}
                 </Header>
             </Modal.Content>
             <Modal.Actions>
@@ -37,6 +39,7 @@ function DeleteModal({ supply, onDelete }) {
                     <Icon name='remove' /> Cancel
                 </Button>
                 <Button
+                    disabled={supply.totalQuantityDonated > 0}
                     color='red'
                     inverted
                     onClick={() => handleDelete(supply._id)}
