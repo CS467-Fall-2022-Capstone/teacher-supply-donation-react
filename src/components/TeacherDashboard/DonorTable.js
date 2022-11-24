@@ -3,8 +3,13 @@ import { Table, Header } from 'semantic-ui-react';
 import DonorRow from './DonorRow';
 import CsvDownloader from 'react-csv-downloader';
 
-function DonorTable({ students }) {
-
+function DonorTable({ 
+    students,
+    inEditMode,
+    onEdit,
+    onSave,
+    onCancel,
+}) {
     // datas contains donors list that can be downloaded as .csv file
     const datas = [];
     students.forEach(student => {
@@ -32,13 +37,21 @@ function DonorTable({ students }) {
                 <Table.Row>
                     <Table.HeaderCell>First Name</Table.HeaderCell>
                     <Table.HeaderCell>Last Name</Table.HeaderCell>
+                    <Table.HeaderCell>Email</Table.HeaderCell>
                     <Table.HeaderCell>Donation Code</Table.HeaderCell>
                     <Table.HeaderCell>Supplies Donated</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
                 {students.map((student, i) => (
-                    <DonorRow key={i} student={student} />
+                    <DonorRow 
+                        key={i}
+                        student={student} 
+                        inEditMode={inEditMode}
+                        onEdit={onEdit}
+                        onSave={onSave}
+                        onCancel={onCancel}
+                    />
                 ))}
             </Table.Body>
             <Table.Footer fullWidth>
@@ -53,8 +66,9 @@ function DonorTable({ students }) {
                         }
                     />
                     <Table.HeaderCell />
+                    <Table.HeaderCell></Table.HeaderCell>
                     <Table.HeaderCell>                      
-                        <div style={{height: '20px'}} >
+                        <div>
                             <CsvDownloader
                                 filename="donorsList"
                                 extension=".csv"
