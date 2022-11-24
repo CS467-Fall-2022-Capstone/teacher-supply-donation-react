@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import DonationService from '../../services/donations.service';
-import logo from '../../media/logo.png';
+import logo from '../../media/TSDLogoWhite.png';
 
 
 function ThankyouLayout() {
@@ -55,7 +55,7 @@ function ThankyouLayout() {
                             centered
                             alt='logo'
                             src={logo}
-                            size='small'
+                            size='medium'
                         />
                     </Menu.Item>
                     {recordRetrieved
