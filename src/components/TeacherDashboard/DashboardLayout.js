@@ -22,6 +22,11 @@ function DashboardLayout() {
                     teacher.teacher_id,
                     teacher.token
                 );
+                if (response.status === 403) {
+                    // Token expired, log the user out and redirect to login
+                    console.log(response.data);
+                    logOut();
+                }
                 if (response.status === 200) {
                     if (!ignore) {
                         setSupplies(response.data.supplies);
