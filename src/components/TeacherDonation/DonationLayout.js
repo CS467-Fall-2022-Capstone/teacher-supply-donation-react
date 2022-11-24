@@ -8,7 +8,7 @@ import {
     useNavigate,
 } from 'react-router-dom';
 import TeacherService from '../../services/teacher.service';
-import logo from '../../media/logo.png';
+import logo from '../../media/TSDLogoWhite.png';
 import Loading from '../Loading';
 
 function DonationLayout() {
@@ -77,7 +77,7 @@ function DonationLayout() {
                     vertical
                 >
                     <Menu.Item>
-                        <Image centered alt='logo' src={logo} size='small' />
+                        <Image centered alt='logo' src={logo} size='medium' />
                     </Menu.Item>
                     {recordRetrieved ? (
                         <Menu.Item link name='main'>
