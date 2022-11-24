@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Segment } from 'semantic-ui-react';
 import Layout from './Layout';
 import { Link, Navigate } from 'react-router-dom';
 import AuthService from '../services/auth.service';
@@ -98,81 +98,83 @@ function Signup() {
 
     return (
         <Layout header='Sign up to get started'>
-            <Form onSubmit={handleSignup}>
-                <Form.Input
+            <Segment raised>
+                <Form onSubmit={handleSignup}>
+                    <Form.Input
+                        fluid
+                        icon='user'
+                        iconPosition='left'
+                        placeholder='Full Name'
+                        className='auth-input-field'
+                        value={formData.name}
+                        name='name'
+                        onChange={handleInputChange}
+                    />
+                    <Form.Input
+                        fluid
+                        icon='user'
+                        iconPosition='left'
+                        placeholder='E-mail address'
+                        className='auth-input-field'
+                        value={formData.email}
+                        name='email'
+                        onChange={handleInputChange}
+                    />
+                    <Form.Input
+                        fluid
+                        icon='lock'
+                        iconPosition='left'
+                        placeholder='Password'
+                        type='password'
+                        className='auth-input-field'
+                        name='password'
+                        value={formData.password}
+                        onChange={handleInputChange}
+                    />
+
+                    <Form.Input
+                        fluid
+                        icon='lock'
+                        iconPosition='left'
+                        placeholder='Confirm Password'
+                        type='password'
+                        className='auth-input-field'
+                        name='confirmPassword'
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                    />
+
+                    <Button
+                        type='submit'
+                        color='blue'
+                        fluid
+                        size='huge'
+                        style={{ marginBottom: '1em' }}
+                    >
+                        Sign up
+                    </Button>
+                </Form>
+                <GoogleLoginButton
                     fluid
-                    icon='user'
-                    iconPosition='left'
-                    placeholder='Full Name'
-                    className='auth-input-field'
-                    value={formData.name}
-                    name='name'
-                    onChange={handleInputChange}
-                />
-                <Form.Input
-                    fluid
-                    icon='user'
-                    iconPosition='left'
-                    placeholder='E-mail address'
-                    className='auth-input-field'
-                    value={formData.email}
-                    name='email'
-                    onChange={handleInputChange}
-                />
-                <Form.Input
-                    fluid
-                    icon='lock'
-                    iconPosition='left'
-                    placeholder='Password'
-                    type='password'
-                    className='auth-input-field'
-                    name='password'
-                    value={formData.password}
-                    onChange={handleInputChange}
+                    iconSize='45px'
+                    align='center'
+                    style={{
+                        marginLeft: 0,
+                        marginBottom: '1em',
+                        width: '100%',
+                    }}
+                    onClick={() => googleLogin()}
                 />
 
-                <Form.Input
-                    fluid
-                    icon='lock'
-                    iconPosition='left'
-                    placeholder='Confirm Password'
-                    type='password'
-                    className='auth-input-field'
-                    name='confirmPassword'
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                />
-
-                <Button
-                    type='submit'
-                    color='blue'
-                    fluid
-                    size='huge'
-                    style={{ marginBottom: '1em' }}
-                >
-                    Sign up
-                </Button>
-            </Form>
-            <GoogleLoginButton
-                fluid
-                iconSize='45px'
-                align='center'
-                style={{
-                    marginLeft: 0,
-                    marginBottom: '1em',
-                    width: '100%',
-                }}
-                onClick={() => googleLogin()}
-            />
-
-            <Link style={{ color: 'white' }} to='/login'>
-                <Button color='red' fluid size='huge'>
-                    Already have account? Log in
-                </Button>
-            </Link>
-            <div>
-                <h1>{successfulReq.message}</h1>
-            </div>
+                <Link style={{ color: 'white' }} to='/login'>
+                    <Button color='red' fluid size='huge'>
+                        Already have account? Log in
+                    </Button>
+                </Link>
+                <div>
+                    <h1>{successfulReq.message}</h1>
+                </div>
+            </Segment>
         </Layout>
     );
 }

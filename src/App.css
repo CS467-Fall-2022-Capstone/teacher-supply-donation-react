@@ -1,16 +1,10 @@
-/* Loading component */
-/* .dashboardLoader {
-    height: 100%;
-    margin: 50px auto;
-} */
-
 /* Dashboard General */
 
 .dashboardHeader {
     margin: 25px 50px;
 }
 
-.container {
+.mainContainer {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -52,6 +46,25 @@
 }
 
 .photo {
-    height: 23rem;
-    margin-bottom: 0rem;
+    width: 250px;
+}
+
+/* Banner Menu */
+.ui.menu.layoutBanner {
+    margin-bottom: 50px;
+    height: 100px;
+    background-color: #2f363d;
+}
+
+.loginLogo {
+    height: 100px;
+    width: 100px;
+}
+
+.HomePage {
+    height: 100%;
+}
+
+.layoutContent {
+    height: 100%;
 }

@@ -58,11 +58,10 @@ class DonationService {
         });
     }
 
-    sendEmailDonationCode(email, teacher_name, donationUrl) {
+    sendEmailDonationCode(email, teacher_name) {
         let req_body = {
             email,
             teacher_name,
-            donationUrl,
         };
         return axios({
             method: 'post',
@@ -74,7 +73,7 @@ class DonationService {
     sendEmailAfterSubmitDonation(teacher, student, studentDonations) {
         let req_body = {
             email: student.email,
-            studentName: student.fname + ' ' + student.lname,
+            studentName: student.firstName + ' ' + student.lastName,
             donationCode: student.donationCode,
             teacherName: teacher.name,
             studentDonations,

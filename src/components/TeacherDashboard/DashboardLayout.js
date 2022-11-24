@@ -46,7 +46,7 @@ function DashboardLayout() {
         return <Navigate to='/login' replace />;
     } else {
         return (
-            <div className='container'>
+            <div className='mainContainer'>
                 <aside className='sidebarContainer'>
                     <Menu
                         className='nav'

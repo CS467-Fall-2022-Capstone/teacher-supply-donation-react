@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Segment } from 'semantic-ui-react';
 import './Login.css';
 import Layout from './Layout';
 import { Link, Navigate } from 'react-router-dom';
@@ -87,57 +87,59 @@ function Login() {
 
     return (
         <Layout header='Log in'>
-            <Form onSubmit={handleLogIn}>
-                <Form.Input
+            <Segment raised>
+                <Form onSubmit={handleLogIn}>
+                    <Form.Input
+                        fluid
+                        icon='user'
+                        iconPosition='left'
+                        placeholder='E-mail address'
+                        className='auth-input-field'
+                        value={formData.email}
+                        name='email'
+                        onChange={handleInputChange}
+                    />
+                    <Form.Input
+                        fluid
+                        icon='lock'
+                        iconPosition='left'
+                        placeholder='Password'
+                        type='password'
+                        className='auth-input-field'
+                        value={formData.password}
+                        name='password'
+                        onChange={handleInputChange}
+                    />
+                    <Button
+                        type='submit'
+                        color='blue'
+                        fluid
+                        size='huge'
+                        style={{ marginBottom: '1em' }}
+                    >
+                        Login
+                    </Button>
+                </Form>
+                <GoogleLoginButton
                     fluid
-                    icon='user'
-                    iconPosition='left'
-                    placeholder='E-mail address'
-                    className='auth-input-field'
-                    value={formData.email}
-                    name='email'
-                    onChange={handleInputChange}
+                    iconSize='45px'
+                    align='center'
+                    style={{
+                        marginLeft: 0,
+                        marginBottom: '1em',
+                        width: '100%',
+                    }}
+                    onClick={() => googleLogin()}
                 />
-                <Form.Input
-                    fluid
-                    icon='lock'
-                    iconPosition='left'
-                    placeholder='Password'
-                    type='password'
-                    className='auth-input-field'
-                    value={formData.password}
-                    name='password'
-                    onChange={handleInputChange}
-                />
-                <Button
-                    type='submit'
-                    color='blue'
-                    fluid
-                    size='huge'
-                    style={{ marginBottom: '1em' }}
-                >
-                    Login
-                </Button>
-            </Form>
-            <GoogleLoginButton
-                fluid
-                iconSize='45px'
-                align='center'
-                style={{
-                    marginLeft: 0,
-                    marginBottom: '1em',
-                    width: '100%',
-                }}
-                onClick={() => googleLogin()}
-            />
-            <Link style={{ color: 'white' }} to='/signup'>
-                <Button color='red' fluid size='huge'>
-                    Sign up for an account
-                </Button>
-            </Link>
-            <div>
-                <h1>{successfulReq.message}</h1>
-            </div>
+                <Link style={{ color: 'white' }} to='/signup'>
+                    <Button color='red' fluid size='huge'>
+                        Sign up for an account
+                    </Button>
+                </Link>
+                <div>
+                    <h1>{successfulReq.message}</h1>
+                </div>
+            </Segment>
         </Layout>
     );
 }

@@ -45,7 +45,7 @@ function ThankyouLayout() {
     }, []);
 
     return (
-        <div className='container'>
+        <div className='mainContainer'>
             <div className='sidebarContainer'>
                 <Menu
                     icon='labeled'

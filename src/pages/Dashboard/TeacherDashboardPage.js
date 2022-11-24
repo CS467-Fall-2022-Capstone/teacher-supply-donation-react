@@ -288,14 +288,6 @@ function TeacherDashboardPage() {
                 <Label size='large' color='black' attached='top left'>
                     Supplies List
                 </Label>
-                <Segment basic textAlign='left'>
-                    <ArchiveModal
-                        metrics={metrics.supplyWithDonations}
-                        supplies={supplies.length}
-                        onArchive={onArchive}
-                        setSupplies={setSupplies}
-                    />
-                </Segment>
                 <Segment basic>
                     <SupplyTable
                         supplies={supplies}
@@ -308,6 +300,14 @@ function TeacherDashboardPage() {
                         onSubmit={onSubmit}
                         onSave={onSave}
                         onCancel={onCancel}
+                    />
+                </Segment>
+                <Segment basic textAlign='left'>
+                    <ArchiveModal
+                        metrics={metrics.supplyWithDonations}
+                        supplies={supplies.length}
+                        onArchive={onArchive}
+                        setSupplies={setSupplies}
                     />
                 </Segment>
             </Segment>
