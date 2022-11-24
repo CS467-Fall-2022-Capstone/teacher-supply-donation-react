@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../services/AuthProvider';
+import { Outlet } from 'react-router-dom';
 import ExpressService from '../services/express.service';
 import Loading from './Loading';
 
 export const LandingLayout = () => {
-    const { teacher } = useAuth();
     const [serverReady, setServerReady] = useState(false);
 
     useEffect(() => {
@@ -22,10 +20,6 @@ export const LandingLayout = () => {
         }
         getServerStatus();
     }, []);
-
-    if (teacher) {
-        return <Navigate to='/teachers/dashboard' replace />;
-    }
 
     return <>{!serverReady ? <Loading /> : <Outlet />}</>;
 };
