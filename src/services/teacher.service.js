@@ -43,7 +43,7 @@ class TeacherService {
      * @returns Teacher.toAuthJSON() document
      */
     updateTeacherRecord(teacher, updates) {
-        return axios.put(`${API_URL}/teachers/${teacher.teacher_id}`, updates, {
+        return axios.patch(`${API_URL}/teachers/${teacher.teacher_id}`, updates, {
             headers: authHeader(teacher),
         });
     }

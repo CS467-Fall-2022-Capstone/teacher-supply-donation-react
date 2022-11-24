@@ -36,8 +36,6 @@ class SupplyService {
      * @param supply_id, @param teacher_token
      */
     deleteSupplyRecord(supply_id, teacher_token) {
-        console.log(supply_id);
-        console.log(teacher_token);
         return axios.delete(`${API_URL}/supplies/${supply_id}`,
             {
                 headers: {
