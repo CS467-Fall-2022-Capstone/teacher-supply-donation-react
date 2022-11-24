@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Header, Icon, Modal, Popup } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import { FaTrashAlt } from 'react-icons/fa';
 
 function DeleteModal({ supply, onDelete }) {
