@@ -22,11 +22,6 @@ function DashboardLayout() {
                     teacher.teacher_id,
                     teacher.token
                 );
-                if (response.status === 403) {
-                    // Token expired, log the user out and redirect to login
-                    console.log(response.data);
-                    logOut();
-                }
                 if (response.status === 200) {
                     if (!ignore) {
                         setSupplies(response.data.supplies);
@@ -36,7 +31,11 @@ function DashboardLayout() {
                     }
                 }
             } catch (err) {
+                // backend will automatically send HTTP Status 401 Unauthorized
+                // when JWT token is expired
                 console.error(err);
+                // log out the user and redirect to login page
+                logOut();
             }
         }
         let ignore = false;
