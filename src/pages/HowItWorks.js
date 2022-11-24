@@ -33,7 +33,7 @@ class HowItWorksPage extends React.Component {
                 <Banner onClick={this.onButtonClick} />
                 <Segment basic>
                     <Header as='h2' dividing>
-                        About the Team
+                        How It Works
                     </Header>
                     <DisplayText
                         msg={this.state.textDisplay}
