@@ -21,28 +21,7 @@ function DonorDashboardPage() {
         });
     };
 
-    const onSave = (student, updates) => {
-            const studentUpdate = {
-                firstName: updates.firstName,
-                lastName: updates.lastName,
-                email: updates.email
-            };
-            // only update item name if the value changed
-            if (student.firstName !== updates.firstName) {          
-                studentUpdate.firstName = updates.firstName;
-            }
-            if (student.lastName !== updates.firstName) {
-                studentUpdate.firstName = updates.firstName;
-            }
-            if (student.email !== updates.email) {
-                studentUpdate.firstName = updates.firstName;
-            }
-            console.log(studentUpdate);
-            updateStudent(student, studentUpdate);
-
-    };
-
-    const updateStudent = async (student, studentUpdate) => {
+    const onSave = async (student, studentUpdate) => {           
         try {
             let response = await StudentService.updateStudentRecord(
                 student._id,

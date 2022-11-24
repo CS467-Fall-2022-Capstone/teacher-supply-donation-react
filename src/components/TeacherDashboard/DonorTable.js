@@ -66,8 +66,9 @@ function DonorTable({
                         }
                     />
                     <Table.HeaderCell />
+                    <Table.HeaderCell></Table.HeaderCell>
                     <Table.HeaderCell>                      
-                        <div style={{height: '20px'}} >
+                        <div>
                             <CsvDownloader
                                 filename="donorsList"
                                 extension=".csv"
