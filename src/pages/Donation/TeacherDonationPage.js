@@ -3,7 +3,6 @@ import {
     useOutletContext,
     useNavigate,
     useLocation,
-    useParams,
 } from 'react-router-dom';
 import SupplyTableSimple from '../../components/TeacherDonation/SupplyTableSimple.js';
 import {
@@ -20,11 +19,9 @@ const clientDomain = window.origin; // http(s)://domain
 
 function TeacherDonationPage() {
     const location = useLocation();
-    const teacherParam = useParams();
     let navigate = useNavigate();
     const { teacher, supplies, recordRetrieved } = useOutletContext();
-    // const donationUrl = `${clientDomain}`
-    console.log(clientDomain, location, teacherParam);
+    const donationUrl = `${clientDomain}${location.pathname}`;
 
     const handleNewDonorSubmit = async (fName, lName, email) => {
         const studentData = {
@@ -108,7 +105,7 @@ function TeacherDonationPage() {
                             handleReturningDonorSubmit={
                                 handleReturningDonorSubmit
                             }
-                            // donationUrl={donationUrl}
+                            donationUrl={donationUrl}
                         />
                     </Container>
                 </>

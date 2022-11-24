@@ -15,7 +15,6 @@ import {
     Segment,
 } from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
-import { set } from 'lodash';
 
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will

@@ -15,7 +15,7 @@ import { useOutletContext } from 'react-router-dom';
 function DonationModal({
     handleNewDonorSubmit,
     handleReturningDonorSubmit,
-    clientDomain
+    donationUrl
 }) {
     const [open, setOpen] = useState(false);
     const [fName, setFName] = useState('');
@@ -25,7 +25,7 @@ function DonationModal({
     const { teacher } = useOutletContext();
 
     const handleSendEmailDonationCode = () => {
-        DonationService.sendEmailDonationCode(email, teacher.name, `${clientDomain}/donations/teachers/${teacher._id}`);
+        DonationService.sendEmailDonationCode(email, teacher.name, donationUrl);
     };
 
     return (
