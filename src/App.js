@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Unprotected Landing Pages
@@ -12,6 +12,7 @@ import SignupPage from './pages/SignupPage';
 import DashboardLayout from './components/TeacherDashboard/DashboardLayout';
 import TeacherDashboardPage from './pages/Dashboard/TeacherDashboardPage';
 import DonorDashboardPage from './pages/Dashboard/DonorDashboardPage';
+import ArchiveDashboardPage from './pages/Dashboard/ArchiveDashboardPage';
 import Settings from './pages/Dashboard/Settings';
 // Public Donation Pages
 import DonationLayout from './components/TeacherDonation/DonationLayout';
@@ -45,6 +46,7 @@ function App() {
                 >
                     <Route index element={<TeacherDashboardPage />} />
                     <Route path='donors' element={<DonorDashboardPage />} />
+                    <Route path='archive' element={<ArchiveDashboardPage />} />
                     <Route path='settings' element={<Settings />} />
                 </Route>
                 {/* Public Donation */}

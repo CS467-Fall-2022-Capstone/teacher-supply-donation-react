@@ -1,4 +1,10 @@
-import { Link, useOutletContext, useNavigate } from 'react-router-dom';
+import {
+    Link,
+    useOutletContext,
+    useNavigate,
+    useLocation,
+    useParams,
+} from 'react-router-dom';
 import SupplyTableSimple from '../../components/TeacherDonation/SupplyTableSimple.js';
 import {
     Header,
@@ -10,10 +16,15 @@ import {
 } from 'semantic-ui-react';
 import DonationModal from '../../components/TeacherDonation/DonationModal';
 import DonationService from '../../services/donations.service';
+const clientDomain = window.origin; // http(s)://domain
 
 function TeacherDonationPage() {
+    const location = useLocation();
+    const teacherParam = useParams();
     let navigate = useNavigate();
     const { teacher, supplies, recordRetrieved } = useOutletContext();
+    // const donationUrl = `${clientDomain}`
+    console.log(clientDomain, location, teacherParam);
 
     const handleNewDonorSubmit = async (fName, lName, email) => {
         const studentData = {
@@ -28,7 +39,7 @@ function TeacherDonationPage() {
             );
             if (response.status === 201) {
                 const student_id = response.data.student_id;
-                navigate(`students/${student_id}`, {replace: true});
+                navigate(`students/${student_id}`, { replace: true });
             }
         } catch (err) {
             console.error(err);
@@ -42,7 +53,7 @@ function TeacherDonationPage() {
             );
             if (response.status === 200) {
                 const student_id = response.data.student_id;
-                navigate(`students/${student_id}`, {replace: true});
+                navigate(`students/${student_id}`, { replace: true });
             }
         } catch (err) {
             console.error(err);
@@ -97,6 +108,7 @@ function TeacherDonationPage() {
                             handleReturningDonorSubmit={
                                 handleReturningDonorSubmit
                             }
+                            // donationUrl={donationUrl}
                         />
                     </Container>
                 </>

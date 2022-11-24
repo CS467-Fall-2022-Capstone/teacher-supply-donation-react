@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { Header, Button, Container, Divider, Message, List } from 'semantic-ui-react';
+import {
+    Header,
+    Button,
+    Container,
+    Divider,
+    Message,
+    List,
+} from 'semantic-ui-react';
 
 function ThankyouPage() {
-    const [student, donations, recordRetrieved] =
-        useOutletContext();
+    const [student, donations, recordRetrieved] = useOutletContext();
 
     return (
         <>
@@ -12,20 +18,23 @@ function ThankyouPage() {
                 <div className='dashboardHeader'>
                     <Header size='huge' textAlign='center'>
                         <Header.Content>
-                            Thank you for your donation, {student.fname}! Your unique donation code is: {student.donationCode}
+                            Thank you for your donation, {student.fname}! Your
+                            unique donation code is: {student.donationCode}
                         </Header.Content>
                         <Divider />
-
                     </Header>
 
                     <Container textAlign='Center'>
-                        <Header as="h3">Please bring your donations to class with you:</Header>
+                        <Header as='h3'>
+                            Please bring your donations to class with you:
+                        </Header>
                         <List bulleted>
                             {donations.map((donation) => (
                                 <List.Item
+                                    as={Header}
                                     key={donation._id}
                                     donation={donation.donation_id}
-                                    content={<Header as="h3">Item: {donation.supply_id.item} | Quantity Donated: {donation.quantityDonated}</Header>}
+                                    content={`Item: ${donation.supply_id.item} | Quantity Donated: ${donation.quantityDonated}`}
                                 />
                             ))}
                         </List>

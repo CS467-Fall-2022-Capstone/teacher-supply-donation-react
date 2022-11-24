@@ -40,7 +40,7 @@ function DashboardLayout() {
             // cleanup code to ensure no race conditions
             ignore = true;
         };
-    }, [location.key]);
+    }, [location.key, teacher]);
 
     if (!teacher) {
         return <Navigate to='/login' replace />;
@@ -69,7 +69,9 @@ function DashboardLayout() {
                             as={Link}
                             to='/teachers/dashboard'
                             name='main'
+                            active={location.pathname === '/teachers/dashboard'}
                         >
+                            <Icon name='list' />
                             Supplies
                         </Menu.Item>
                         <Menu.Item
@@ -77,15 +79,36 @@ function DashboardLayout() {
                             as={Link}
                             to='/teachers/dashboard/donors'
                             name='donorList'
+                            active={
+                                location.pathname ===
+                                '/teachers/dashboard/donors'
+                            }
                         >
+                            <Icon name='address card' />
                             Donors
                         </Menu.Item>
                         <Menu.Menu>
                             <Menu.Item
                                 link
                                 as={Link}
+                                to='/teachers/dashboard/archive'
+                                name='archive'
+                                active={
+                                    location.pathname ===
+                                    '/teachers/dashboard/archive'
+                                }
+                            >
+                                <Icon name='archive' />
+                                Archive
+                            </Menu.Item>
+                            <Menu.Item
+                                link
+                                as={Link}
                                 to='/teachers/dashboard/settings'
                                 name='settings'
+                                active={
+                                    location.pathname === '/teachers/settings'
+                                }
                             >
                                 <Icon name='setting' />
                                 Settings

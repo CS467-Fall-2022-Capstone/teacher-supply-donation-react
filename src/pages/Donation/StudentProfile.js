@@ -17,7 +17,7 @@ function StudentProfile() {
             email: email,
         };
         try {
-            const response = await StudentService.updateStudentInfo(
+            const response = await StudentService.updateStudentRecord(
                 student._id,
                 studentUpdate
             );

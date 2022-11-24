@@ -13,6 +13,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useOutletContext } from 'react-router-dom';
 import SupplyService from '../../services/supply.service';
 import TeacherService from '../../services/teacher.service';
+import ArchiveModal from '../../components/TeacherDashboard/ArchiveModal';
 const clientDomain = window.origin; // http(s)://domain
 
 function TeacherDashboardPage() {
@@ -64,11 +65,15 @@ function TeacherDashboardPage() {
             );
             if (response.status === 200) {
                 // find updatedSupply in supplies and replace with updates
-                let updatedSupply = response.data;
+                let updatedSupply = {
+                    ...response.data,
+                    _id: response.data.supply_id,
+                };
+                console.log(updatedSupply);
                 updatedSupply.totalQuantityDonated =
                     supply.totalQuantityDonated;
                 let newSupplies = supplies.map((supply) => {
-                    if (supply._id === updatedSupply._id) {
+                    if (supply._id === updatedSupply.supply_id) {
                         return updatedSupply;
                     } else {
                         return supply;
@@ -150,6 +155,10 @@ function TeacherDashboardPage() {
         setTimeout(() => {
             setIsCopied(false);
         }, 1000);
+    };
+
+    const onArchive = () => {
+        return TeacherService.archiveSupplyData(teacher);
     };
 
     return (
@@ -279,18 +288,28 @@ function TeacherDashboardPage() {
                 <Label size='large' color='black' attached='top left'>
                     Supplies List
                 </Label>
-                <SupplyTable
-                    supplies={supplies}
-                    setSupplies={setSupplies}
-                    inEditMode={inEditMode}
-                    inAddMode={inAddMode}
-                    onDelete={onDelete}
-                    onEdit={onEdit}
-                    onAdd={onAdd}
-                    onSubmit={onSubmit}
-                    onSave={onSave}
-                    onCancel={onCancel}
-                />
+                <Segment basic textAlign='left'>
+                    <ArchiveModal
+                        metrics={metrics.supplyWithDonations}
+                        supplies={supplies.length}
+                        onArchive={onArchive}
+                        setSupplies={setSupplies}
+                    />
+                </Segment>
+                <Segment basic>
+                    <SupplyTable
+                        supplies={supplies}
+                        setSupplies={setSupplies}
+                        inEditMode={inEditMode}
+                        inAddMode={inAddMode}
+                        onDelete={onDelete}
+                        onEdit={onEdit}
+                        onAdd={onAdd}
+                        onSubmit={onSubmit}
+                        onSave={onSave}
+                        onCancel={onCancel}
+                    />
+                </Segment>
             </Segment>
         </>
     );

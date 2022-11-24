@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
-import TeacherService from '../../services/teacher.service'
 
-function ArchiveModal({ metrics, supplies, teacher, setSupplies }) {
+function ArchiveModal({ metrics, supplies, setSupplies, onArchive }) {
     const [open, setOpen] = useState(false);
     const handleArchive = async () => {
-        try{
-            const response = await TeacherService.archiveSupplyData(teacher);
+        try {
+            const response = await onArchive();
             if (response.status === 200) {
                 setSupplies([])
             }
         } catch (err) {
             console.error(err)
-            setOpen(false)
+        } finally {
+            setOpen(false);
         }
+        
+        
     };
-
     return (
         <Modal
             basic

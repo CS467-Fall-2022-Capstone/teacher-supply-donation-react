@@ -15,7 +15,7 @@ import {
     Segment,
 } from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
-// import _ from 'lodash';
+import { set } from 'lodash';
 
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
@@ -117,7 +117,7 @@ function StudentDonationPage() {
                             firstName: response.data.firstName,
                             lastName: response.data.lastName,
                             donationCode: response.data.donation_code,
-                            email: response.data.email
+                            email: response.data.email,
                         };
                         setStudent(studentData);
                         // merge supplies with donations and create bulk write objects for update
@@ -143,11 +143,14 @@ function StudentDonationPage() {
     }, []);
 
     const handleSendEmailAfterSubmitDonation = (studentDonations) => {
-        DonationService.sendEmailAfterSubmitDonation(teacher, student, studentDonations);
+        DonationService.sendEmailAfterSubmitDonation(
+            teacher,
+            student,
+            studentDonations
+        );
     };
 
-
-    // TODO: add automated email after student submits donation 
+    // TODO: add automated email after student submits donation
     // contains donation code and donations they've committed
     const handleSubmit = async (submitData) => {
         const student_id = student._id;
@@ -159,7 +162,7 @@ function StudentDonationPage() {
             if (response.status === 200) {
                 console.log('Send successful');
                 let studentDonations = [];
-                submitData.forEach( supply => {
+                submitData.forEach((supply) => {
                     let supplyName = supply.supplyName;
                     let quantityDonated = supply.donationFields.quantityDonated;
                     if (quantityDonated > 0) {
@@ -177,7 +180,8 @@ function StudentDonationPage() {
             console.log(err);
             throw err;
         } finally {
-            // TODO: handle unsuccessful attempt to donate
+            // Unregister student from donation page and take them to Thank You page
+            setStudent(null);
             navigate('/donations/students/' + student._id, { replace: true });
         }
     };

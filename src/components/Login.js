@@ -82,7 +82,7 @@ function Login() {
     });
 
     if (teacher) {
-        return <Navigate to='/teachers/dashboard' replace />;
+        return <Navigate to='/teachers/dashboard' />;
     }
 
     return (

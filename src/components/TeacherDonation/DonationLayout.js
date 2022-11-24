@@ -15,6 +15,7 @@ function DonationLayout() {
     const navigate = useNavigate();
     // Use location so refreshed are done on every redirect
     const location = useLocation();
+    console.log(location);
     // This donations layout will always have the latest
     // data for the Teacher's supplies
     const { teacherId } = useParams();
@@ -89,10 +90,7 @@ function DonationLayout() {
                         </Menu.Item>
                     )}
                     <Menu.Menu>
-                        <Menu.Item
-                            link
-                            onClick={() => handleGoHome()}
-                        >
+                        <Menu.Item link onClick={() => handleGoHome()}>
                             <Icon name='home' />
                             Home Page
                         </Menu.Item>
@@ -104,6 +102,13 @@ function DonationLayout() {
                                     ? `/donations/teachers/${teacherId}/students/${student._id}`
                                     : `/donations/teachers/${teacherId}`
                             }
+                            active={
+                                student
+                                    ? location.pathname ===
+                                      `/donations/teachers/${teacherId}/students/${student._id}`
+                                    : location.pathname ===
+                                      `/donations/teachers/${teacherId}`
+                            }
                         >
                             <Icon name='list' />
                             Supplies/Donations List
@@ -113,6 +118,10 @@ function DonationLayout() {
                                 link
                                 as={Link}
                                 to={`/donations/teachers/${teacherId}/students/${student._id}/profile`}
+                                active={
+                                    location.pathname ===
+                                    `/donations/teachers/${teacherId}/students/${student._id}/profile`
+                                }
                             >
                                 <Icon name='user' />
                                 Edit Student Profile

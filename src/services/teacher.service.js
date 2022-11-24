@@ -43,9 +43,13 @@ class TeacherService {
      * @returns Teacher.toAuthJSON() document
      */
     updateTeacherRecord(teacher, updates) {
-        return axios.patch(`${API_URL}/teachers/${teacher.teacher_id}`, updates, {
-            headers: authHeader(teacher),
-        });
+        return axios.patch(
+            `${API_URL}/teachers/${teacher.teacher_id}`,
+            updates,
+            {
+                headers: authHeader(teacher),
+            }
+        );
     }
 
     /**
@@ -65,18 +69,22 @@ class TeacherService {
 
     /**
      * Archives the teacher's supplies and donations
-     * @param teacher, @param teacher_token
+     * @param teacher auth object
      * @returns HTTP status 200
      */
     archiveSupplyData(teacher) {
-        return axios.post(`${API_URL}/teachers/${teacher.teacher_id}/archive`, {
-            headers: authHeader(teacher),
-        });
+        return axios.patch(
+            `${API_URL}/teachers/${teacher.teacher_id}/archive`,
+            { isArchived: true },
+            {
+                headers: authHeader(teacher),
+            }
+        );
     }
 
     /**
      * Gets the teacher's archived supplies and donations
-     * @param teacher, @param teacher_token
+     * @param teacher auth object
      * @returns Archived Teacher Data
      */
     getArchivedData(teacher) {
