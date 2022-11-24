@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import './Login.css';
 import Layout from './Layout';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../services/AuthProvider';
 import AuthService from '../services/auth.service';
 
 function Login() {
-    const { logIn } = useAuth();
+    const { logIn, teacher } = useAuth();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -80,6 +80,10 @@ function Login() {
             console.log(errorResponse.code, errorResponse.message);
         },
     });
+
+    if (teacher) {
+        return <Navigate to='/teachers/dashboard' />;
+    }
 
     return (
         <Layout header='Log in'>

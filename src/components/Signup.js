@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import Layout from './Layout';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import AuthService from '../services/auth.service';
 import { useAuth } from '../services/AuthProvider';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { useGoogleLogin } from '@react-oauth/google';
 
 function Signup() {
-    const { logIn } = useAuth();
+    const { logIn, teacher } = useAuth();
     // const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -91,6 +91,10 @@ function Signup() {
             console.log(errorResponse.code, errorResponse.message);
         },
     });
+
+    if (teacher) {
+        return <Navigate to='/teachers/dashboard' />;
+    }
 
     return (
         <Layout header='Sign up to get started'>

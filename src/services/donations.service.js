@@ -58,31 +58,32 @@ class DonationService {
         });
     }
 
-    sendEmailDonationCode(email, teacher_name) {
+    sendEmailDonationCode(email, teacher_name, donationUrl) {
         let req_body = {
             email,
             teacher_name,
+            donationUrl,
         };
         return axios({
             method: 'post',
             url: `${API_URL}/emailDonationId`,
             data: req_body,
-        })
+        });
     }
 
     sendEmailAfterSubmitDonation(teacher, student, studentDonations) {
         let req_body = {
             email: student.email,
-            studentName: student.fname + " " + student.lname,
+            studentName: student.fname + ' ' + student.lname,
             donationCode: student.donationCode,
             teacherName: teacher.name,
-            studentDonations
-        }
+            studentDonations,
+        };
         return axios({
             method: 'post',
             url: `${API_URL}/emailAfterSubmitDonation`,
             data: req_body,
-        })
+        });
     }
 }
 export default new DonationService();

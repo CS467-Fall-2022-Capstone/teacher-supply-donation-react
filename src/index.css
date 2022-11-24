@@ -9,4 +9,5 @@ body {
     font-family: 'Arial', sans-serif;
     overflow: hidden;
     height: 100vh;
+    border-radius: 0;
 }

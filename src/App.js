@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Unprotected Landing Pages
@@ -12,11 +12,13 @@ import SignupPage from './pages/SignupPage';
 import DashboardLayout from './components/TeacherDashboard/DashboardLayout';
 import TeacherDashboardPage from './pages/Dashboard/TeacherDashboardPage';
 import DonorDashboardPage from './pages/Dashboard/DonorDashboardPage';
+import ArchiveDashboardPage from './pages/Dashboard/ArchiveDashboardPage';
 import Settings from './pages/Dashboard/Settings';
 // Public Donation Pages
 import DonationLayout from './components/TeacherDonation/DonationLayout';
 import TeacherDonationPage from './pages/Donation/TeacherDonationPage';
 import StudentDonationPage from './pages/Donation/StudentDonationPage';
+import StudentProfile from './pages/Donation/StudentProfile';
 import ThankyouLayout from './components/TeacherDonation/ThankyouLayout';
 import ThankyouPage from './pages/Donation/ThankyouPage';
 
@@ -44,6 +46,7 @@ function App() {
                 >
                     <Route index element={<TeacherDashboardPage />} />
                     <Route path='donors' element={<DonorDashboardPage />} />
+                    <Route path='archive' element={<ArchiveDashboardPage />} />
                     <Route path='settings' element={<Settings />} />
                 </Route>
                 {/* Public Donation */}
@@ -51,10 +54,14 @@ function App() {
                     path='/donations/teachers/:teacherId'
                     element={<DonationLayout />}
                 >
-                    <Route exact index element={<TeacherDonationPage />} />
+                    <Route index element={<TeacherDonationPage />} />
                     <Route
                         path='students/:studentId'
                         element={<StudentDonationPage />}
+                    />
+                    <Route
+                        path='students/:studentId/profile'
+                        element={<StudentProfile />}
                     />
                 </Route>
                 <Route path='/donations/students/' element={<ThankyouLayout />}>

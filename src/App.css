@@ -27,6 +27,9 @@
     max-width: 200px;
     position: fixed;
     height: 100%;
+}
+
+.ui.menu {
     border-radius: 0;
 }
 
@@ -48,10 +51,7 @@
     margin-top: 50px;
 }
 
-
 .photo {
     height: 23rem;
     margin-bottom: 0rem;
 }
-
-

@@ -11,10 +11,9 @@ class StudentService {
         return axios.delete(`${API_URL}/students/${student_id}`);
     }
 
-        /**
-     * Updates a supply associated with a teacher
-     * Only the item or totalQuantityNeeded can be updated
-     * @param supply_id, @param teacher_token, @param updatedSupplyData
+    /**
+     * Updates student record
+     * @param student_id, @param updatedStudentData 
      */
     updateStudentRecord(student_id, updatedStudentData) {
         return axios({

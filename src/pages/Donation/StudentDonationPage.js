@@ -15,14 +15,12 @@ import {
     Segment,
 } from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
-// import _ from 'lodash';
 
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
     // always pull teacher's data to pass down as context
-    const { teacher, supplies } = useOutletContext();
+    const { teacher, supplies, student, setStudent } = useOutletContext();
     const { studentId } = useParams();
-    const [student, setStudent] = useState({});
     const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
     const [studentRetrieved, setStudentRetrieved] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -115,10 +113,10 @@ function StudentDonationPage() {
                         //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const studentData = {
                             _id: response.data._id,
-                            fname: response.data.firstName,
-                            lname: response.data.lastName,
+                            firstName: response.data.firstName,
+                            lastName: response.data.lastName,
                             donationCode: response.data.donation_code,
-                            email: response.data.email
+                            email: response.data.email,
                         };
                         setStudent(studentData);
                         // merge supplies with donations and create bulk write objects for update
@@ -144,11 +142,14 @@ function StudentDonationPage() {
     }, []);
 
     const handleSendEmailAfterSubmitDonation = (studentDonations) => {
-        DonationService.sendEmailAfterSubmitDonation(teacher, student, studentDonations);
+        DonationService.sendEmailAfterSubmitDonation(
+            teacher,
+            student,
+            studentDonations
+        );
     };
 
-
-    // TODO: add automated email after student submits donation 
+    // TODO: add automated email after student submits donation
     // contains donation code and donations they've committed
     const handleSubmit = async (submitData) => {
         const student_id = student._id;
@@ -160,7 +161,7 @@ function StudentDonationPage() {
             if (response.status === 200) {
                 console.log('Send successful');
                 let studentDonations = [];
-                submitData.forEach( supply => {
+                submitData.forEach((supply) => {
                     let supplyName = supply.supplyName;
                     let quantityDonated = supply.donationFields.quantityDonated;
                     if (quantityDonated > 0) {
@@ -178,7 +179,8 @@ function StudentDonationPage() {
             console.log(err);
             throw err;
         } finally {
-            // TODO: handle unsuccessful attempt to donate
+            // Unregister student from donation page and take them to Thank You page
+            setStudent(null);
             navigate('/donations/students/' + student._id, { replace: true });
         }
     };
