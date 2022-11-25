@@ -8,7 +8,7 @@ import {
     useNavigate,
 } from 'react-router-dom';
 import TeacherService from '../../services/teacher.service';
-import logo from '../../media/TSDLogoWhite.png';
+import logo from '../../media/logo_v2_transparent.png';
 import Loading from '../Loading';
 
 function DonationLayout() {

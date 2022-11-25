@@ -1,5 +1,4 @@
 import React from 'react';
-import './Banner.css';
 import { viewConfig } from '../constants';
 import { Button, Menu, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
@@ -19,7 +18,7 @@ class Banner extends React.Component {
                     <Image
                         as={Link}
                         to='/'
-                        size='small'
+                        size='tiny'
                         centered
                         verticalAlign='middle'
                         src={viewConfig.banner.imageDisplay}

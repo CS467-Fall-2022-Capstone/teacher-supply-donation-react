@@ -1,8 +1,8 @@
-import logo from './media/TSDlogo-transparent.png';
-import whiteLogo from './media/TSDLogoWhite.png';
+import logo from './media/logo_v2_transparent.png';
+
 export const viewConfig = {
     banner: {
-        imageDisplay: whiteLogo,
+        imageDisplay: logo,
     },
     mission: {
         textDisplay: 'mission',
