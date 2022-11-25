@@ -4,7 +4,7 @@ import StudentService from '../../services/student.service.js';
 import { useOutletContext } from 'react-router-dom';
 
 function StudentProfile() {
-    const { student, setStudent } = useOutletContext();
+    const { student } = useOutletContext();
     const [firstName, setFirstName] = useState(student.firstName);
     const [lastName, setLastName] = useState(student.lastName);
     const [email, setEmail] = useState(student.email);

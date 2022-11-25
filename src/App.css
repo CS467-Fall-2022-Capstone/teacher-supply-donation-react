@@ -52,11 +52,10 @@
 /* Banner Menu */
 .ui.menu.layoutBanner {
     margin-bottom: 50px;
-    height: 100px;
     background-color: #2f363d;
 }
 
-.loginLogo {
+.bannerLogo {
     height: 100px;
     width: 100px;
 }
