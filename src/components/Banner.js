@@ -8,7 +8,13 @@ class Banner extends React.Component {
 
     render() {
         return (
-            <Menu fluid widths={3} className='layoutBanner'>
+            <Menu
+                stackable
+                size='large'
+                fluid
+                widths={3}
+                className='layoutBanner'
+            >
                 <Menu.Item>
                     <Button size='large' as={Link} to='/aboutus' inverted>
                         About Us
