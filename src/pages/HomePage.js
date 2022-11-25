@@ -23,7 +23,7 @@ class HomePage extends React.Component {
             >
                 <Banner />
                 <Segment basic>
-                    <Header as='h2' dividing>
+                    <Header as='h1' dividing>
                         Welcome to Teacher Supply Donation
                     </Header>
                 </Segment>

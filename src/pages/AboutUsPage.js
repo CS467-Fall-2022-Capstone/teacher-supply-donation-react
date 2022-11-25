@@ -33,7 +33,7 @@ class AboutUsPage extends React.Component {
             >
                 <Banner onClick={this.onButtonClick} />
                 <Segment basic>
-                    <Header as='h2' dividing>
+                    <Header as='h1' dividing>
                         About the Team
                     </Header>
                     <DisplayText
