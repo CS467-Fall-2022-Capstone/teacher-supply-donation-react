@@ -1,24 +1,27 @@
 import logo from './media/TSDlogo-transparent.png';
-import whiteBackground from './media/whiteBackground.png';
+import whiteLogo from './media/TSDLogoWhite.png';
 export const viewConfig = {
+    banner: {
+        imageDisplay: whiteLogo,
+    },
     mission: {
-      textDisplay: 'mission',
-      imageDisplay: logo
+        textDisplay: 'mission',
+        imageDisplay: logo,
     },
     aboutUs: {
-      textDisplay: 'aboutUs',
-      imageDisplay: logo
+        textDisplay: 'aboutUs',
+        imageDisplay: logo,
     },
     howItWorks: {
-      textDisplay: 'howItWorks',
-      imageDisplay: logo
+        textDisplay: 'howItWorks',
+        imageDisplay: logo,
     },
     login: {
-      textDisplay: 'login',
-      imageDisplay: whiteBackground
+        textDisplay: 'login',
+        imageDisplay: logo,
     },
     signup: {
-      textDisplay: 'signup',
-      imageDisplay: whiteBackground
-    }
-  }
+        textDisplay: 'signup',
+        imageDisplay: logo,
+    },
+};

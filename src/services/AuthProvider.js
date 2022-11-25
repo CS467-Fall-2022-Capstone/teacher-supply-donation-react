@@ -19,12 +19,6 @@ export const AuthProvider = ({ children }) => {
         return <Navigate to='/login' replace />;
     };
 
-    // const teacherAuthRequest = () => {
-    //     return axios.get(API_URL + '/api/teachers/' + teacher._id, {
-    //         headers: authHeader(teacher),
-    //     });
-    // };
-
     const value = useMemo(
         () => ({
             teacher,

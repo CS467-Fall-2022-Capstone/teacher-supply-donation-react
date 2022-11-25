@@ -31,7 +31,11 @@ function DashboardLayout() {
                     }
                 }
             } catch (err) {
+                // backend will automatically send HTTP Status 401 Unauthorized
+                // when JWT token is expired
                 console.error(err);
+                // log out the user and redirect to login page
+                logOut();
             }
         }
         let ignore = false;
@@ -46,7 +50,7 @@ function DashboardLayout() {
         return <Navigate to='/login' replace />;
     } else {
         return (
-            <div className='container'>
+            <div className='mainContainer'>
                 <aside className='sidebarContainer'>
                     <Menu
                         className='nav'

@@ -67,7 +67,7 @@ function DonationLayout() {
     }, [location.key]);
 
     return (
-        <div className='container'>
+        <div className='mainContainer'>
             <div className='sidebarContainer'>
                 <Menu
                     className='nav'

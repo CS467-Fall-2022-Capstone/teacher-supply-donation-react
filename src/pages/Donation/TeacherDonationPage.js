@@ -1,9 +1,4 @@
-import {
-    Link,
-    useOutletContext,
-    useNavigate,
-    useLocation,
-} from 'react-router-dom';
+import { Link, useOutletContext, useNavigate } from 'react-router-dom';
 import SupplyTableSimple from '../../components/TeacherDonation/SupplyTableSimple.js';
 import {
     Header,
@@ -15,13 +10,10 @@ import {
 } from 'semantic-ui-react';
 import DonationModal from '../../components/TeacherDonation/DonationModal';
 import DonationService from '../../services/donations.service';
-const clientDomain = window.origin; // http(s)://domain
 
 function TeacherDonationPage() {
-    const location = useLocation();
     let navigate = useNavigate();
     const { teacher, supplies, recordRetrieved } = useOutletContext();
-    const donationUrl = `${clientDomain}${location.pathname}`;
 
     const handleNewDonorSubmit = async (fName, lName, email) => {
         const studentData = {
@@ -105,7 +97,6 @@ function TeacherDonationPage() {
                             handleReturningDonorSubmit={
                                 handleReturningDonorSubmit
                             }
-                            donationUrl={donationUrl}
                         />
                     </Container>
                 </>

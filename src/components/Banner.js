@@ -1,38 +1,43 @@
-import React from 'react'
-import './Banner.css'
+import React from 'react';
+import './Banner.css';
 import { viewConfig } from '../constants';
-import { Button } from "semantic-ui-react";
+import { Button, Menu, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class Banner extends React.Component {
+    state = { currentView: viewConfig.mission };
 
-  state = { currentView: viewConfig.mission };
-
-  render() {
-    return (
-      <div className="Banner">
-        <span className="ui container">
-          <Link style={{ color: 'white' }} to='/aboutus'>
-            <Button id="aboutBtn" className="ui inverted basic button" >
-              About Us
-            </Button>
-          </Link>
-        </span>
-        <span className="ui container" >
-          <Link to='/' style={{ color: '#cccccc' }}>
-            <h1>Teacher Supply Donation</h1>
-          </Link>
-        </span>
-        <span className="ui container">
-          <Link style={{ color: '#5d5d5d' }} to='/login'>
-            <Button id="loginBtn" className="ui button" >
-              Sign up / Login
-            </Button>
-          </Link>
-        </span>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <Menu fluid widths={3} className='layoutBanner'>
+                <Menu.Item>
+                    <Button size='large' as={Link} to='/aboutus' inverted>
+                        About Us
+                    </Button>
+                </Menu.Item>
+                <Menu.Item>
+                    <Image
+                        as={Link}
+                        to='/'
+                        size='small'
+                        centered
+                        verticalAlign='middle'
+                        src={viewConfig.banner.imageDisplay}
+                    />
+                </Menu.Item>
+                <Menu.Item>
+                    <Button
+                        size='large'
+                        as={Link}
+                        to='/login'
+                        content='Sign Up/Login'
+                        icon='sign in'
+                        labelPosition='right'
+                    />
+                </Menu.Item>
+            </Menu>
+        );
+    }
 }
 
-export default Banner
+export default Banner;
