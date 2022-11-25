@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Image, Menu, Icon } from 'semantic-ui-react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import DonationService from '../../services/donations.service';
-import logo from '../../media/TSDLogoWhite.png';
+import logo from '../../media/border_logo_v2_transparent.png';
 
 function ThankyouLayout() {
     const { studentId } = useParams();

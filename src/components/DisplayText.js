@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+import { Button, Image } from 'semantic-ui-react';
 import Accordion from './Accordion.js';
-
+import logo from '../media/logo_v2_black.png'
 class DisplayText extends React.Component {
     mission =
         'Teacher Supply Donation’s mission is to help teachers collect classroom supplies in an efficient, simple way \
@@ -66,6 +66,12 @@ class DisplayText extends React.Component {
                             manage. {this.colorText('red', 'No')} fuss.
                         </p>
                         <p>{this.mission}</p>
+                        <Image
+                            size='small'
+                            centered
+                            verticalAlign='middle'
+                            src={logo}
+                        />
                         <p>
                             <Link style={{ color: 'white' }} to='/howitworks'>
                                 <button
@@ -75,7 +81,7 @@ class DisplayText extends React.Component {
                                 >
                                     {this.colorText(
                                         'white',
-                                        'Read how it works.'
+                                        'Read how it works'
                                     )}
                                 </button>
                             </Link>
