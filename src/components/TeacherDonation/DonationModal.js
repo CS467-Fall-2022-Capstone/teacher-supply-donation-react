@@ -8,6 +8,7 @@ import {
     Grid,
     Segment,
     Form,
+    Popup
 } from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
 import { useOutletContext } from 'react-router-dom';
@@ -22,9 +23,22 @@ function DonationModal({
     const [email, setEmail] = useState('');
     const [donationCode, setDonationCode] = useState('');
     const { teacher } = useOutletContext();
-
-    const handleSendEmailDonationCode = () => {
-        DonationService.sendEmailDonationCode(email, teacher.name);
+    const [successMessage, setSuccessMessage] = useState(false);
+    
+    const handleSendEmailDonationCode = async () => {
+        try {
+            let response = await DonationService.sendEmailDonationCode(email, teacher.name);
+            if (response.status === 200) {
+                // Display success message for 3 seconds
+                console.log('response received');
+                setSuccessMessage(true);
+                setTimeout(() => {
+                    setSuccessMessage(false);
+                }, 3000);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -121,12 +135,21 @@ function DonationModal({
                                     placeholder='Email'
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                <Button
-                                    size='small'
-                                    disabled={email.length === 0}
-                                    content='Email Me My Donation Code'
-                                    color='teal'
-                                    onClick={() => handleSendEmailDonationCode()}
+                                <Popup
+                                    position='top center'
+                                    inverted
+                                    open={successMessage}
+                                    size='large'
+                                    trigger={
+                                        <Button
+                                            size='small'
+                                            disabled={email.length === 0}
+                                            content='Email Me My Donation Code'
+                                            color='teal'
+                                            onClick={() => handleSendEmailDonationCode()}
+                                        />
+                                    }
+                                    content='Email sent!'
                                 />
                             </Form>
                         </Grid.Column>
