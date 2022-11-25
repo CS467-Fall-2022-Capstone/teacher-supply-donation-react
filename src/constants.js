@@ -1,20 +1,20 @@
-import logo from './media/logo_v2_transparent.png';
-
+import logo from './media/border_logo_v2_transparent.png';
+import borderlessLogo from './media/borderless_logo_v2_transparent.png';
 export const viewConfig = {
     banner: {
-        imageDisplay: logo,
+        imageDisplay: borderlessLogo,
     },
     mission: {
         textDisplay: 'mission',
-        imageDisplay: logo,
+        imageDisplay: borderlessLogo,
     },
     aboutUs: {
         textDisplay: 'aboutUs',
-        imageDisplay: logo,
+        imageDisplay: borderlessLogo,
     },
     howItWorks: {
         textDisplay: 'howItWorks',
-        imageDisplay: logo,
+        imageDisplay: borderlessLogo,
     },
     login: {
         textDisplay: 'login',
