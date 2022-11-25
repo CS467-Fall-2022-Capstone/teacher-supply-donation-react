@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
+import Accordion from './Accordion.js';
 
 class DisplayText extends React.Component {
     mission =
@@ -10,6 +11,43 @@ class DisplayText extends React.Component {
     colorText(color, text) {
         return <span style={{ color }}>{text}</span>;
     }
+
+    team_blurbs = [
+        {
+            title: 'Alice Fisher',
+            content: `Alice Fisher was a
+            classroom teacher for 18 years - 12 years teaching
+            middle and high school math and 6 years teaching HS
+            CS. She graduated from Rice University with a BA in
+            history and teaching certification in mathematics.
+            She earned a Master's degree in mathematics and then
+            decided to pursue a post-bac in CS out of curiosity
+            and recently accepted a full-time software
+            engineering position at Code.org. In the past, she
+            had to buy classroom supplies out-of-pocket such as
+            a clock, electric pencil sharpener, countless tissue
+            boxes. This project arises from her past classroom
+            experiences and is dedicated to committed teachers
+            who go above and beyond.`
+        },
+        {
+            title: 'Sean Park',
+            content: `Sean Park is currently
+            a Corporate Investigations and Internal Audit
+            Manager living in Southern California. He graduated
+            in 2012 with a major in Philosophy and minor in Law
+            and Society from University of California, San
+            Diego. He joined the OSU post-bac program to pursue
+            his passion in tech. He accepted a Software Engineer
+            role at Paylocity! When he's not working he loves
+            binging movies and shows, going to concerts, and
+            listening to vinyl records.`
+        },
+        {
+            title: 'Joel Swendaal',
+            content: `Joe Swendaal is a...`
+        }
+    ];
 
     displayMsg(whichMsg) {
         if (whichMsg === 'mission') {
@@ -92,67 +130,41 @@ class DisplayText extends React.Component {
             );
         } else if (whichMsg === 'aboutUs') {
             return (
-                <div>
-                    <div
+            <div>
+                <div 
+                    style={{
+                        textAlign: 'left',
+                        marginLeft: '3em',
+                        marginRight: '3em',
+                    }}
+                >
+                    <h3>
+                        The Teacher Supply Donation web app is a
+                        collaboration among three developers - Alice Fisher,
+                        Sean Park, and Joel Swenddal - who developed this
+                        project as part of the Capstone course in the Oregon
+                        State University Postbaccalaureate Computer Science
+                        program. They will all graduate from the program in
+                        December 2022 and hope you enjoy this TSD
+                        application!
+                    </h3>
+                    <div>
+                    { <Accordion items={this.team_blurbs}/> }
+                    </div>
+                </div>
+                <Link to='/' style={{ color: '#3d3d3d' }}>
+                    <Button
+                        className='ui  button'
                         style={{
-                            textAlign: 'left',
-                            marginLeft: '4em',
-                            marginRight: '4em',
+                            marginTop: '3em',
+                            marginBottom: '3em',
+                            align: 'center',
                         }}
                     >
-                        <h3>
-                            The Teacher Supply Donation web app is a
-                            collaboration among three developers - Alice Fisher,
-                            Sean Park, and Joel Swenddal - who developed this
-                            project as part of the Capstone course in the Oregon
-                            State University Postbaccalaureate Computer Science
-                            program. They will all graduate from the program in
-                            December 2022 and hope you enjoy this TSD
-                            application!
-                        </h3>
-                        <h4>
-                            {this.colorText('red', '*')} Alice Fisher was a
-                            classroom teacher for 18 years - 12 years teaching
-                            middle and high school math and 6 years teaching HS
-                            CS. She graduated from Rice University with a BA in
-                            history and teaching certification in mathematics.
-                            She earned a Master's degree in mathematics and then
-                            decided to pursue a post-bac in CS out of curiosity
-                            and recently accepted a full-time software
-                            engineering position at Code.org. In the past, she
-                            had to buy classroom supplies out-of-pocket such as
-                            a clock, electric pencil sharpener, countless tissue
-                            boxes. This project arises from her past classroom
-                            experiences and is dedicated to committed teachers
-                            who go above and beyond.
-                        </h4>
-                        <h4>
-                            {this.colorText('red', '*')} Sean Park is currently
-                            a Corporate Investigations and Internal Audit
-                            Manager living in Southern California. He graduated
-                            in 2012 with a major in Philosophy and minor in Law
-                            and Society from University of California, San
-                            Diego. He joined the OSU post-bac program to pursue
-                            his passion in tech. He accepted a Software Engineer
-                            role at Paylocity! When he's not working he loves
-                            binging movies and shows, going to concerts, and
-                            listening to vinyl records.
-                        </h4>
-                        <h4>{this.colorText('red', '*')} Joel Swenddal is</h4>
-                    </div>
-                    <Link to='/' style={{ color: '#3d3d3d' }}>
-                        <Button
-                            className='ui  button'
-                            style={{
-                                marginTop: '3em',
-                                marginBottom: '3em',
-                                align: 'center',
-                            }}
-                        >
-                            Back to home
-                        </Button>
-                    </Link>
-                </div>
+                        Back to home
+                    </Button>
+                </Link>
+            </div>
             );
         }
     }
@@ -167,6 +179,7 @@ class DisplayText extends React.Component {
             </div>
         );
     }
+
     render() {
         return (
             <div className='ui container layoutContent'>
