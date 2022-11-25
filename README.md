@@ -16,11 +16,14 @@ Place the following in the file:
 ```
 PORT=8000
 REACT_APP_BACKEND_URL=http://localhost:3000
+REACT_APP_GOOGLE_CLIENT=<Your Google Client ID>
 ```
 
 The React app will run on Port 8000 and proxy to localhost:3000 where the Express app should be running on.
 
-When developing locally, REACT_APP_BACKEND_URL will point to the local express server.  For deployment, REACT_APP_BACKEND_URL is set to the Donation Web API's URL.
+When developing locally, `REACT_APP_BACKEND_URL` will point to the local express server.  For deployment, `REACT_APP_BACKEND_URL` is set to the Donation Web API's URL.
+
+`REACT_APP_GOOGLE_CLIENT` is required for the GoogleOAuthProvider component to function properly.  You can get the Client ID by registering an application in the Google Cloud console.
 
 ## Available Scripts
 
@@ -33,8 +36,3 @@ Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
