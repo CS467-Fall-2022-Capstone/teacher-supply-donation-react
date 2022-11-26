@@ -18,8 +18,10 @@ function ThankyouPage() {
                 <div className='dashboardHeader'>
                     <Header size='huge' textAlign='center'>
                         <Header.Content>
-                            Thank you for your donation, {student.fname}! Your
-                            unique donation code is: {student.donationCode}
+                            Thank you for your donation, {student.fname}!
+                        </Header.Content>
+                        <Header.Content>
+                            Your unique donation code is: {student.donationCode}
                         </Header.Content>
                         <Divider />
                     </Header>
