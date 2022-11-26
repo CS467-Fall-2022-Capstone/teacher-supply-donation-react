@@ -45,7 +45,12 @@ class DisplayText extends React.Component {
         },
         {
             title: 'Joel Swendaal',
-            content: `Joe Swendaal is a...`
+            content: `Joe Swendaal has a Master’s degree in English Language Education 
+            from San Francisco State University and worked in student success roles in higher education 
+            for a decade before returning to study toward a BS in Computer Science at Oregon State. 
+            He is especially interested in developing applications with an educational component, as well 
+            as implementing systems that use data to improve student success outcomes. 
+            Following graduation, he will be working as a Data Analyst at the University of Illinois.`
         }
     ];
 
