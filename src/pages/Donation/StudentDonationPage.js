@@ -139,7 +139,7 @@ function StudentDonationPage() {
             // cleanup code to ensure no race conditions
             ignore = true;
         };
-    }, []);
+    }, [studentId]);
 
     const handleSendEmailAfterSubmitDonation = (studentDonations) => {
         DonationService.sendEmailAfterSubmitDonation(

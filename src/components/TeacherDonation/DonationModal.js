@@ -41,9 +41,10 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
         }
     };
 
-    const onDonationCodeSubmit = (donationCode) => {
+    const onDonationCodeSubmit = async () => {
         try {
-            handleReturningDonorSubmit(donationCode);
+            console.log(donationCode);
+            return await DonationService.getStudentByDonationCode(donationCode);
         } catch (err) {
             console.error(err);
         } finally {
@@ -130,7 +131,9 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
                                     content='Update Donations'
                                     primary
                                     onClick={() =>
-                                        onDonationCodeSubmit(donationCode)
+                                        handleReturningDonorSubmit(
+                                            onDonationCodeSubmit
+                                        )
                                     }
                                 />
                             </Form>

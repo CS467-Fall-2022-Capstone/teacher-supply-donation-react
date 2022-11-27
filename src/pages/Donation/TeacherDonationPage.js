@@ -35,19 +35,18 @@ function TeacherDonationPage() {
         }
     };
 
-    const handleReturningDonorSubmit = async (donationCode) => {
+    const handleReturningDonorSubmit = (getStudent) => {
         try {
-            const response = await DonationService.getStudentByDonationCode(
-                donationCode
-            );
-
+            const response = getStudent()
+    
             if (response.status === 200) {
                 const student_id = response.data.student_id;
                 navigate(`students/${student_id}`, { replace: true });
             }
         } catch (err) {
-            console.error(err);
+            console.error(err)
         }
+        
     };
 
     return (
