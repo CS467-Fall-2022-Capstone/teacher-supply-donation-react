@@ -35,9 +35,9 @@ function TeacherDonationPage() {
         }
     };
 
-    const handleReturningDonorSubmit = (getStudent) => {
+    const handleReturningDonorSubmit = async (donationCode) => {
         try {
-            const response = getStudent();
+            const response = await DonationService.getStudentByDonationCode(donationCode);
             console.log(response);
             if (response.status === 200) {
                 const student_id = response.data.student_id;
