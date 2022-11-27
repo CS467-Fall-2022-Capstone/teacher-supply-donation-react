@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button, Image } from 'semantic-ui-react';
 import Accordion from './Accordion.js';
 import logo from '../media/logo_v2_black.png'
+import alice from '../media/alice.jpeg';
+import sean from '../media/sean.jpeg';
+import joel from '../media/joel.jpeg';
+
 class DisplayText extends React.Component {
     mission =
         'Teacher Supply Donation’s mission is to help teachers collect classroom supplies in an efficient, simple way \
@@ -15,6 +19,7 @@ class DisplayText extends React.Component {
     team_blurbs = [
         {
             title: 'Alice Fisher',
+            photo: alice,
             content: `Alice Fisher was a
             classroom teacher for 18 years - 12 years teaching
             middle and high school math and 6 years teaching HS
@@ -32,6 +37,7 @@ class DisplayText extends React.Component {
         },
         {
             title: 'Sean Park',
+            photo: sean,
             content: `Sean Park is currently
             a Corporate Investigations and Internal Audit
             Manager living in Southern California. He graduated
@@ -45,6 +51,7 @@ class DisplayText extends React.Component {
         },
         {
             title: 'Joel Swenddal',
+            photo: joel,
             content: `Joel Swenddal has a Master’s degree in English Language Education 
             from San Francisco State University and worked in student success roles in higher education 
             for a decade before returning to study toward a BS in Computer Science at Oregon State. 
