@@ -116,7 +116,7 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
                             <Header as='h3'>
                                 Returning Donors - Update Donations
                             </Header>
-                            <Form>
+                            <Form onSubmit={(e) => e.preventDefault()}>
                                 <Form.Input
                                     size='mini'
                                     label='Donation Code'
