@@ -22,8 +22,8 @@ const Accordion = ({items}) => {
             </div>
             <div className={`content ${active}`}>
                 <div>
-                    <h4>{item.content}</h4>
-                    <Image centered alt='dev-photo' src={item.photo} size='tiny' />
+                <Image class="ui avatar image" src={item.photo} floated='left' alt="dev" size='tiny'/>
+                <h4>{item.content}</h4>
                 </div>
             </div>
         </React.Fragment>
