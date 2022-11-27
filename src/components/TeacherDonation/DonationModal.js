@@ -41,18 +41,9 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
         }
     };
 
-    const onDonationCodeSubmit = async (donationCode) => {
+    const onDonationCodeSubmit = (donationCode) => {
         try {
-            console.log(donationCode);
-            const response = await DonationService.getStudentByDonationCode(
-                donationCode
-            );
-
-            if (response.status === 200) {
-                const student_id = response.data.student_id;
-                console.log(student_id);
-                handleReturningDonorSubmit(student_id);
-            }
+            handleReturningDonorSubmit(donationCode);
         } catch (err) {
             console.error(err);
         } finally {

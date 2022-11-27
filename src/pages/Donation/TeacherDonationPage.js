@@ -35,12 +35,18 @@ function TeacherDonationPage() {
         }
     };
 
-    const handleReturningDonorSubmit = (student_id) => {
-        console.log(student_id);
-        if (student_id) {
-            navigate(`students/${student_id}`, { replace: true });
-        } else if (student_id === undefined) {
-            console.log('Student could not be found by Donation Code');
+    const handleReturningDonorSubmit = async (donationCode) => {
+        try {
+            const response = await DonationService.getStudentByDonationCode(
+                donationCode
+            );
+
+            if (response.status === 200) {
+                const student_id = response.data.student_id;
+                navigate(`students/${student_id}`, { replace: true });
+            }
+        } catch (err) {
+            console.error(err);
         }
     };
 
