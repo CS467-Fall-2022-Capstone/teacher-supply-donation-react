@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Image } from 'semantic-ui-react';
 
 const Accordion = ({items}) => {
     const [activeIndex, setActiveIndex] =  useState(null);
@@ -20,7 +21,10 @@ const Accordion = ({items}) => {
                 {item.title}
             </div>
             <div className={`content ${active}`}>
-                <h4>{item.content}</h4>
+                <div>
+                    <h4>{item.content}</h4>
+                    <Image centered alt='dev-photo' src={item.photo} size='tiny' />
+                </div>
             </div>
         </React.Fragment>
         )
