@@ -131,9 +131,9 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
                                 disabled={donationCode.length === 0}
                                 content='Update Donations'
                                 primary
-                                onClick={() =>
-                                    handleReturningDonorSubmit(donationCode)
-                                }
+                                onClick={handleReturningDonorSubmit(
+                                    donationCode
+                                )}
                             />
 
                             <Divider />
