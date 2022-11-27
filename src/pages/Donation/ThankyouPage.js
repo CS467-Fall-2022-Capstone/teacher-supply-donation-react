@@ -26,7 +26,7 @@ function ThankyouPage() {
                         <Divider />
                     </Header>
 
-                    <Container textAlign='Center'>
+                    <Container textAlign='center'>
                         <Header as='h3'>
                             Please bring your donations to class with you:
                         </Header>

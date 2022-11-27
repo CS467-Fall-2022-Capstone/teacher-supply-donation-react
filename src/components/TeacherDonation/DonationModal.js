@@ -8,15 +8,12 @@ import {
     Grid,
     Segment,
     Form,
-    Popup
+    Popup,
 } from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
 import { useOutletContext } from 'react-router-dom';
 
-function DonationModal({
-    handleNewDonorSubmit,
-    handleReturningDonorSubmit,
-}) {
+function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
     const [open, setOpen] = useState(false);
     const [fName, setFName] = useState('');
     const [lName, setLName] = useState('');
@@ -24,10 +21,13 @@ function DonationModal({
     const [donationCode, setDonationCode] = useState('');
     const { teacher } = useOutletContext();
     const [successMessage, setSuccessMessage] = useState(false);
-    
+
     const handleSendEmailDonationCode = async () => {
         try {
-            let response = await DonationService.sendEmailDonationCode(email, teacher.name);
+            let response = await DonationService.sendEmailDonationCode(
+                email,
+                teacher.name
+            );
             if (response.status === 200) {
                 // Display success message for 3 seconds
                 console.log('response received');
@@ -38,6 +38,22 @@ function DonationModal({
             }
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const onDonationCodeSubmit = async () => {
+        try {
+            const response = await DonationService.getStudentByDonationCode(
+                donationCode
+            );
+            if (response.status === 200) {
+                const student_id = response.data.student_id;
+                handleReturningDonorSubmit(student_id);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setOpen(false);
         }
     };
 
@@ -119,15 +135,11 @@ function DonationModal({
                                     disabled={donationCode.length === 0}
                                     content='Update Donations'
                                     primary
-                                    onClick={() =>
-                                        handleReturningDonorSubmit(donationCode)
-                                    }
+                                    onClick={() => onDonationCodeSubmit()}
                                 />
                             </Form>
                             <Divider />
-                            <Header as='h3'>
-                                Forgot your Donation Code?
-                            </Header>
+                            <Header as='h3'>Forgot your Donation Code?</Header>
                             <Form>
                                 <Form.Input
                                     size='mini'
@@ -146,7 +158,9 @@ function DonationModal({
                                             disabled={email.length === 0}
                                             content='Email Me My Donation Code'
                                             color='teal'
-                                            onClick={() => handleSendEmailDonationCode()}
+                                            onClick={() =>
+                                                handleSendEmailDonationCode()
+                                            }
                                         />
                                     }
                                     content='Email sent!'
