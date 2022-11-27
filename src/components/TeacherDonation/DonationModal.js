@@ -41,13 +41,16 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
         }
     };
 
-    const onDonationCodeSubmit = async () => {
+    const onDonationCodeSubmit = async (donationCode) => {
         try {
+            console.log(donationCode);
             const response = await DonationService.getStudentByDonationCode(
                 donationCode
             );
+
             if (response.status === 200) {
                 const student_id = response.data.student_id;
+                console.log(student_id);
                 handleReturningDonorSubmit(student_id);
             }
         } catch (err) {
@@ -135,7 +138,9 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
                                     disabled={donationCode.length === 0}
                                     content='Update Donations'
                                     primary
-                                    onClick={() => onDonationCodeSubmit()}
+                                    onClick={() =>
+                                        onDonationCodeSubmit(donationCode)
+                                    }
                                 />
                             </Form>
                             <Divider />

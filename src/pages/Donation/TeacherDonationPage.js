@@ -36,6 +36,7 @@ function TeacherDonationPage() {
     };
 
     const handleReturningDonorSubmit = (student_id) => {
+        console.log(student_id);
         if (student_id) {
             navigate(`students/${student_id}`, { replace: true });
         } else if (student_id === undefined) {
