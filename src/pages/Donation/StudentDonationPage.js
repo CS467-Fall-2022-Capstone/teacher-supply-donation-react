@@ -180,7 +180,6 @@ function StudentDonationPage() {
             throw err;
         } finally {
             // Unregister student from donation page and take them to Thank You page
-            setStudent(null);
             navigate('/donations/students/' + student._id, { replace: true });
         }
     };
