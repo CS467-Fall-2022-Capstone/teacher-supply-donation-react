@@ -37,16 +37,15 @@ function TeacherDonationPage() {
 
     const handleReturningDonorSubmit = (getStudent) => {
         try {
-            const response = getStudent()
-    
+            const response = getStudent();
+            console.log(response);
             if (response.status === 200) {
                 const student_id = response.data.student_id;
                 navigate(`students/${student_id}`, { replace: true });
             }
         } catch (err) {
-            console.error(err)
+            console.error(err);
         }
-        
     };
 
     return (

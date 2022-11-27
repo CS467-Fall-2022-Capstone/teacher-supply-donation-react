@@ -9,7 +9,7 @@ import {
     Segment,
     Form,
     Popup,
-    Input
+    Input,
 } from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
 import { useOutletContext } from 'react-router-dom';
@@ -117,27 +117,27 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
                             <Header as='h3'>
                                 Returning Donors - Update Donations
                             </Header>
-                           
-                                <Input
-                                    size='mini'
-                                    label='Donation Code'
-                                    placeholder='Donation Code'
-                                    onChange={(e) =>
-                                        setDonationCode(e.target.value)
-                                    }
-                                />
-                                <Button
-                                    size='small'
-                                    disabled={donationCode.length === 0}
-                                    content='Update Donations'
-                                    primary
-                                    onClick={() =>
-                                        handleReturningDonorSubmit(
-                                            onDonationCodeSubmit
-                                        )
-                                    }
-                                />
-                       
+
+                            <Input
+                                size='mini'
+                                label='Donation Code'
+                                placeholder='Donation Code'
+                                onChange={(e) =>
+                                    setDonationCode(e.target.value)
+                                }
+                            />
+                            <Button
+                                size='small'
+                                disabled={donationCode.length === 0}
+                                content='Update Donations'
+                                primary
+                                onClick={() =>
+                                    handleReturningDonorSubmit(
+                                        onDonationCodeSubmit
+                                    )
+                                }
+                            />
+
                             <Divider />
                             <Header as='h3'>Forgot your Donation Code?</Header>
                             <Form>
