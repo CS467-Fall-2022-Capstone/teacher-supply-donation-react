@@ -63,12 +63,8 @@ function App() {
                         path='students/:studentId/profile'
                         element={<StudentProfile />}
                     />
-                </Route>
-                <Route path='/donations/students/' element={<ThankyouLayout />}>
                     <Route
-                        index
-                        path=':studentId'
-                        exact
+                        path='students/:studentId/thankyou'
                         element={<ThankyouPage />}
                     />
                 </Route>

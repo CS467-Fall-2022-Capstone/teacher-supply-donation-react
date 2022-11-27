@@ -181,7 +181,8 @@ function StudentDonationPage() {
         } finally {
             // Unregister student from donation page and take them to Thank You page
             setStudent(null);
-            navigate('/donations/students/' + student._id, { replace: true });
+            //navigate('/donations/students/' + student._id, { replace: true });
+            navigate('/donations/teachers/' + teacher._id + '/students/' + student._id + '/thankyou', { replace: true });
         }
     };
 

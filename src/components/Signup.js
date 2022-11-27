@@ -9,7 +9,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 
 function Signup() {
     const { logIn, teacher } = useAuth();
-    // const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -31,7 +30,7 @@ function Signup() {
                 ...currentFormData,
                 [name]: value,
             };
-            console.log(nextFormData);
+
             return nextFormData;
         });
     };
@@ -48,7 +47,7 @@ function Signup() {
                     formData.email,
                     formData.password
                 );
-                console.log(teacher);
+
                 if (!teacher) return;
                 setSuccessfulReq({
                     message: 'Request succeeded',
