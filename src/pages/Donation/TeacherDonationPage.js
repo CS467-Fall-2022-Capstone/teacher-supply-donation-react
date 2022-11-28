@@ -52,7 +52,7 @@ function TeacherDonationPage() {
     return (
         <>
             <div className='dashboardHeader'>
-                {recordRetrieved ? (
+                {teacher.isPublished ? (
                     <>
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
@@ -70,15 +70,14 @@ function TeacherDonationPage() {
                     <>
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
-                                Problem accessing this Classroom Page
+                                {teacher.name} has not published their donation
+                                page
                                 <Header.Subheader>
-                                    Record not accessed
+                                    Please return when the teacher has published
+                                    the supplies list for donation.
                                 </Header.Subheader>
                             </Header.Content>
                         </Header>
-                        <Message size='big' color='olive' compact>
-                            Check that the id '{teacher._id}' is correct
-                        </Message>
                     </>
                 )}
             </div>
@@ -89,7 +88,7 @@ function TeacherDonationPage() {
                 <SupplyTableSimple supplies={supplies} />
             </Segment>
 
-            {recordRetrieved ? (
+            {teacher.isPublished ? (
                 <>
                     <Container className='buttonRow' textAlign='center'>
                         <DonationModal

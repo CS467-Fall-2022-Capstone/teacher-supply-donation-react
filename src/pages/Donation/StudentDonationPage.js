@@ -19,10 +19,10 @@ import DonationService from '../../services/donations.service';
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
     // always pull teacher's data to pass down as context
-    const { teacher, supplies, student, setStudent } = useOutletContext();
+    const { teacher, supplies, student, setStudent, setLoading } =
+        useOutletContext();
     const { studentId } = useParams();
     const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
-    const [studentRetrieved, setStudentRetrieved] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const navigate = useNavigate();
 
@@ -49,7 +49,6 @@ function StudentDonationPage() {
                 return supplyItem;
             });
             // bulk form data to be all insert operations
-            setStudentRetrieved(true);
             return insertOneObjects;
         } else {
             // if there are donations then map the supply to the donation
@@ -96,7 +95,6 @@ function StudentDonationPage() {
                     };
                 }
             });
-            setStudentRetrieved(true);
 
             return insertOrUpdateObjects;
         }
@@ -126,12 +124,15 @@ function StudentDonationPage() {
                             response.data.donations
                         );
                         setSuppliesAndDonations(donationsForBulkWrite);
+                        setLoading(false);
                     }
                 }
             } catch (err) {
                 console.error(err);
             }
         }
+
+        setLoading(true);
         let ignore = false;
         loadStudentInfo();
         return () => {
@@ -181,13 +182,20 @@ function StudentDonationPage() {
             // Unregister student from donation page and take them to Thank You page
             setStudent(null);
             //navigate('/donations/students/' + student._id, { replace: true });
-            navigate('/donations/teachers/' + teacher._id + '/students/' + student._id + '/thankyou', { replace: true });
+            navigate(
+                '/donations/teachers/' +
+                    teacher._id +
+                    '/students/' +
+                    student._id +
+                    '/thankyou',
+                { replace: true }
+            );
         }
     };
 
     const handleDonationChange = (e, donationUpdater) => {
         const updatedDonation = donationUpdater(e);
-   
+
         if (
             updatedDonation.donationFields.quantityDonated >
             updatedDonation.maxAllowed
@@ -209,37 +217,18 @@ function StudentDonationPage() {
 
     return (
         <>
-            {studentRetrieved ? (
-                <div className='dashboardHeader'>
-                    <Header size='huge' textAlign='center'>
-                        <Header.Content>
-                            Donate Supplies to {teacher.name}'s Classroom!
-                            <Header.Subheader>
-                                {teacher.school}
-                            </Header.Subheader>
-                        </Header.Content>
-                    </Header>
+            <div className='dashboardHeader'>
+                <Header size='huge' textAlign='center'>
+                    <Header.Content>
+                        Donate Supplies to {teacher.name}'s Classroom!
+                        <Header.Subheader>{teacher.school}</Header.Subheader>
+                    </Header.Content>
+                </Header>
 
-                    <Message size='big' color='olive' compact>
-                        {teacher.message}
-                    </Message>
-                </div>
-            ) : (
-                <div className='dashboardHeader'>
-                    <Header size='huge' textAlign='center'>
-                        <Header.Content>
-                            Problem accessing this Classroom Page
-                            <Header.Subheader>
-                                Record not accessed
-                            </Header.Subheader>
-                        </Header.Content>
-                    </Header>
-
-                    <Message size='big' color='olive' compact>
-                        Check that the id url is correct
-                    </Message>
-                </div>
-            )}
+                <Message size='big' color='olive' compact>
+                    {teacher.message}
+                </Message>
+            </div>
 
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
@@ -251,31 +240,16 @@ function StudentDonationPage() {
                 />
             </Segment>
 
-            {studentRetrieved ? (
-                <Container className='buttonRow' textAlign='center'>
-                    <Button
-                        primary
-                        disabled={disabled}
-                        type='submit'
-                        size='medium'
-                        content='Submit your donations'
-                        onClick={() => handleSubmit(suppliesAndDonations)}
-                    />
-                </Container>
-            ) : (
-                <Container className='buttonRow' textAlign='center'>
-                    <Button
-                        type='submit'
-                        as={Link}
-                        to='/'
-                        color='blue'
-                        size='huge'
-                        style={{ marginBottom: '1em' }}
-                    >
-                        Return Home
-                    </Button>
-                </Container>
-            )}
+            <Container className='buttonRow' textAlign='center'>
+                <Button
+                    primary
+                    disabled={disabled}
+                    type='submit'
+                    size='medium'
+                    content='Submit your donations'
+                    onClick={() => handleSubmit(suppliesAndDonations)}
+                />
+            </Container>
         </>
     );
 }
