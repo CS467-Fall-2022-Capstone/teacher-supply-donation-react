@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Link,
-    useOutletContext,
-    useNavigate,
-    useParams,
-} from 'react-router-dom';
+import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
 import {
     Header,
@@ -22,7 +17,6 @@ function StudentDonationPage() {
     const { teacher, supplies, student, setStudent } = useOutletContext();
     const { studentId } = useParams();
     const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
-    const [studentRetrieved, setStudentRetrieved] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const navigate = useNavigate();
 
@@ -49,7 +43,6 @@ function StudentDonationPage() {
                 return supplyItem;
             });
             // bulk form data to be all insert operations
-            setStudentRetrieved(true);
             return insertOneObjects;
         } else {
             // if there are donations then map the supply to the donation
@@ -96,7 +89,6 @@ function StudentDonationPage() {
                     };
                 }
             });
-            setStudentRetrieved(true);
 
             return insertOrUpdateObjects;
         }
@@ -110,7 +102,6 @@ function StudentDonationPage() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const studentData = {
                             _id: response.data._id,
                             firstName: response.data.firstName,
@@ -132,6 +123,7 @@ function StudentDonationPage() {
                 console.error(err);
             }
         }
+
         let ignore = false;
         loadStudentInfo();
         return () => {
@@ -172,7 +164,6 @@ function StudentDonationPage() {
             } else {
                 console.log('Send unsuccessful');
             }
-            //console.log("Response returned from backend on Update Donations: " + JSON.stringify(response.data));
         } catch (err) {
             console.log('Error response received from Donations API');
             console.log(err);
@@ -180,14 +171,20 @@ function StudentDonationPage() {
         } finally {
             // Unregister student from donation page and take them to Thank You page
             setStudent(null);
-            //navigate('/donations/students/' + student._id, { replace: true });
-            navigate('/donations/teachers/' + teacher._id + '/students/' + student._id + '/thankyou', { replace: true });
+            navigate(
+                '/donations/teachers/' +
+                    teacher._id +
+                    '/students/' +
+                    student._id +
+                    '/thankyou',
+                { replace: true }
+            );
         }
     };
 
     const handleDonationChange = (e, donationUpdater) => {
         const updatedDonation = donationUpdater(e);
-   
+
         if (
             updatedDonation.donationFields.quantityDonated >
             updatedDonation.maxAllowed
@@ -209,37 +206,18 @@ function StudentDonationPage() {
 
     return (
         <>
-            {studentRetrieved ? (
-                <div className='dashboardHeader'>
-                    <Header size='huge' textAlign='center'>
-                        <Header.Content>
-                            Donate Supplies to {teacher.name}'s Classroom!
-                            <Header.Subheader>
-                                {teacher.school}
-                            </Header.Subheader>
-                        </Header.Content>
-                    </Header>
+            <div className='dashboardHeader'>
+                <Header size='huge' textAlign='center'>
+                    <Header.Content>
+                        Donate Supplies to {teacher.name}'s Classroom!
+                        <Header.Subheader>{teacher.school}</Header.Subheader>
+                    </Header.Content>
+                </Header>
 
-                    <Message size='big' color='olive' compact>
-                        {teacher.message}
-                    </Message>
-                </div>
-            ) : (
-                <div className='dashboardHeader'>
-                    <Header size='huge' textAlign='center'>
-                        <Header.Content>
-                            Problem accessing this Classroom Page
-                            <Header.Subheader>
-                                Record not accessed
-                            </Header.Subheader>
-                        </Header.Content>
-                    </Header>
-
-                    <Message size='big' color='olive' compact>
-                        Check that the id url is correct
-                    </Message>
-                </div>
-            )}
+                <Message size='big' color='olive' compact>
+                    {teacher.message}
+                </Message>
+            </div>
 
             <Header size='large'> Supplies List</Header>
             <Divider fitted />
@@ -251,31 +229,16 @@ function StudentDonationPage() {
                 />
             </Segment>
 
-            {studentRetrieved ? (
-                <Container className='buttonRow' textAlign='center'>
-                    <Button
-                        primary
-                        disabled={disabled}
-                        type='submit'
-                        size='medium'
-                        content='Submit your donations'
-                        onClick={() => handleSubmit(suppliesAndDonations)}
-                    />
-                </Container>
-            ) : (
-                <Container className='buttonRow' textAlign='center'>
-                    <Button
-                        type='submit'
-                        as={Link}
-                        to='/'
-                        color='blue'
-                        size='huge'
-                        style={{ marginBottom: '1em' }}
-                    >
-                        Return Home
-                    </Button>
-                </Container>
-            )}
+            <Container className='buttonRow' textAlign='center'>
+                <Button
+                    primary
+                    disabled={disabled}
+                    type='submit'
+                    size='medium'
+                    content='Submit your donations'
+                    onClick={() => handleSubmit(suppliesAndDonations)}
+                />
+            </Container>
         </>
     );
 }

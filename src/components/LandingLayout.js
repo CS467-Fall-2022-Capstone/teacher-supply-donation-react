@@ -11,7 +11,6 @@ export const LandingLayout = () => {
             try {
                 const response = await ExpressService.pingServer();
                 if (response.status === 200) {
-                    console.log(response.data.status);
                     setServerReady(response.data.status);
                 }
             } catch (err) {

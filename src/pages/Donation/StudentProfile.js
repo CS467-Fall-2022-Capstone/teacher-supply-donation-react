@@ -29,8 +29,6 @@ function StudentProfile() {
                     setSuccess(false);
                 }, 1500);
                 // update the Student in the Donation Layout Context
-                // setStudent(response.data);
-                console.log(response.data);
             }
         } catch (error) {
             console.error(error);
