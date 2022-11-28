@@ -43,7 +43,7 @@ class DonationService {
     getStudentByDonationCode(donation_code) {
         return axios({
             method: 'get',
-            url: `/students/${donation_code}/donations`,
+            url: `/students/${donation_code}`,
         });
     }
 
