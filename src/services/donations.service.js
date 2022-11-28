@@ -41,7 +41,7 @@ class DonationService {
      * @returns status 200
      */
     getStudentByDonationCode(donation_code) {
-        return axios.get(`/students/${donation_code}/donations`);
+        return axios(`${API_URL}/students/donation_code/${donation_code}`);
     }
 
     /**

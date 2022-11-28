@@ -15,7 +15,6 @@ function DonationLayout() {
     const navigate = useNavigate();
     // Use location so refreshed are done on every redirect
     const location = useLocation();
-    console.log(location);
     // This donations layout will always have the latest
     // data for the Teacher's supplies
     const { teacherId } = useParams();
