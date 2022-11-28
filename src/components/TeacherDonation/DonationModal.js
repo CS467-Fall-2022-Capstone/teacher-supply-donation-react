@@ -106,24 +106,25 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
                             <Header as='h3'>
                                 Returning Donors - Update Donations
                             </Header>
-
-                            <Input
-                                size='mini'
-                                label='Donation Code'
-                                placeholder='Donation Code'
-                                onChange={(e) =>
-                                    setDonationCode(e.target.value)
-                                }
-                            />
-                            <Button
-                                size='small'
-                                disabled={donationCode.length === 0}
-                                content='Update Donations'
-                                primary
-                                onClick={() =>
-                                    handleReturningDonorSubmit(donationCode)
-                                }
-                            />
+                            <Form>
+                                <Form.Input
+                                    size='mini'
+                                    label='Donation Code'
+                                    placeholder='Donation Code'
+                                    onChange={(e) =>
+                                        setDonationCode(e.target.value)
+                                    }
+                                />
+                                <Button
+                                    size='small'
+                                    disabled={donationCode.length === 0}
+                                    content='Update Donations'
+                                    primary
+                                    onClick={() =>
+                                        handleReturningDonorSubmit(donationCode)
+                                    }
+                                />
+                            </Form>
 
                             <Divider />
                             <Header as='h3'>Forgot your Donation Code?</Header>
