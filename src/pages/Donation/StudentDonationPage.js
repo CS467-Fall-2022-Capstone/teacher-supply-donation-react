@@ -12,8 +12,6 @@ import {
 import DonationService from '../../services/donations.service';
 
 function StudentDonationPage() {
-    // Don't need use params because DonationLayout has it and will
-    // always pull teacher's data to pass down as context
     const { teacher, supplies, student, setStudent } = useOutletContext();
     const { studentId } = useParams();
     const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
