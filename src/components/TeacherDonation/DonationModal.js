@@ -9,7 +9,6 @@ import {
     Segment,
     Form,
     Popup,
-    Input,
 } from 'semantic-ui-react';
 import DonationService from '../../services/donations.service';
 import { useOutletContext } from 'react-router-dom';
