@@ -14,8 +14,7 @@ import DonationService from '../../services/donations.service';
 function StudentDonationPage() {
     // Don't need use params because DonationLayout has it and will
     // always pull teacher's data to pass down as context
-    const { teacher, supplies, student, setStudent, setLoading } =
-        useOutletContext();
+    const { teacher, supplies, student, setStudent } = useOutletContext();
     const { studentId } = useParams();
     const [suppliesAndDonations, setSuppliesAndDonations] = useState([]);
     const [disabled, setDisabled] = useState(false);
@@ -97,7 +96,6 @@ function StudentDonationPage() {
 
     useEffect(() => {
         async function loadStudentInfo() {
-            setLoading(true);
             try {
                 const response = await DonationService.getStudentRecord(
                     studentId
@@ -123,8 +121,6 @@ function StudentDonationPage() {
                 }
             } catch (err) {
                 console.error(err);
-            } finally {
-                setLoading(false);
             }
         }
 
