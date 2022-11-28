@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Segment, Label, Table, List } from 'semantic-ui-react';
+import { Header, Segment, Label, Table } from 'semantic-ui-react';
 import { useOutletContext, useLocation } from 'react-router-dom';
 import TeacherService from '../../services/teacher.service';
 import ArchiveRow from '../../components/TeacherDashboard/ArchiveRow';
