@@ -41,22 +41,6 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
         }
     };
 
-    const onDonationCodeSubmit = async () => {
-        try {
-            const response = await DonationService.getStudentByDonationCode(
-                donationCode
-            );
-            if (response.status === 200) {
-                const student_id = response.data.student_id;
-                handleReturningDonorSubmit(student_id);
-            }
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setOpen(false);
-        }
-    };
-
     return (
         <Modal
             onClose={() => setOpen(false)}
@@ -135,9 +119,12 @@ function DonationModal({ handleNewDonorSubmit, handleReturningDonorSubmit }) {
                                     disabled={donationCode.length === 0}
                                     content='Update Donations'
                                     primary
-                                    onClick={() => onDonationCodeSubmit()}
+                                    onClick={() =>
+                                        handleReturningDonorSubmit(donationCode)
+                                    }
                                 />
                             </Form>
+
                             <Divider />
                             <Header as='h3'>Forgot your Donation Code?</Header>
                             <Form>
