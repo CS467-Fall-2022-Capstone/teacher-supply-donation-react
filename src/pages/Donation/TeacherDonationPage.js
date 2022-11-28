@@ -51,23 +51,23 @@ function TeacherDonationPage() {
 
     return (
         <>
-            <div className='dashboardHeader'>
-                {teacher.isPublished ? (
-                    <>
-                        <Header size='huge' textAlign='center'>
-                            <Header.Content>
-                                Donate Supplies to {teacher.name}'s Classroom!
-                                <Header.Subheader>
-                                    {teacher.school}
-                                </Header.Subheader>
-                            </Header.Content>
-                        </Header>
-                        <Message size='big' color='olive' compact>
-                            {teacher.message}
-                        </Message>
-                    </>
-                ) : (
-                    <>
+            {teacher.isPublished ? (
+                <div className='dashboardHeader'>
+                    <Header size='huge' textAlign='center'>
+                        <Header.Content>
+                            Donate Supplies to {teacher.name}'s Classroom!
+                            <Header.Subheader>
+                                {teacher.school}
+                            </Header.Subheader>
+                        </Header.Content>
+                    </Header>
+                    <Message size='big' color='olive' compact>
+                        {teacher.message}
+                    </Message>
+                </div>
+            ) : (
+                <>
+                    <div className='dashboardHeader'>
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
                                 {teacher.name} has not published their donation
@@ -78,15 +78,15 @@ function TeacherDonationPage() {
                                 </Header.Subheader>
                             </Header.Content>
                         </Header>
-                    </>
-                )}
-            </div>
+                    </div>
 
-            <Header size='large'> Supplies List</Header>
-            <Divider fitted />
-            <Segment raised color='blue'>
-                <SupplyTableSimple supplies={supplies} />
-            </Segment>
+                    <Header size='large'> Supplies List</Header>
+                    <Divider fitted />
+                    <Segment raised color='blue'>
+                        <SupplyTableSimple supplies={supplies} />
+                    </Segment>
+                </>
+            )}
 
             {teacher.isPublished ? (
                 <>
