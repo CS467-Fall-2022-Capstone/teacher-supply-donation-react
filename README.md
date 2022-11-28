@@ -1,7 +1,7 @@
 ## Teacher Supply Donation Web Application
 Oregon State University Fall 2022 CS467 Online Capstone Project
 
-https://teacher-supply-donation-x10q.onrender.com
+https://tsdonation.live
 
 **Developers/Authors:**
 - Alice Fisher
