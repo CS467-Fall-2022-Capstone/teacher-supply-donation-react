@@ -13,7 +13,7 @@ import DonationService from '../../services/donations.service';
 
 function TeacherDonationPage() {
     let navigate = useNavigate();
-    const { teacher, supplies, recordRetrieved } = useOutletContext();
+    const { teacher, supplies } = useOutletContext();
 
     const handleNewDonorSubmit = async (fName, lName, email) => {
         const studentData = {
