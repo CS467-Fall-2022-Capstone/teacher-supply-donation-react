@@ -19,7 +19,6 @@ import DonationLayout from './components/TeacherDonation/DonationLayout';
 import TeacherDonationPage from './pages/Donation/TeacherDonationPage';
 import StudentDonationPage from './pages/Donation/StudentDonationPage';
 import StudentProfile from './pages/Donation/StudentProfile';
-import ThankyouLayout from './components/TeacherDonation/ThankyouLayout';
 import ThankyouPage from './pages/Donation/ThankyouPage';
 
 function App() {
@@ -63,12 +62,8 @@ function App() {
                         path='students/:studentId/profile'
                         element={<StudentProfile />}
                     />
-                </Route>
-                <Route path='/donations/students/' element={<ThankyouLayout />}>
                     <Route
-                        index
-                        path=':studentId'
-                        exact
+                        path='students/:studentId/thankyou'
                         element={<ThankyouPage />}
                     />
                 </Route>

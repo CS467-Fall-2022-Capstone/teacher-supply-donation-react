@@ -7,7 +7,6 @@ import logo from '../../media/border_logo_v2_transparent.png';
 function ThankyouLayout() {
     const { studentId } = useParams();
     const [student, setStudent] = useState({});
-    //const [student_id, setStudentId] = useState(studentId);
     const [donations, setDonations] = useState([]);
     const [recordRetrieved, setRecordRetrieved] = useState(false);
 
@@ -19,7 +18,6 @@ function ThankyouLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const studentData = {
                             _id: response.data._id,
                             fname: response.data.firstName,
@@ -29,8 +27,6 @@ function ThankyouLayout() {
                         setStudent(studentData);
                         setDonations(response.data.donations);
                         setRecordRetrieved(true);
-                        //console.log(JSON.stringify(studentData));
-                        //console.log(JSON.stringify(response.data.donations))
                     }
                 }
             } catch (err) {

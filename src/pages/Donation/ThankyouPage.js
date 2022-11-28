@@ -1,47 +1,81 @@
-import React from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import {
     Header,
     Button,
     Container,
-    Divider,
     Message,
     List,
+    Segment,
 } from 'semantic-ui-react';
+import DonationService from '../../services/donations.service';
+
 
 function ThankyouPage() {
-    const [student, donations, recordRetrieved] = useOutletContext();
+    const { studentId } = useParams();
+    const [student, setStudent] = useState({});
+    const [donations, setDonations] = useState([]);
+    const [recordRetrieved, setRecordRetrieved] = useState(false);
+
+    useEffect(() => {
+        async function loadStudentInfo() {
+            try {
+                const response = await DonationService.getStudentRecord(
+                    studentId
+                );
+                if (response.status === 200) {
+                    if (!ignore) {
+                        const studentData = {
+                            _id: response.data._id,
+                            fname: response.data.firstName,
+                            lname: response.data.lastName,
+                            donationCode: response.data.donation_code,
+                        };
+                        setStudent(studentData);
+                        setDonations(response.data.donations);
+                        setRecordRetrieved(true);
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        let ignore = false;
+        loadStudentInfo();
+        return () => {
+            ignore = true;
+        };
+    }, []);
 
     return (
         <>
             {recordRetrieved ? (
                 <div className='dashboardHeader'>
                     <Header size='huge' textAlign='center'>
-                        <Header.Content>
-                            Thank you for your donation, {student.fname}!
-                        </Header.Content>
-                        <Header.Content>
-                            Your unique donation code is: {student.donationCode}
-                        </Header.Content>
-                        <Divider />
+                        Thank you for your donation, {student.fname}!
                     </Header>
-
+                    <Message color="olive" size="huge">
+                        Your unique donation code is: {student.donationCode}
+                    </Message>
                     <Container textAlign='center'>
-                        <Header as='h3'>
-                            Please bring your donations to class with you:
-                        </Header>
-                        <List bulleted>
-                            {donations.map((donation) => (
-                                <List.Item
-                                    as={Header}
-                                    key={donation._id}
-                                    donation={donation.donation_id}
-                                    content={`Item: ${donation.supply_id.item} | Quantity Donated: ${donation.quantityDonated}`}
-                                />
-                            ))}
-                        </List>
+                        <Segment inverted padded>
+                            <List divided inverted relaxed size="big">
+                                {donations.map((donation) => (
+                                    <List.Item
+                                        key={donation._id}
+                                        donation={donation.donation_id}
+                                    >
+                                        <List.Header as='h2'>Item: <i>{donation.supply_id.item}</i></List.Header>
+                                        Quantity Donated: {donation.quantityDonated}
+                                    </List.Item>
+                                ))}
+                            </List>
+                        </Segment>
                     </Container>
-                    <Divider />
+                    <Header size="large">
+                        Please bring your donations to class with you!
+                    </Header>
+                    
                 </div>
             ) : (
                 <div className='dashboardHeader'>
