@@ -125,7 +125,6 @@ function StudentDonationPage() {
                             supplies,
                             response.data.donations
                         );
-                        console.log(donationsForBulkWrite);
                         setSuppliesAndDonations(donationsForBulkWrite);
                     }
                 }
@@ -186,7 +185,7 @@ function StudentDonationPage() {
 
     const handleDonationChange = (e, donationUpdater) => {
         const updatedDonation = donationUpdater(e);
-        console.log(updatedDonation);
+   
         if (
             updatedDonation.donationFields.quantityDonated >
             updatedDonation.maxAllowed
