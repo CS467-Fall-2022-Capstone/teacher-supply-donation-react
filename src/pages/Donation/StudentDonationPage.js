@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    useOutletContext,
-    useNavigate,
-    useParams,
-} from 'react-router-dom';
+import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
 import SupplyTableDonate from '../../components/TeacherDonation/SupplyTableDonate.js';
 import {
     Header,
@@ -101,6 +97,7 @@ function StudentDonationPage() {
 
     useEffect(() => {
         async function loadStudentInfo() {
+            setLoading(true);
             try {
                 const response = await DonationService.getStudentRecord(
                     studentId
@@ -122,15 +119,15 @@ function StudentDonationPage() {
                             response.data.donations
                         );
                         setSuppliesAndDonations(donationsForBulkWrite);
-                        setLoading(false);
                     }
                 }
             } catch (err) {
                 console.error(err);
+            } finally {
+                setLoading(false);
             }
         }
 
-        setLoading(true);
         let ignore = false;
         loadStudentInfo();
         return () => {
