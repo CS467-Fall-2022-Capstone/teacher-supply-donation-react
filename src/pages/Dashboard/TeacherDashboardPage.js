@@ -49,7 +49,6 @@ function TeacherDashboardPage() {
     };
 
     const onEdit = (supply_id) => {
-        console.log(supply_id);
         setInEditMode({
             status: true,
             supplyKey: supply_id,
@@ -102,7 +101,6 @@ function TeacherDashboardPage() {
                 // only update item name if the value changed
                 supplyUpdate.item = updates.supplyName;
             }
-            console.log(supplyUpdate);
             updateSupply(supply, supplyUpdate);
         }
     };

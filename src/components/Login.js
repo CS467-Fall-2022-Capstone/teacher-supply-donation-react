@@ -29,7 +29,6 @@ function Login() {
                 ...currentFormData,
                 [name]: value,
             };
-            console.log(nextFormData);
             return nextFormData;
         });
     };
@@ -42,7 +41,6 @@ function Login() {
                 formData.email,
                 formData.password
             );
-            console.log(teacher);
             if (!teacher) return; // teacher is null if not found
             logIn(teacher);
         } catch (error) {

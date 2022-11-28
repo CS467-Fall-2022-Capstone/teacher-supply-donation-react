@@ -26,7 +26,6 @@ function DonorRow({ student, inEditMode, onEdit, onSave, onCancel }) {
         StudentService.deleteStudentRecord(student_id);
         navigate('/teachers/dashboard/donors')
     };
-    console.log(student);
     return (
         <>
             {inEditMode.status && inEditMode.studentKey === student._id ? (

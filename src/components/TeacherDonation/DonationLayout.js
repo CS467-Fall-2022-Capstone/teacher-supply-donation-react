@@ -38,7 +38,6 @@ function DonationLayout() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const teacherData = {
                             _id: response.data._id,
                             name: response.data.name,

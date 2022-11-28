@@ -108,7 +108,6 @@ function StudentDonationPage() {
                 );
                 if (response.status === 200) {
                     if (!ignore) {
-                        //console.log("Raw response data is: " + JSON.stringify(response.data))
                         const studentData = {
                             _id: response.data._id,
                             firstName: response.data.firstName,
@@ -173,7 +172,6 @@ function StudentDonationPage() {
             } else {
                 console.log('Send unsuccessful');
             }
-            //console.log("Response returned from backend on Update Donations: " + JSON.stringify(response.data));
         } catch (err) {
             console.log('Error response received from Donations API');
             console.log(err);
@@ -181,7 +179,6 @@ function StudentDonationPage() {
         } finally {
             // Unregister student from donation page and take them to Thank You page
             setStudent(null);
-            //navigate('/donations/students/' + student._id, { replace: true });
             navigate(
                 '/donations/teachers/' +
                     teacher._id +
