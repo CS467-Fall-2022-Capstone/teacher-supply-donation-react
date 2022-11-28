@@ -14,7 +14,6 @@ function Settings() {
     const [successMessage, setSuccessMessage] = useState(false);
 
     const handleSubmit = async () => {
-        // Update Teacher model
         let teacherUpdate = {
             name: name,
             school: schoolName,

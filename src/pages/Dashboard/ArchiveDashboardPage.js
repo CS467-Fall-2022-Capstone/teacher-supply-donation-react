@@ -15,7 +15,6 @@ function ArchiveDashboardPage() {
                 const response = await TeacherService.getArchivedData(teacher);
                 if (response.status === 200) {
                     if (!ignore) {
-                        console.log(response.data);
                         setArchivedSupplies(response.data);
                     }
                 }

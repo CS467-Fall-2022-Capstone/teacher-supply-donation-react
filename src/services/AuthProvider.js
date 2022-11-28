@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
     // Set authenticated user
     const logIn = (data) => {
         setTeacher(data);
-        console.log(data);
         return <Navigate to='/teachers/dashboard' />;
     };
 

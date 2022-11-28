@@ -78,15 +78,11 @@ function DonationLayout() {
                     <Menu.Item>
                         <Image centered alt='logo' src={logo} size='small' />
                     </Menu.Item>
-                    {recordRetrieved ? (
-                        <Menu.Item link name='main'>
-                            {teacher.name}'s Classroom
-                        </Menu.Item>
-                    ) : (
-                        <Menu.Item link as={Link} to='/donations' name='main'>
-                            No Classroom Page Found
-                        </Menu.Item>
-                    )}
+
+                    <Menu.Item link name='main'>
+                        {teacher.name}'s Classroom
+                    </Menu.Item>
+
                     <Menu.Menu>
                         <Menu.Item link onClick={() => handleGoHome()}>
                             <Icon name='home' />
@@ -141,6 +137,7 @@ function DonationLayout() {
                                 recordRetrieved,
                                 student,
                                 setStudent,
+                                setLoading,
                             }}
                         />
                     )}

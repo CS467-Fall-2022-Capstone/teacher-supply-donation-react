@@ -64,7 +64,6 @@ function Signup() {
                 error.toString();
 
             setSuccessfulReq({ message: resMessage, successful: false });
-            console.log(error);
             console.log('Error calling API: ' + resMessage);
             console.log(error.code, error.message);
         }

@@ -13,7 +13,7 @@ import DonationService from '../../services/donations.service';
 
 function TeacherDonationPage() {
     let navigate = useNavigate();
-    const { teacher, supplies, recordRetrieved } = useOutletContext();
+    const { teacher, supplies } = useOutletContext();
 
     const handleNewDonorSubmit = async (fName, lName, email) => {
         const studentData = {
@@ -51,9 +51,9 @@ function TeacherDonationPage() {
 
     return (
         <>
-            <div className='dashboardHeader'>
-                {recordRetrieved ? (
-                    <>
+            {teacher.isPublished ? (
+                <>
+                    <div className='dashboardHeader'>
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
                                 Donate Supplies to {teacher.name}'s Classroom!
@@ -65,31 +65,29 @@ function TeacherDonationPage() {
                         <Message size='big' color='olive' compact>
                             {teacher.message}
                         </Message>
-                    </>
-                ) : (
-                    <>
-                        <Header size='huge' textAlign='center'>
-                            <Header.Content>
-                                Problem accessing this Classroom Page
-                                <Header.Subheader>
-                                    Record not accessed
-                                </Header.Subheader>
-                            </Header.Content>
-                        </Header>
-                        <Message size='big' color='olive' compact>
-                            Check that the id '{teacher._id}' is correct
-                        </Message>
-                    </>
-                )}
-            </div>
+                    </div>
 
-            <Header size='large'> Supplies List</Header>
-            <Divider fitted />
-            <Segment raised color='blue'>
-                <SupplyTableSimple supplies={supplies} />
-            </Segment>
+                    <Header size='large'> Supplies List</Header>
+                    <Divider fitted />
+                    <Segment raised color='blue'>
+                        <SupplyTableSimple supplies={supplies} />
+                    </Segment>
+                </>
+            ) : (
+                <div className='dashboardHeader'>
+                    <Header size='huge' textAlign='center'>
+                        <Header.Content>
+                            {teacher.name} has not published their donation page
+                            <Header.Subheader>
+                                Please return when the teacher has published the
+                                supplies list for donation.
+                            </Header.Subheader>
+                        </Header.Content>
+                    </Header>
+                </div>
+            )}
 
-            {recordRetrieved ? (
+            {teacher.isPublished ? (
                 <>
                     <Container className='buttonRow' textAlign='center'>
                         <DonationModal

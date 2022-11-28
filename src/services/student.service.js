@@ -7,7 +7,6 @@ class StudentService {
      * @param student_id
      */
     deleteStudentRecord(student_id) {
-        console.log('inside student.service');
         return axios.delete(`${API_URL}/students/${student_id}`);
     }
 
