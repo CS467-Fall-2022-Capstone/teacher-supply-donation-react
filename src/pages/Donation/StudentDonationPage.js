@@ -188,7 +188,7 @@ function StudentDonationPage() {
 
     const handleDonationChange = (e, donationUpdater) => {
         const updatedDonation = donationUpdater(e);
-        console.log(updatedDonation);
+        //console.log(updatedDonation);
         if (
             updatedDonation.donationFields.quantityDonated >
             updatedDonation.maxAllowed
