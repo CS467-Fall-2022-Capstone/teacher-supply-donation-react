@@ -52,32 +52,19 @@ function TeacherDonationPage() {
     return (
         <>
             {teacher.isPublished ? (
-                <div className='dashboardHeader'>
-                    <Header size='huge' textAlign='center'>
-                        <Header.Content>
-                            Donate Supplies to {teacher.name}'s Classroom!
-                            <Header.Subheader>
-                                {teacher.school}
-                            </Header.Subheader>
-                        </Header.Content>
-                    </Header>
-                    <Message size='big' color='olive' compact>
-                        {teacher.message}
-                    </Message>
-                </div>
-            ) : (
                 <>
                     <div className='dashboardHeader'>
                         <Header size='huge' textAlign='center'>
                             <Header.Content>
-                                {teacher.name} has not published their donation
-                                page
+                                Donate Supplies to {teacher.name}'s Classroom!
                                 <Header.Subheader>
-                                    Please return when the teacher has published
-                                    the supplies list for donation.
+                                    {teacher.school}
                                 </Header.Subheader>
                             </Header.Content>
                         </Header>
+                        <Message size='big' color='olive' compact>
+                            {teacher.message}
+                        </Message>
                     </div>
 
                     <Header size='large'> Supplies List</Header>
@@ -86,6 +73,18 @@ function TeacherDonationPage() {
                         <SupplyTableSimple supplies={supplies} />
                     </Segment>
                 </>
+            ) : (
+                <div className='dashboardHeader'>
+                    <Header size='huge' textAlign='center'>
+                        <Header.Content>
+                            {teacher.name} has not published their donation page
+                            <Header.Subheader>
+                                Please return when the teacher has published the
+                                supplies list for donation.
+                            </Header.Subheader>
+                        </Header.Content>
+                    </Header>
+                </div>
             )}
 
             {teacher.isPublished ? (
